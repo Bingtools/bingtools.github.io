@@ -490,7 +490,12 @@ if (searchInput) {
 
   function parseBody(body) {
     var name = "匿名", font = "Nunito, sans-serif", color = "#3d2c5e", text = body || "";
+    // 1) 正确格式: [[NAME:xxx]][[FONT:xxx]][[COLOR:xxx]]
     var m = (body || "").match(/^\[\[NAME:(.*?)\]\]\[\[FONT:(.*?)\]\]\[\[COLOR:(.*?)\]\]/);
+    // 2) 兼容历史乱码格式: [[NAME:xxx]][[NAME:...]][...[FONT:xxx]]!!COLOR:xxx]]
+    if (!m) {
+      m = (body || "").match(/^\[\[NAME:(.*?)\]\][\s\S]*?FONT:(.*?)\]\]!!COLOR:(.*?)\]\]/);
+    }
     if (m) { name = m[1]; font = m[2]; color = m[3]; text = body.replace(m[0], "").trim(); }
     return { name: name, font: font, color: color, text: text };
   }
