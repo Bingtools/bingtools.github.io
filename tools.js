@@ -496,7 +496,7 @@ if (searchInput) {
   }
 
   function wrapBody(text, font, color) {
-    return "[[NAME:" + userName + "]][[NAME:/(.*?/)/]/]/[/[FONT:" + font + "]]!!COLOR:" + color + "]]" + text;
+    return "[[NAME:" + userName + "]][[FONT:" + font + "]][[COLOR:" + color + "]]" + text;
   }
 
   function loadReplies(issueNum, containerEl) {
