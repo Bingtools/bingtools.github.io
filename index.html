@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bingo Maya Tools — 专为 Maya 动画师打造的个人工具集</title>
+  <meta name="description" content="Bingo Maya Tools — 个人 Maya 动画工具集，涵盖日常制作、P4 流程、表情控制器镜像、蒙皮辅助与工具箱管理。">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="assets/bingo-icon.png">
+</head>
+<body>
+
+  <!-- ===== Corner Decorations ===== -->
+  <div class="sky-decorations" aria-hidden="true">
+    <video class="tiger-corner" autoplay loop muted playsinline>
+      <source src="assets/tiger.webm" type="video/webm">
+    </video>
+  </div>
+
+  <!-- ===== Navbar ===== -->
+  <header class="navbar">
+    <div class="navbar-inner">
+      <a class="logo" href="#hero" aria-label="Bingo Maya Tools">
+        <img src="assets/bingo-icon.png" alt="">
+        <span>Bingo<span class="logo-sub">Tools</span></span>
+      </a>
+      <nav class="nav-links">
+        <a href="#modules">核心模块</a>
+        <a href="#download">下载安装</a>
+        <a href="#tools">工具列表</a>
+        <a href="#tutorial">使用教程</a>
+      </nav>
+      <div class="nav-search">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input id="searchInput" type="search" placeholder="搜索工具...">
+      </div>
+      <a class="github-icon" href="https://github.com/331908200-dotcom/Bingo-Tools" target="_blank" rel="noopener" aria-label="GitHub">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+      </a>
+    </div>
+  </header>
+
+  <!-- ===== Hero ===== -->
+  <section id="hero" class="hero">
+    <img class="hero-logo" src="assets/bingo-icon.png" alt="Bingo Logo" width="96" height="96">
+    <h1>Bingo Maya Tools</h1>
+    <p class="hero-desc">专为 Maya 动画师与 TD 打造的个人工具集<br>覆盖动画制作、P4 流程、表情控制器镜像、蒙皮辅助与工具箱管理</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="#download">开始使用</a>
+      <a class="btn btn-secondary" href="https://github.com/331908200-dotcom/Bingo-Tools" target="_blank" rel="noopener">GitHub</a>
+    </div>
+    <div class="hero-badges">
+      <span class="badge">Maya 2020 – 2026+</span>
+      <span class="badge">6+ 工具</span>
+      <span class="badge">P4 Workflow</span>
+      <span class="badge">PySide2</span>
+    </div>
+  </section>
+
+  <!-- ===== 核心模块 ===== -->
+  <section id="modules" class="section">
+    <div class="section-header">
+      <h2>核心模块，一站集成</h2>
+      <p>从日常启动到生产流程，六个工具覆盖动画师的完整工作链</p>
+    </div>
+    <div id="moduleGrid" class="module-grid"></div>
+  </section>
+
+  <!-- ===== 下载安装 ===== -->
+  <section id="download" class="section section-alt">
+    <div class="section-header">
+      <h2>一键安装，即刻使用</h2>
+      <p>Bingo ToolBox 提供 EXE 安装包，双击即可完成部署</p>
+    </div>
+    <div class="download-card">
+      <div class="download-card-body">
+        <div class="download-info">
+          <h3>Bingo ToolBox 安装包</h3>
+          <ul>
+            <li>支持 Maya 2020 / 2021 / 2022 / 2023 / 2024 / 2025 / 2026</li>
+            <li>自动注册 Maya module，无需手动配置路径</li>
+            <li>内置卸载脚本，安全升级无忧</li>
+            <li>安装前自动备份旧版本工具目录</li>
+          </ul>
+        </div>
+        <div class="download-action">
+          <a class="btn btn-primary btn-lg" href="https://raw.githubusercontent.com/331908200-dotcom/Bingo-Tools/main/Bingo_ToolBox_Maya2020-2026_CustomMenu_Setup.exe" download>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            下载 EXE 安装包
+          </a>
+          <small>v1.0 · 1.1 MB · 2026-05-28</small>
+          <details class="sha-details">
+            <summary>SHA256</summary>
+            <code>FEC29D854C4F12D3A208D1549C16CB9E3BE28B468E3F77771FA10362733CEEC9</code>
+          </details>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 工具列表 ===== -->
+  <section id="tools" class="section">
+    <div class="section-header">
+      <h2>工具列表</h2>
+      <p>点击卡片查看详情、复制启动命令或下载安装包</p>
+    </div>
+    <div class="toolbar">
+      <div id="filterBar" class="filters"></div>
+    </div>
+    <div class="content-grid">
+      <div class="tool-list">
+        <div id="toolGrid" class="tool-grid"></div>
+      </div>
+      <aside id="detailPanel" class="detail-panel"></aside>
+    </div>
+  </section>
+
+
+  <!-- ===== 打赏支持 ===== -->
+  <div class="donate-box">
+    <div class="donate-title">如果觉得工具好用，可小小支持一下</div>
+    <button class="donate-btn" id="donateBtn">❤</button>
+  </div>
+
+  <!-- ===== 二维码弹窗 ===== -->
+  <div class="qr-overlay" id="qrOverlay">
+    <div class="qr-modal">
+      <span class="qr-close" id="qrClose">×</span>
+      <p class="qr-title" id="qrTitle">微信收款码</p>
+      <div class="qr-img-box" id="qrImgBox">
+        <img src="assets/wechat-qr.png" alt="微信收款码">
+      </div>
+      <p class="qr-thanks">点滴心意，皆是鼓励，谢谢支持</p>
+      <div class="qr-switch" id="qrSwitch">点击切换：支付宝</div>
+    </div>
+  </div>
+
+
+  <!-- ===== 留言板 ===== -->
+  <section class="section message-section">
+    <div class="section-header">
+      <h2>💬 留言板</h2>
+    </div>
+    <div class="message-box">
+      <p class="msg-hint">欢迎留下使用感受、建议或问题，我会认真查看，感谢大家的支持😊</p>
+      <div class="msg-toolbar">
+        <select class="msg-font-picker" id="msgFontPicker">
+          <option value="Nunito, sans-serif">Nunito（圆体）</option>
+          <option value="SimSun, STSong, serif">宋体</option>
+          <option value="KaiTi, STKaiti, serif">楷体</option>
+          <option value="STXingkai, KaiTi, cursive">行楷</option>
+          <option value="SimHei, STHeiti, sans-serif">黑体</option>
+          <option value="Microsoft YaHei, sans-serif">微软雅黑</option>
+          <option value="Comic Sans MS, cursive">卡通体</option>
+          <option value="Georgia, serif">Georgia</option>
+          <option value="Courier New, monospace">打字机</option>
+          <option value="cursive">手写体</option>
+        </select>
+        <input type="color" class="msg-color-picker" id="msgColorPicker" value="#3d2c5e" title="字体颜色">
+        <span class="author-toggle" id="authorToggle" title="切换作者身份">🔒 游客</span>
+      </div>
+      <div class="msg-input-row">
+        <textarea id="msgInput" class="msg-input" placeholder="写点什么吧..." maxlength="500" rows="2"></textarea>
+        <button class="btn-msg-send" id="sendBtn">发送</button>
+      </div>
+      <div class="msg-list" id="msgList"></div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <p class="footer-tagline">献给每一位在 Maya 中雕琢细节的动画人</p>
+      <p class="footer-copy">
+        &copy; Since 2025 · Bingo ·
+        <a href="https://github.com/331908200-dotcom/Bingo-Tools" target="_blank" rel="noopener">GitHub</a>
+      </p>
+    </div>
+  </footer>
+
+  <script src="tools.js"></script>
+</body>
+</html>
