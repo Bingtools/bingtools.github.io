@@ -1524,6 +1524,35 @@ body::after {
 }
 .msg-item-del:hover { opacity: 1; }
 
+/* Pinned message */
+.msg-pinned {
+  border-color: var(--c-gold);
+  background: rgba(254, 243, 199, 0.3);
+}
+.msg-pin-badge {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--c-gold);
+  background: var(--c-gold-light);
+  padding: 2px 8px;
+  border-radius: 10px;
+  margin-right: 6px;
+}
+.msg-pin-btn {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--c-accent);
+  cursor: pointer;
+  margin-left: auto;
+  padding: 2px 8px;
+  border-radius: 10px;
+  transition: background 0.2s;
+  user-select: none;
+}
+.msg-pin-btn:hover {
+  background: var(--c-accent-light);
+}
+
 .msg-reply-box, .msg-replies {
   margin-top: 10px;
   padding-left: 12px;

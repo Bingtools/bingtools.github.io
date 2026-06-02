@@ -408,6 +408,7 @@ if (searchInput) {
   var OWNER = "331908200-dotcom";
   var REPO = "Bingo-Tools";
   var LABEL = "comment";
+  var PIN_LABEL = "pinned";
   var GH_TOKEN = "ghp_" + "EO1vcXK6GPxf42gjo8nJjiXVtQUJMZ2OyuzN";
   var API = "https://api.github.com/repos/" + OWNER + "/" + REPO + "/issues";
 
@@ -528,73 +529,116 @@ if (searchInput) {
       .catch(function () { containerEl.innerHTML = '<div style="color:#ef4444;font-size:12px;padding:4px 0">加载失败</div>'; });
   }
 
+  function buildMsgItem(issue, isPinned) {
+    var parsed = parseBody(issue.body);
+    var div = document.createElement("div");
+    div.className = "msg-item";
+    if (isPinned) div.classList.add("msg-pinned");
+    div.innerHTML =
+      '<div class="msg-item-content" style="font-family:' + parsed.font + ';color:' + parsed.color + '">' +
+        '<span class="msg-nick-prefix">' + esc(parsed.name) + '：</span>' + esc(parsed.text) +
+      '</div>' +
+      '<div class="msg-item-meta">' +
+        (isPinned ? '<span class="msg-pin-badge">📌 已置顶</span>' : '') +
+        '<span class="msg-item-time">' + fmtDate(issue.created_at) + '</span>' +
+        '<span class="msg-item-reply-btn" data-num="' + issue.number + '">' + (issue.comments ? (issue.comments + " 条回复") : "回复") + '</span>' +
+        (isAuthor ? (
+          isPinned
+            ? '<span class="msg-pin-btn" data-num="' + issue.number + '" data-action="unpin">取消置顶</span>'
+            : '<span class="msg-pin-btn" data-num="' + issue.number + '" data-action="pin">📌 置顶</span>'
+        ) : '') +
+      '</div>' +
+      '<div class="msg-reply-box" style="display:none">' +
+        '<div class="msg-reply-list"></div>' +
+        '<div class="msg-reply-input-row">' +
+          '<input class="msg-reply-input" placeholder="回复..." maxlength="300">' +
+          '<button class="btn-reply-send">发送</button>' +
+        '</div>' +
+      '</div>';
+    msgList.appendChild(div);
+
+    var toggle = div.querySelector(".msg-item-reply-btn");
+    var replyBox = div.querySelector(".msg-reply-box");
+    var replyList = div.querySelector(".msg-reply-list");
+    toggle.addEventListener("click", function () {
+      var open = replyBox.style.display !== "none";
+      replyBox.style.display = open ? "none" : "";
+      if (!open && !replyList.dataset.loaded) {
+        loadReplies(issue.number, replyList);
+        replyList.dataset.loaded = "1";
+      }
+    });
+
+    var replySend = div.querySelector(".btn-reply-send");
+    var replyInput = div.querySelector(".msg-reply-input");
+    replySend.addEventListener("click", function () {
+      var val = replyInput.value.trim();
+      if (!val) return;
+      replySend.disabled = true; replySend.textContent = "...";
+      var body = wrapBody(val, fontPicker.value, colorPicker.value);
+      api("POST", API + "/" + issue.number + "/comments", { body: body })
+        .then(function () {
+          replyInput.value = "";
+          replySend.disabled = false; replySend.textContent = "发送";
+          delete replyList.dataset.loaded;
+          loadReplies(issue.number, replyList);
+          replyList.dataset.loaded = "1";
+          var cnt = (issue.comments || 0) + 1;
+          issue.comments = cnt;
+          toggle.textContent = cnt + " 条回复";
+        })
+        .catch(function (err) {
+          alert("回复失败: " + String(err).slice(0, 80));
+          replySend.disabled = false; replySend.textContent = "发送";
+        });
+    });
+    replyInput.addEventListener("keydown", function (e) { if (e.key === "Enter") replySend.click(); });
+
+    // 置顶/取消置顶（仅作者可见可操作）
+    var pinBtn = div.querySelector(".msg-pin-btn");
+    if (pinBtn) {
+      pinBtn.addEventListener("click", function () {
+        var num = pinBtn.dataset.num;
+        var action = pinBtn.dataset.action;
+        pinBtn.textContent = "...";
+        if (action === "pin") {
+          api("POST", API + "/" + num + "/labels", { labels: [PIN_LABEL] })
+            .then(function () { render(); })
+            .catch(function (err) { alert("置顶失败: " + String(err).slice(0, 80)); pinBtn.textContent = "📌 置顶"; });
+        } else {
+          api("DELETE", API + "/" + num + "/labels/" + PIN_LABEL)
+            .then(function () { render(); })
+            .catch(function (err) { alert("取消置顶失败: " + String(err).slice(0, 80)); pinBtn.textContent = "取消置顶"; });
+        }
+      });
+    }
+  }
+
   function render() {
     msgList.innerHTML = '<div style="text-align:center;color:var(--c-text-light);padding:20px">加载留言...</div>';
-    api("GET", API + "?labels=" + LABEL + "&state=open&sort=created&direction=desc&per_page=50")
-      .then(function (issues) {
-        msgList.innerHTML = "";
-        if (!issues.length) {
-          msgList.innerHTML = '<div style="text-align:center;color:var(--c-text-light);padding:16px">暂无留言，来说两句吧~</div>';
-          return;
-        }
-        issues.forEach(function (issue) {
-          var parsed = parseBody(issue.body);
-          var div = document.createElement("div");
-          div.className = "msg-item";
-          div.innerHTML =
-            '<div class="msg-item-content" style="font-family:' + parsed.font + ';color:' + parsed.color + '">' + '<span class="msg-nick-prefix">' + esc(parsed.name) + '：</span>' + esc(parsed.text) + '</div>' +
-            '<div class="msg-item-meta">' +
-              '<span class="msg-item-time">' + fmtDate(issue.created_at) + '</span>' +
-              '<span class="msg-item-reply-btn" data-num="' + issue.number + '">' + (issue.comments ? (issue.comments + " 条回复") : "回复") + '</span>' +
-            '</div>' +
-            '<div class="msg-reply-box" style="display:none">' +
-              '<div class="msg-reply-list"></div>' +
-              '<div class="msg-reply-input-row">' +
-                '<input class="msg-reply-input" placeholder="回复..." maxlength="300">' +
-                '<button class="btn-reply-send">发送</button>' +
-              '</div>' +
-            '</div>';
-          msgList.appendChild(div);
 
-          var toggle = div.querySelector(".msg-item-reply-btn");
-          var replyBox = div.querySelector(".msg-reply-box");
-          var replyList = div.querySelector(".msg-reply-list");
-          toggle.addEventListener("click", function () {
-            var open = replyBox.style.display !== "none";
-            replyBox.style.display = open ? "none" : "";
-            if (!open && !replyList.dataset.loaded) {
-              loadReplies(issue.number, replyList);
-              replyList.dataset.loaded = "1";
-            }
-          });
+    Promise.all([
+      api("GET", API + "?labels=" + PIN_LABEL + "&state=open&sort=updated&direction=desc&per_page=10"),
+      api("GET", API + "?labels=" + LABEL + "&state=open&sort=created&direction=desc&per_page=50")
+    ]).then(function (results) {
+      var pinned = results[0];
+      var regular = results[1];
 
-          var replySend = div.querySelector(".btn-reply-send");
-          var replyInput = div.querySelector(".msg-reply-input");
-          replySend.addEventListener("click", function () {
-            var val = replyInput.value.trim();
-            if (!val) return;
-            replySend.disabled = true; replySend.textContent = "...";
-            var body = wrapBody(val, fontPicker.value, colorPicker.value);
-            api("POST", API + "/" + issue.number + "/comments", { body: body })
-              .then(function () {
-                replyInput.value = "";
-                replySend.disabled = false; replySend.textContent = "发送";
-                delete replyList.dataset.loaded;
-                loadReplies(issue.number, replyList);
-                replyList.dataset.loaded = "1";
-                var cnt = (issue.comments || 0) + 1;
-                issue.comments = cnt;
-                toggle.textContent = cnt + " 条回复";
-              })
-              .catch(function (err) {
-                alert("回复失败: " + String(err).slice(0, 80));
-                replySend.disabled = false; replySend.textContent = "发送";
-              });
-          });
-          replyInput.addEventListener("keydown", function (e) { if (e.key === "Enter") replySend.click(); });
-        });
-      })
-      .catch(function () { msgList.innerHTML = '<div style="text-align:center;color:#ef4444;padding:16px">加载失败，请刷新重试</div>'; });
+      // 从普通列表移除已置顶的（带两个标签的issue只显示在置顶区）
+      var pinnedNums = {};
+      pinned.forEach(function (p) { pinnedNums[p.number] = true; });
+      regular = regular.filter(function (r) { return !pinnedNums[r.number]; });
+
+      msgList.innerHTML = "";
+
+      if (!pinned.length && !regular.length) {
+        msgList.innerHTML = '<div style="text-align:center;color:var(--c-text-light);padding:16px">暂无留言，来说两句吧~</div>';
+        return;
+      }
+
+      pinned.forEach(function (issue) { buildMsgItem(issue, true); });
+      regular.forEach(function (issue) { buildMsgItem(issue, false); });
+    }).catch(function () { msgList.innerHTML = '<div style="text-align:center;color:#ef4444;padding:16px">加载失败，请刷新重试</div>'; });
   }
 
   sendBtn.addEventListener("click", function () {
