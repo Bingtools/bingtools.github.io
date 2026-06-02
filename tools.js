@@ -423,35 +423,42 @@ if (searchInput) {
   var adjectives = ["快乐的","可爱的","认真的","悠闲的","好奇的","勇敢的","温柔的","机智的"];
   var animals = ["小熊猫","小海豚","小狐狸","小兔子","小松鼠","小企鹅","小考拉","小柴犬","小橘猫","小鹦鹉","小仓鼠","小鹿"];
   var USER_KEY = "bingo_msg_name";
+  var AUTHOR_PASS = "bingo2026"; // ← 作者密码，在此修改
   var userName = localStorage.getItem(USER_KEY);
   if (!userName) {
     userName = adjectives[Math.floor(Math.random() * adjectives.length)] + animals[Math.floor(Math.random() * animals.length)];
     localStorage.setItem(USER_KEY, userName);
+  }
 
+  // 作者身份切换（需密码验证）
   var authorToggle = document.getElementById("authorToggle");
-  var isAuthor = localStorage.getItem("bingo_is_author") === "1";
+  var isAuthor = localStorage.getItem("bingo_author_auth") === AUTHOR_PASS;
   if (isAuthor) {
     userName = "作者";
     if (authorToggle) { authorToggle.textContent = "✅ 作者"; authorToggle.classList.add("author-active"); }
   }
   if (authorToggle) {
     authorToggle.addEventListener("click", function () {
-      isAuthor = !isAuthor;
-      if (isAuthor) {
-        localStorage.setItem("bingo_is_author", "1");
-        userName = "作者";
-        authorToggle.textContent = "✅ 作者";
-        authorToggle.classList.add("author-active");
+      if (!isAuthor) {
+        var pass = prompt("请输入作者密码：");
+        if (pass === AUTHOR_PASS) {
+          isAuthor = true;
+          localStorage.setItem("bingo_author_auth", AUTHOR_PASS);
+          userName = "作者";
+          authorToggle.textContent = "✅ 作者";
+          authorToggle.classList.add("author-active");
+        } else if (pass !== null) {
+          alert("密码错误！");
+        }
       } else {
-        localStorage.removeItem("bingo_is_author");
+        isAuthor = false;
+        localStorage.removeItem("bingo_author_auth");
         userName = adjectives[Math.floor(Math.random() * adjectives.length)] + animals[Math.floor(Math.random() * animals.length)];
         localStorage.setItem(USER_KEY, userName);
         authorToggle.textContent = "🔒 游客";
         authorToggle.classList.remove("author-active");
       }
     });
-  }
-
   }
 
 
