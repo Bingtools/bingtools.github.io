@@ -34,7 +34,7 @@ maya_time_machine.show()`,
     command: `// 在 Maya Script Editor 的 Python 标签中执行:
 exec(open(r"D:/Codex/maya/Bingo_ToolBox_01/install.mel", "r").read())`,
     path: "D:/Codex/maya/Bingo_ToolBox_01/",
-    download: "https://raw.githubusercontent.com/331908200-dotcom/Bingo-Tools/main/Bingo_ToolBox_Maya2020-2026_CustomMenu_Setup.exe",
+    download: "https://raw.githubusercontent.com/Bingtools/Bingo-Tools/main/Bingo_ToolBox_Maya2020-2026_CustomMenu_Setup.exe",
     tutorial: [
       {
         title: "1. 安装方式",
@@ -405,7 +405,7 @@ if (searchInput) {
 
 // ===== Message Board (GitHub Issues API) =====
 (function () {
-  var OWNER = "331908200-dotcom";
+  var OWNER = "Bingtools";
   var REPO = "Bingo-Tools";
   var LABEL = "comment";
   var PIN_LABEL = "pinned";
