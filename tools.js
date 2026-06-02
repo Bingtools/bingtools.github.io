@@ -662,3 +662,22 @@ if (searchInput) {
 
   render();
 })();
+
+// ===== Tiger Heart Interaction =====
+(function () {
+  var tiger = document.querySelector(".tiger-corner");
+  if (!tiger) return;
+  tiger.addEventListener("click", function (e) {
+    for (var i = 0; i < 5; i++) {
+      var heart = document.createElement("span");
+      heart.className = "tiger-heart";
+      heart.textContent = ["❤","💕","💖","💗","💝","✨","💜"][Math.floor(Math.random() * 7)];
+      heart.style.left = (e.clientX + (Math.random() - 0.5) * 80) + "px";
+      heart.style.top = (e.clientY + (Math.random() - 0.5) * 40) + "px";
+      heart.style.animationDuration = (1 + Math.random() * 0.8) + "s";
+      heart.style.fontSize = (18 + Math.random() * 22) + "px";
+      document.body.appendChild(heart);
+      setTimeout(function (h) { return function () { h.remove(); }; }(heart), 1400);
+    }
+  });
+})();
