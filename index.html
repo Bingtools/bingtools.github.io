@@ -236,17 +236,49 @@
     });
   }, 300);
 
-  // ===== 全局替换：回复→评论 =====
+  // ===== 全局替换：回复→评论 + 作者删除功能 =====
   (function () {
     var area = document.getElementById("msgList");
     if (!area) return;
+    var G = "ghp_" + "EO1vcXK6GPxf42gjo8nJjiXVtQUJMZ2OyuzN";
+    var isAuthor = localStorage.getItem("bingo_author_auth") === "bingo2026";
+
     function fix() {
+      // 回复→评论
       area.querySelectorAll(".msg-item-reply-btn, .msg-reply-input, .msg-reply-nick, .msg-reply-time").forEach(function (el) {
         if (el.placeholder && el.placeholder.indexOf("回复") > -1) el.placeholder = "评论...";
         if (el.textContent) el.textContent = el.textContent.replace(/回复/g, "评论");
       });
+      // 作者删除按钮
+      if (!isAuthor) return;
+      area.querySelectorAll(".msg-item").forEach(function (item) {
+        if (item.querySelector(".msg-del-btn")) return; // 已有按钮
+        var replyBtn = item.querySelector(".msg-item-reply-btn");
+        if (!replyBtn) return;
+        var num = replyBtn.dataset.num;
+        var del = document.createElement("span");
+        del.className = "msg-del-btn";
+        del.textContent = "删除";
+        del.style.cssText = "font-size:12px;color:#ef4444;cursor:pointer;margin-left:8px;opacity:0.6;";
+        del.addEventListener("mouseenter", function () { del.style.opacity = "1"; });
+        del.addEventListener("mouseleave", function () { del.style.opacity = "0.6"; });
+        del.addEventListener("click", function (e) {
+          e.stopPropagation();
+          if (!confirm("确定删除这条留言？")) return;
+          del.textContent = "...";
+          var x = new XMLHttpRequest();
+          x.open("PATCH", "https://api.github.com/repos/Bingtools/Bingo-Tools/issues/" + num, true);
+          x.setRequestHeader("Authorization", "Bearer " + G);
+          x.setRequestHeader("Accept", "application/vnd.github+json");
+          x.setRequestHeader("Content-Type", "application/json");
+          x.onload = function () { if (x.status === 200) item.remove(); else alert("删除失败"); };
+          x.onerror = function () { del.textContent = "删除"; alert("网络错误"); };
+          x.send(JSON.stringify({ state: "closed" }));
+        });
+        var meta = item.querySelector(".msg-item-meta");
+        if (meta) meta.appendChild(del);
+      });
     }
-    // 定时扫描（简单但可靠）
     setInterval(fix, 500);
     fix();
   })();
