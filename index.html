@@ -232,6 +232,21 @@
       ml.insertBefore(temp, ml.firstChild);
     }, true);
   })();
+
+  // ===== 全局替换：回复→评论 =====
+  (function () {
+    var area = document.getElementById("msgList");
+    if (!area) return;
+    function fix() {
+      area.querySelectorAll(".msg-item-reply-btn, .msg-reply-input, .msg-reply-nick, .msg-reply-time").forEach(function (el) {
+        if (el.placeholder && el.placeholder.indexOf("回复") > -1) el.placeholder = "评论...";
+        if (el.textContent) el.textContent = el.textContent.replace(/回复/g, "评论");
+      });
+    }
+    // 定时扫描（简单但可靠）
+    setInterval(fix, 500);
+    fix();
+  })();
   </script>
 </body>
 </html>
