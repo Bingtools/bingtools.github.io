@@ -1177,6 +1177,15 @@ body::after {
   animation: none;
 }
 
+.donate-count {
+  font-family: "Nunito", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--c-text-muted);
+  margin-top: 10px;
+  text-align: center;
+}
+
 /* QR Overlay */
 .qr-overlay {
   display: none;
