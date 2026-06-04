@@ -214,9 +214,9 @@
   })();
 
   // ===== 留言乐观更新（点击发送立即显示）=====
-  setTimeout(function () {
+  (function reg() {
     var sb = document.getElementById("sendBtn"), ml = document.getElementById("msgList");
-    if (!sb || !ml) return;
+    if (!sb || !ml) { setTimeout(reg, 100); return; }
     sb.addEventListener("click", function () {
       var inp = document.getElementById("msgInput");
       if (!inp) return;
@@ -234,7 +234,7 @@
         '</div><div class="msg-item-meta"><span class="msg-item-time">发送中...</span></div>';
       ml.insertBefore(temp, ml.firstChild);
     });
-  }, 300);
+  })();
 
   // ===== 全局替换：回复→评论 + 作者删除功能 =====
   (function () {
