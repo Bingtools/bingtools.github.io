@@ -214,27 +214,24 @@
   })();
 
   // ===== 留言乐观更新（点击发送立即显示）=====
-  (function reg() {
-    var sb = document.getElementById("sendBtn"), ml = document.getElementById("msgList");
-    if (!sb || !ml) { setTimeout(reg, 100); return; }
-    sb.addEventListener("click", function () {
-      var inp = document.getElementById("msgInput");
-      if (!inp) return;
-      var val = inp.value.trim();
-      if (!val) return;
-      var fp = document.getElementById("msgFontPicker"), cp = document.getElementById("msgColorPicker");
-      var font = (fp && fp.value) || "";
-      var color = (cp && cp.value) || "";
-      var nick = (localStorage.getItem("bingo_author_auth") === "bingo2026") ? "作者" : (localStorage.getItem("bingo_msg_name") || "匿名");
-      var temp = document.createElement("div");
-      temp.className = "msg-item";
-      temp.style.opacity = "0.6";
-      temp.innerHTML = '<div class="msg-item-content" style="font-family:' + font + ';color:' + color + '">' +
-        '<span class="msg-nick-prefix">' + nick + '：</span>' + val +
-        '</div><div class="msg-item-meta"><span class="msg-item-time">发送中...</span></div>';
-      ml.insertBefore(temp, ml.firstChild);
-    });
-  })();
+  document.body.addEventListener("click", function (e) {
+    var t = e.target;
+    if (!t || (t.id !== "sendBtn" && !t.closest("#sendBtn"))) return;
+    var inp = document.getElementById("msgInput"), ml = document.getElementById("msgList");
+    if (!inp || !ml) return;
+    var val = inp.value.trim();
+    if (!val) return;
+    var fp = document.getElementById("msgFontPicker"), cp = document.getElementById("msgColorPicker");
+    var font = (fp && fp.value) || "", color = (cp && cp.value) || "";
+    var nick = (localStorage.getItem("bingo_author_auth") === "bingo2026") ? "作者" : (localStorage.getItem("bingo_msg_name") || "匿名");
+    var temp = document.createElement("div");
+    temp.className = "msg-item";
+    temp.style.opacity = "0.6";
+    temp.innerHTML = '<div class="msg-item-content" style="font-family:' + font + ';color:' + color + '">' +
+      '<span class="msg-nick-prefix">' + nick + '：</span>' + val +
+      '</div><div class="msg-item-meta"><span class="msg-item-time">发送中...</span></div>';
+    ml.insertBefore(temp, ml.firstChild);
+  });
 
   // ===== 全局替换：回复→评论 + 作者删除功能 =====
   (function () {
