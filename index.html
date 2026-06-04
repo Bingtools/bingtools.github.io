@@ -182,34 +182,34 @@
     var countEl = document.getElementById("donateCount"), btn = document.getElementById("donateBtn");
     if (!countEl || !btn) return;
 
-    function xhr(method, body) {
-      var r = new XMLHttpRequest();
-      r.open(method, API, true);
-      r.setRequestHeader("Authorization", "Bearer " + G);
-      r.setRequestHeader("Accept", "application/vnd.github+json");
-      if (body) r.setRequestHeader("Content-Type", "application/json");
-      r.send(body ? JSON.stringify(body) : null);
-      return r;
-    }
-
-    // 页面加载时读取计数
-    var get = xhr("GET");
+    // 读取计数
+    var get = new XMLHttpRequest();
+    get.open("GET", API, true);
+    get.setRequestHeader("Authorization", "Bearer " + G);
+    get.setRequestHeader("Accept", "application/vnd.github+json");
     get.onload = function () {
-      if (get.status === 200) {
-        countEl.textContent = "💛 " + (JSON.parse(get.responseText).body || "0");
-      }
+      try { countEl.textContent = "💛 " + (JSON.parse(get.responseText).body || "0"); } catch(e) {}
     };
-    get.onerror = function () { countEl.textContent = "💛 0"; };
+    get.onerror = function () {};
+    get.send();
 
     // 点击爱心 +1
     btn.addEventListener("click", function () {
       var n = parseInt(countEl.textContent.replace("💛 ", "") || "0", 10);
-      var patch = xhr("PATCH", { body: String(n + 1) });
+      countEl.textContent = "💛 " + (n + 1); // 先乐观更新
+      var patch = new XMLHttpRequest();
+      patch.open("PATCH", API, true);
+      patch.setRequestHeader("Authorization", "Bearer " + G);
+      patch.setRequestHeader("Accept", "application/vnd.github+json");
+      patch.setRequestHeader("Content-Type", "application/json");
       patch.onload = function () {
-        if (patch.status === 200) {
-          countEl.textContent = "💛 " + JSON.parse(patch.responseText).body;
-        }
+        try {
+          if (patch.status === 200) countEl.textContent = "💛 " + JSON.parse(patch.responseText).body;
+          else countEl.textContent = "💛 " + n; // 回滚
+        } catch(e) {}
       };
+      patch.onerror = function () { countEl.textContent = "💛 " + n; };
+      patch.send(JSON.stringify({ body: String(n + 1) }));
     });
   })();
   </script>
