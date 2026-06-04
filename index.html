@@ -214,24 +214,27 @@
   })();
 
   // ===== 留言乐观更新（点击发送立即显示）=====
-  (function () {
+  setTimeout(function () {
     var sb = document.getElementById("sendBtn"), ml = document.getElementById("msgList");
     if (!sb || !ml) return;
     sb.addEventListener("click", function () {
-      var val = (document.getElementById("msgInput") || {}).value;
-      if (!val || !val.trim()) return;
-      var font = (document.getElementById("msgFontPicker") || {}).value || "";
-      var color = (document.getElementById("msgColorPicker") || {}).value || "";
+      var inp = document.getElementById("msgInput");
+      if (!inp) return;
+      var val = inp.value.trim();
+      if (!val) return;
+      var fp = document.getElementById("msgFontPicker"), cp = document.getElementById("msgColorPicker");
+      var font = (fp && fp.value) || "";
+      var color = (cp && cp.value) || "";
+      var nick = (localStorage.getItem("bingo_author_auth") === "bingo2026") ? "作者" : (localStorage.getItem("bingo_msg_name") || "匿名");
       var temp = document.createElement("div");
       temp.className = "msg-item";
       temp.style.opacity = "0.6";
-      var nick = localStorage.getItem("bingo_author_auth") === "bingo2026" ? "作者" : (localStorage.getItem("bingo_msg_name") || "匿名");
       temp.innerHTML = '<div class="msg-item-content" style="font-family:' + font + ';color:' + color + '">' +
-        '<span class="msg-nick-prefix">' + nick + '：</span>' + val.trim() +
+        '<span class="msg-nick-prefix">' + nick + '：</span>' + val +
         '</div><div class="msg-item-meta"><span class="msg-item-time">发送中...</span></div>';
       ml.insertBefore(temp, ml.firstChild);
-    }, true);
-  })();
+    });
+  }, 300);
 
   // ===== 全局替换：回复→评论 =====
   (function () {
