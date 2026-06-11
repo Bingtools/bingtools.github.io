@@ -583,8 +583,10 @@ if (searchInput) {
           var parsed = parseBody(c.body);
           var div = document.createElement("div");
           div.className = "msg-reply-item";
-          div.innerHTML = '<div style="font-family:' + parsed.font + ';color:' + parsed.color + '">' + esc(parsed.text) + '</div><span class="msg-reply-nick">' + esc(parsed.name) + ' </span>' +
-            '<div class="msg-reply-time">' + fmtDate(c.created_at) + '</div>';
+          div.style.cssText = "padding:6px 0;border-bottom:1px solid rgba(0,0,0,0.05);font-size:13px";
+          div.innerHTML = '<div style="font-family:' + parsed.font + ';color:' + parsed.color + ';margin-bottom:2px">' + esc(parsed.text) + '</div><span class="msg-reply-nick" style="font-weight:600;font-size:11px;color:#7c3aed">' + esc(parsed.name) + '</span>' +
+            ' <span class="msg-reply-time" style="color:#9ca3af;font-size:11px">' + fmtDate(c.created_at) + '</span>';
+          containerEl.appendChild(div);  // 关键：把评论项追加到容器
         });
       })
       .catch(function () { containerEl.innerHTML = '<div style="color:#ef4444;font-size:12px;padding:4px 0">加载失败</div>'; });
@@ -602,16 +604,16 @@ if (searchInput) {
       '<div class="msg-item-meta">' +
         (isPinned ? '<span class="msg-pin-badge">📌 已置顶</span>' : '') +
         '<span class="msg-item-time">' + fmtDate(issue.created_at) + '</span>' +
-        '<span class="msg-item-reply-btn" data-num="' + issue.number + '">' + (issue.comments ? (issue.comments + " 条评论") : "评论") + '</span>' +
+        '<span class="msg-item-reply-btn" data-num="' + issue.number + '" style="cursor:pointer;font-size:12px;color:#7c3aed;margin-left:8px;opacity:0.75">' + (issue.comments ? (issue.comments + " 条评论") : "评论") + '</span>' +
         (isAuthor ? (
           isPinned
             ? '<span class="msg-pin-btn" data-num="' + issue.number + '" data-action="unpin">取消置顶</span>'
             : '<span class="msg-pin-btn" data-num="' + issue.number + '" data-action="pin">📌 置顶</span>'
         ) : '') +
       '</div>' +
-      '<div class="msg-reply-box" style="display:none">' +
-        '<div class="msg-reply-list"></div>' +
-        '<div class="msg-reply-input-row">' +
+      '<div class="msg-reply-box" style="display:none;padding:10px 12px 8px;margin-top:6px;background:rgba(0,0,0,0.03);border-radius:8px;border-left:3px solid #6d28d9">' +
+        '<div class="msg-reply-list" style="min-height:20px"></div>' +
+        '<div class="msg-reply-input-row" style="display:flex;gap:6px;margin-top:8px">' +
           '<input class="msg-reply-input" placeholder="评论..." maxlength="300">' +
           '<button class="btn-reply-send">发送</button>' +
         '</div>' +
