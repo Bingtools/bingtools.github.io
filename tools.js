@@ -526,7 +526,8 @@ if (searchInput) {
   function api(method, path, body) {
     return new Promise(function (resolve, reject) {
       var url = path.startsWith("http") ? path : "https://api.github.com" + path;
-      // GET 请求强制加时间戳，绕过浏览器缓存 & GitHub API 60s CDN 缓存
+      // GET 请求加时间戳参数绕过浏览器缓存 & GitHub API 60s CDN 缓存
+      // 注意：不能加 Cache-Control/Pragma 等非简单头，否则触发 CORS OPTIONS 预检失败
       if (method === "GET") {
         url += (url.indexOf("?") > -1 ? "&" : "?") + "_t=" + Date.now();
       }
@@ -534,10 +535,6 @@ if (searchInput) {
       xhr.open(method, url);
       xhr.setRequestHeader("Authorization", "Bearer " + GH_TOKEN);
       xhr.setRequestHeader("Accept", "application/vnd.github+json");
-      if (method === "GET") {
-        xhr.setRequestHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-        xhr.setRequestHeader("Pragma", "no-cache");
-      }
       if (body) xhr.setRequestHeader("Content-Type", "application/json");
       xhr.onload = function () {
         if (xhr.status >= 200 && xhr.status < 300) resolve(xhr.responseText ? JSON.parse(xhr.responseText) : {});
