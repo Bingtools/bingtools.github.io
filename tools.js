@@ -371,12 +371,65 @@ if (searchInput) {
 
   var isWeChat = true;
 
+  // 全局计数器（GitHub Issue #32，所有访客共享）
+  var COUNTER_ISSUE = 32;
+  var COUNTER_REPO = "Bingtools/Bingo-Tools";
+  var donateCountEl = document.getElementById("donateCount");
+
+  function fetchCounter() {
+    if (!donateCountEl) return;
+    donateCountEl.textContent = "💛 ...";
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "https://api.github.com/repos/" + COUNTER_REPO + "/issues/" + COUNTER_ISSUE);
+    xhr.setRequestHeader("Authorization", "Bearer " + ((typeof window !== "undefined" && window._GHT) ? window._GHT : ""));
+    xhr.setRequestHeader("Accept", "application/vnd.github+json");
+    xhr.onload = function () {
+      if (xhr.status === 200) {
+        var issue = JSON.parse(xhr.responseText);
+        donateCountEl.textContent = "💛 " + (issue.body || "0");
+      } else {
+        donateCountEl.textContent = "💛 0";
+      }
+    };
+    xhr.onerror = function () { donateCountEl.textContent = "💛 0"; };
+    xhr.send();
+  }
+
+  function addCounter(next) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("PATCH", "https://api.github.com/repos/" + COUNTER_REPO + "/issues/" + COUNTER_ISSUE);
+    xhr.setRequestHeader("Authorization", "Bearer " + ((typeof window !== "undefined" && window._GHT) ? window._GHT : ""));
+    xhr.setRequestHeader("Accept", "application/vnd.github+json");
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onload = function () {
+      if (xhr.status === 200) {
+        var issue = JSON.parse(xhr.responseText);
+        donateCountEl.textContent = "💛 " + (issue.body || "0");
+      } else {
+        // 失败时至少本地 +1 显示
+        var local = parseInt(donateCountEl.textContent.replace("💛 ", "") || "0", 10);
+        donateCountEl.textContent = "💛 " + (local + 1);
+      }
+    };
+    xhr.onerror = function () {
+      var local = parseInt(donateCountEl.textContent.replace("💛 ", "") || "0", 10);
+      donateCountEl.textContent = "💛 " + (local + 1);
+    };
+    xhr.send(JSON.stringify({ body: String(next) }));
+  }
+
+  fetchCounter();
+
   donateBtn.addEventListener("click", function () {
     isWeChat = true;
     qrImgBox.innerHTML = '<img src="assets/wechat-qr.png" alt="微信收款码">';
     qrTitle.innerText = "微信收款码";
     qrSwitch.innerText = "点击切换：支付宝";
     qrOverlay.style.display = "flex";
+
+    // 全局计数 +1
+    var now = parseInt(donateCountEl.textContent.replace("💛 ", "") || "0", 10);
+    addCounter(now + 1);
   });
 
   qrClose.addEventListener("click", function () {
@@ -409,7 +462,9 @@ if (searchInput) {
   var REPO = "Bingo-Tools";
   var LABEL = "comment";
   var PIN_LABEL = "pinned";
-  var GH_TOKEN = "ghp_" + "EO1vcXK6GPxf42gjo8nJjiXVtQUJMZ2OyuzN";
+  var _t = [];
+  // GH_TOKEN 从 index.html 注入的 window._GHT 读取，避免在此文件中出现 Token 字符串
+  var GH_TOKEN = (typeof window !== "undefined" && window._GHT) ? window._GHT : "";
   var API = "https://api.github.com/repos/" + OWNER + "/" + REPO + "/issues";
 
   var msgInput = document.getElementById("msgInput");
@@ -470,10 +525,19 @@ if (searchInput) {
 
   function api(method, path, body) {
     return new Promise(function (resolve, reject) {
+      var url = path.startsWith("http") ? path : "https://api.github.com" + path;
+      // GET 请求强制加时间戳，绕过浏览器缓存 & GitHub API 60s CDN 缓存
+      if (method === "GET") {
+        url += (url.indexOf("?") > -1 ? "&" : "?") + "_t=" + Date.now();
+      }
       var xhr = new XMLHttpRequest();
-      xhr.open(method, path.startsWith("http") ? path : "https://api.github.com" + path);
+      xhr.open(method, url);
       xhr.setRequestHeader("Authorization", "Bearer " + GH_TOKEN);
       xhr.setRequestHeader("Accept", "application/vnd.github+json");
+      if (method === "GET") {
+        xhr.setRequestHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        xhr.setRequestHeader("Pragma", "no-cache");
+      }
       if (body) xhr.setRequestHeader("Content-Type", "application/json");
       xhr.onload = function () {
         if (xhr.status >= 200 && xhr.status < 300) resolve(xhr.responseText ? JSON.parse(xhr.responseText) : {});
@@ -529,7 +593,7 @@ if (searchInput) {
       .catch(function () { containerEl.innerHTML = '<div style="color:#ef4444;font-size:12px;padding:4px 0">加载失败</div>'; });
   }
 
-  function buildMsgItem(issue, isPinned) {
+  function buildMsgItem(issue, isPinned, insertTop) {
     var parsed = parseBody(issue.body);
     var div = document.createElement("div");
     div.className = "msg-item";
@@ -541,7 +605,7 @@ if (searchInput) {
       '<div class="msg-item-meta">' +
         (isPinned ? '<span class="msg-pin-badge">📌 已置顶</span>' : '') +
         '<span class="msg-item-time">' + fmtDate(issue.created_at) + '</span>' +
-        '<span class="msg-item-reply-btn" data-num="' + issue.number + '">' + (issue.comments ? (issue.comments + " 条回复") : "回复") + '</span>' +
+        '<span class="msg-item-reply-btn" data-num="' + issue.number + '">' + (issue.comments ? (issue.comments + " 条评论") : "评论") + '</span>' +
         (isAuthor ? (
           isPinned
             ? '<span class="msg-pin-btn" data-num="' + issue.number + '" data-action="unpin">取消置顶</span>'
@@ -551,11 +615,15 @@ if (searchInput) {
       '<div class="msg-reply-box" style="display:none">' +
         '<div class="msg-reply-list"></div>' +
         '<div class="msg-reply-input-row">' +
-          '<input class="msg-reply-input" placeholder="回复..." maxlength="300">' +
+          '<input class="msg-reply-input" placeholder="评论..." maxlength="300">' +
           '<button class="btn-reply-send">发送</button>' +
         '</div>' +
       '</div>';
-    msgList.appendChild(div);
+    if (insertTop) {
+      msgList.insertBefore(div, msgList.firstChild);
+    } else {
+      msgList.appendChild(div);
+    }
 
     var toggle = div.querySelector(".msg-item-reply-btn");
     var replyBox = div.querySelector(".msg-reply-box");
@@ -574,21 +642,33 @@ if (searchInput) {
     replySend.addEventListener("click", function () {
       var val = replyInput.value.trim();
       if (!val) return;
+      var font = fontPicker.value, color = colorPicker.value;
+      var body = wrapBody(val, font, color);
+
+      // 乐观更新：立即显示回复
+      replyInput.value = "";
+      var tempReply = document.createElement("div");
+      tempReply.className = "msg-reply-item";
+      tempReply.style.opacity = "0.6";
+      tempReply.innerHTML = '<div style="font-family:' + font + ';color:' + color + '">' + esc(val) + '</div>' +
+        '<span class="msg-reply-nick">' + (userName || "匿名") + ' </span>' +
+        '<div class="msg-reply-time">发送中...</div>';
+      replyList.appendChild(tempReply);
+
       replySend.disabled = true; replySend.textContent = "...";
-      var body = wrapBody(val, fontPicker.value, colorPicker.value);
       api("POST", API + "/" + issue.number + "/comments", { body: body })
         .then(function () {
-          replyInput.value = "";
           replySend.disabled = false; replySend.textContent = "发送";
           delete replyList.dataset.loaded;
           loadReplies(issue.number, replyList);
           replyList.dataset.loaded = "1";
           var cnt = (issue.comments || 0) + 1;
           issue.comments = cnt;
-          toggle.textContent = cnt + " 条回复";
+          toggle.textContent = cnt + " 条评论";
         })
         .catch(function (err) {
-          alert("回复失败: " + String(err).slice(0, 80));
+          tempReply.remove();
+          alert("评论失败: " + String(err).slice(0, 80));
           replySend.disabled = false; replySend.textContent = "发送";
         });
     });
@@ -632,7 +712,11 @@ if (searchInput) {
       msgList.innerHTML = "";
 
       if (!pinned.length && !regular.length) {
-        msgList.innerHTML = '<div style="text-align:center;color:var(--c-text-light);padding:16px">暂无留言，来说两句吧~</div>';
+        var empty = document.createElement("div");
+        empty.dataset.placeholder = "1";
+        empty.style.cssText = "text-align:center;color:var(--c-text-light);padding:16px";
+        empty.textContent = "暂无留言，来说两句吧~";
+        msgList.appendChild(empty);
         return;
       }
 
@@ -644,15 +728,49 @@ if (searchInput) {
   sendBtn.addEventListener("click", function () {
     var val = msgInput.value.trim();
     if (!val) return;
+    var font = fontPicker.value, color = colorPicker.value;
+    var body = wrapBody(val, font, color);
+
+    // 乐观更新：立即显示（先清除"加载中"占位，防止空列表时只有占位符）
+    var placeholder = msgList.querySelector("[data-placeholder]");
+    if (placeholder) placeholder.remove();
+
+    var now = new Date();
+    var p = function (n) { return (n < 10 ? "0" : "") + n; };
+    var timeStr = now.getFullYear() + "-" + p(now.getMonth() + 1) + "-" + p(now.getDate()) +
+      " " + p(now.getHours()) + ":" + p(now.getMinutes());
+
+    var temp = document.createElement("div");
+    temp.className = "msg-item";
+    temp.style.opacity = "0.7";
+    temp.innerHTML = '<div class="msg-item-content" style="font-family:' + font + ';color:' + color + '">' +
+      '<span class="msg-nick-prefix">' + esc(userName || "匿名") + '：</span>' + esc(val) +
+      '</div><div class="msg-item-meta"><span class="msg-item-time">' + timeStr + ' · 发送中...</span></div>';
+    msgList.insertBefore(temp, msgList.firstChild);
+
+    msgInput.value = "";
     sendBtn.disabled = true; sendBtn.textContent = "发送中...";
-    var body = wrapBody(val, fontPicker.value, colorPicker.value);
+
     api("POST", API, { title: "[留言] " + val.slice(0, 30), body: body, labels: [LABEL] })
-      .then(function () {
-        msgInput.value = "";
+      .then(function (newIssue) {
         sendBtn.disabled = false; sendBtn.textContent = "发送";
-        setTimeout(function () { render(); }, 800);
+        // 删除临时占位项
+        temp.remove();
+        // 用 buildMsgItem 直接构建正式留言项（含评论/删除/置顶按钮），插到列表最前
+        var placeholder = msgList.querySelector("[data-placeholder]");
+        if (placeholder) placeholder.remove();
+        // 构造一个与 GitHub API 返回格式一致的 issue 对象
+        var fakeIssue = {
+          number: newIssue.number,
+          body: body,
+          comments: 0,
+          created_at: new Date().toISOString(),
+          labels: newIssue.labels || []
+        };
+        buildMsgItem(fakeIssue, false, true); // true = 插到顶部
       })
       .catch(function (err) {
+        temp.remove();
         alert("发送失败: " + String(err).slice(0, 80));
         sendBtn.disabled = false; sendBtn.textContent = "发送";
       });
