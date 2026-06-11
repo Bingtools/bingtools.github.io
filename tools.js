@@ -697,12 +697,15 @@ if (searchInput) {
   function render() {
     msgList.innerHTML = '<div style="text-align:center;color:var(--c-text-light);padding:20px">加载留言...</div>';
 
-    Promise.all([
-      api("GET", API + "?labels=" + PIN_LABEL + "&state=open&sort=updated&direction=desc&per_page=10"),
-      api("GET", API + "?labels=" + LABEL + "&state=open&sort=created&direction=desc&per_page=50")
-    ]).then(function (results) {
-      var pinned = results[0];
-      var regular = results[1];
+    // 两个请求各自独立处理错误，避免一个失败导致整体不显示
+    var p1 = api("GET", API + "?labels=" + PIN_LABEL + "&state=open&sort=updated&direction=desc&per_page=100")
+      .catch(function (e) { console.warn("[留言板] 置顶列表加载失败:", e); return []; });
+    var p2 = api("GET", API + "?labels=" + LABEL + "&state=open&sort=created&direction=desc&per_page=100")
+      .catch(function (e) { console.warn("[留言板] 普通列表加载失败:", e); return []; });
+
+    Promise.all([p1, p2]).then(function (results) {
+      var pinned  = Array.isArray(results[0]) ? results[0] : [];
+      var regular = Array.isArray(results[1]) ? results[1] : [];
 
       // 从普通列表移除已置顶的（带两个标签的issue只显示在置顶区）
       var pinnedNums = {};
@@ -722,7 +725,7 @@ if (searchInput) {
 
       pinned.forEach(function (issue) { buildMsgItem(issue, true); });
       regular.forEach(function (issue) { buildMsgItem(issue, false); });
-    }).catch(function () { msgList.innerHTML = '<div style="text-align:center;color:#ef4444;padding:16px">加载失败，请刷新重试</div>'; });
+    });
   }
 
   sendBtn.addEventListener("click", function () {
