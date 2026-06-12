@@ -134,14 +134,12 @@
 
 
   <!-- ===== 留言板 ===== -->
-  <section id="message" class="section message-section">
+  <section class="section message-section">
     <div class="section-header">
       <h2>💬 留言板</h2>
-      <p>欢迎留下使用感受、建议或问题，我会认真查看 😊</p>
     </div>
-
-    <div class="msg-container">
-      <!-- 工具栏 -->
+    <div class="message-box">
+      <p class="msg-hint">欢迎留下使用感受、建议或问题，我会认真查看，感谢大家的支持😊</p>
       <div class="msg-toolbar">
         <select class="msg-font-picker" id="msgFontPicker">
           <option value="Nunito, sans-serif">Nunito（圆体）</option>
@@ -156,25 +154,13 @@
           <option value="cursive">手写体</option>
         </select>
         <input type="color" class="msg-color-picker" id="msgColorPicker" value="#3d2c5e" title="字体颜色">
-        <span class="author-toggle" id="authorToggle" title="切换作者身份">🔒 游客模式</span>
+        <span class="author-toggle" id="authorToggle" title="切换作者身份">🔒 游客</span>
       </div>
-
-      <!-- 输入区域 -->
-      <div class="msg-input-area">
-        <div class="msg-avatar msg-avatar-me" id="msgAvatarMe">?</div>
-        <div class="msg-input-wrap">
-          <textarea id="msgInput" class="msg-input" placeholder="写下你的留言..." maxlength="500" rows="2"></textarea>
-          <div class="msg-input-footer">
-            <span class="msg-char-count"><span id="msgCharCount">0</span>/500</span>
-            <button class="btn-msg-send" id="sendBtn">发送留言</button>
-          </div>
-        </div>
+      <div class="msg-input-row">
+        <textarea id="msgInput" class="msg-input" placeholder="写点什么吧..." maxlength="500" rows="2"></textarea>
+        <button class="btn-msg-send" id="sendBtn">发送</button>
       </div>
-
-      <!-- 留言列表 -->
-      <div class="msg-list" id="msgList">
-        <div class="msg-loading">正在加载留言...</div>
-      </div>
+      <div class="msg-list" id="msgList"></div>
     </div>
   </section>
 
