@@ -597,27 +597,38 @@ if (searchInput) {
     var div = document.createElement("div");
     div.className = "msg-item";
     if (isPinned) div.classList.add("msg-pinned");
+
+    var initial = (parsed.name && parsed.name.length > 0) ? parsed.name.charAt(0) : "?";
+    var avatarColor = (parsed.name === "作者") ? "linear-gradient(135deg, #f59e0b, #f472b6)" : "linear-gradient(135deg, #8b5cf6, #a78bfa)";
+
     div.innerHTML =
-      '<div class="msg-item-content" style="font-family:' + parsed.font + ';color:' + parsed.color + '">' +
-        '<span class="msg-nick-prefix">' + esc(parsed.name) + '：</span>' + esc(parsed.text) +
+      '<div class="msg-avatar-wrap">' +
+        '<div class="msg-avatar" style="background:' + avatarColor + '">' + esc(initial) + '</div>' +
       '</div>' +
-      '<div class="msg-item-meta">' +
-        (isPinned ? '<span class="msg-pin-badge">📌 已置顶</span>' : '') +
-        '<span class="msg-item-time">' + fmtDate(issue.created_at) + '</span>' +
-        '<span class="msg-item-reply-btn" data-num="' + issue.number + '" style="cursor:pointer;font-size:12px;color:#7c3aed;margin-left:8px;opacity:0.75">' + (issue.comments ? (issue.comments + " 条评论") : "评论") + '</span>' +
-        (isAuthor ? (
-          isPinned
-            ? '<span class="msg-pin-btn" data-num="' + issue.number + '" data-action="unpin">取消置顶</span>'
-            : '<span class="msg-pin-btn" data-num="' + issue.number + '" data-action="pin">📌 置顶</span>'
-        ) : '') +
-      '</div>' +
-      '<div class="msg-reply-box" style="display:none;padding:10px 12px 8px;margin-top:6px;background:rgba(0,0,0,0.03);border-radius:8px;border-left:3px solid #6d28d9">' +
-        '<div class="msg-reply-list" style="min-height:20px"></div>' +
-        '<div class="msg-reply-input-row" style="display:flex;gap:6px;margin-top:8px">' +
+      '<div class="msg-body">' +
+        '<div class="msg-header">' +
+          '<span class="msg-nick">' + esc(parsed.name) + '</span>' +
+          (isPinned ? '<span class="msg-pin-badge">📌 已置顶</span>' : '') +
+          '<span class="msg-time">' + fmtDate(issue.created_at) + '</span>' +
+        '</div>' +
+        '<div class="msg-item-content" style="font-family:' + parsed.font + ';color:' + parsed.color + '">' + esc(parsed.text) + '</div>' +
+        '<div class="msg-actions">' +
+          '<button class="msg-item-reply-btn" data-num="' + issue.number + '">' + (issue.comments ? (issue.comments + " 条评论") : "评论") + '</button>' +
+          (isAuthor ? (
+            isPinned
+              ? '<button class="msg-pin-btn" data-num="' + issue.number + '" data-action="unpin">取消置顶</button>'
+              : '<button class="msg-pin-btn" data-num="' + issue.number + '" data-action="pin">📌 置顶</button>'
+          ) : '') +
+        '</div>' +
+        '<div class="msg-reply-area" style="display:none">' +
+        '<div class="msg-replies"></div>' +
+        '<div class="msg-reply-input-row">' +
           '<input class="msg-reply-input" placeholder="评论..." maxlength="300">' +
           '<button class="btn-reply-send">发送</button>' +
         '</div>' +
+      '</div>' +
       '</div>';
+
     if (insertTop) {
       msgList.insertBefore(div, msgList.firstChild);
     } else {
@@ -625,11 +636,11 @@ if (searchInput) {
     }
 
     var toggle = div.querySelector(".msg-item-reply-btn");
-    var replyBox = div.querySelector(".msg-reply-box");
-    var replyList = div.querySelector(".msg-reply-list");
+    var replyArea = div.querySelector(".msg-reply-input-row").parentElement;
+    var replyList = div.querySelector(".msg-replies");
     toggle.addEventListener("click", function () {
-      var open = replyBox.style.display !== "none";
-      replyBox.style.display = open ? "none" : "";
+      var open = replyArea.style.display !== "none";
+      replyArea.style.display = open ? "none" : "";
       if (!open && !replyList.dataset.loaded) {
         loadReplies(issue.number, replyList);
         replyList.dataset.loaded = "1";
