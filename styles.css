@@ -1072,7 +1072,7 @@ body::after {
 
 .msg-hint {
   font-size: 14px;
-  color: var(--c-text-muted);
+  color: #000;
   margin-bottom: 20px;
   font-weight: 600;
   text-align: center;
@@ -1411,7 +1411,7 @@ body::after {
 .msg-hint {
   font-family: "Nunito", -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
   font-size: 14px;
-  color: var(--c-text-light);
+  color: #000;
   margin-bottom: 16px;
   text-align: center;
 }
