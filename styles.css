@@ -959,6 +959,69 @@ body::after {
   box-shadow: 0 6px 20px rgba(139,92,246,0.4);
 }
 
+/* ===== Tool UI Screenshots ===== */
+.tool-screenshot-section {
+  margin-top: 22px;
+  padding-top: 22px;
+  border-top: 2px solid var(--c-border-light);
+}
+
+.tool-screenshot-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+  margin-top: 12px;
+}
+
+.tool-screenshot-card {
+  overflow: hidden;
+  border: 2px solid var(--c-border-light);
+  border-radius: var(--radius-md);
+  background: rgba(255,255,255,0.72);
+  box-shadow: 0 2px 12px rgba(139,92,246,0.08);
+  transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+}
+
+.tool-screenshot-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--c-accent-light);
+  box-shadow: 0 10px 24px rgba(139,92,246,0.14);
+}
+
+.tool-screenshot-card img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background: #1f2937;
+  border-bottom: 1px solid var(--c-border-light);
+}
+
+.tool-screenshot-card figcaption {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 12px 12px;
+}
+
+.tool-screenshot-card figcaption strong {
+  font-size: 13px;
+  color: var(--c-accent);
+  font-weight: 800;
+}
+
+.tool-screenshot-card figcaption span {
+  font-size: 12px;
+  color: var(--c-text-muted);
+  line-height: 1.55;
+  font-weight: 600;
+}
+
+:root[data-page-theme="dark"] .tool-screenshot-card {
+  background: rgba(33,26,47,0.78);
+  border-color: var(--c-border);
+}
+
 /* ===== Tutorial Section ===== */
 .tutorial-section {
   margin-top: 22px;
