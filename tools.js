@@ -783,6 +783,98 @@ if (searchInput) {
   render();
 })();
 
+// ===== Page Theme Switcher =====
+(function () {
+  var root = document.documentElement;
+  var buttons = document.querySelectorAll(".theme-btn");
+  var customWrap = document.querySelector(".theme-custom");
+  var colorInput = document.getElementById("themeColorPicker");
+  var STORAGE_KEY = "bingo_page_theme";
+  var COLOR_KEY = "bingo_page_custom_color";
+
+  if (!buttons.length || !colorInput) return;
+
+  function clamp(n) { return Math.max(0, Math.min(255, n)); }
+
+  function hexToRgb(hex) {
+    var value = String(hex || "#8b5cf6").replace("#", "");
+    if (value.length === 3) value = value.split("").map(function (c) { return c + c; }).join("");
+    var num = parseInt(value, 16);
+    return {
+      r: (num >> 16) & 255,
+      g: (num >> 8) & 255,
+      b: num & 255
+    };
+  }
+
+  function rgbToHex(rgb) {
+    return "#" + [rgb.r, rgb.g, rgb.b].map(function (n) {
+      return clamp(Math.round(n)).toString(16).padStart(2, "0");
+    }).join("");
+  }
+
+  function mix(hex, target, amount) {
+    var a = hexToRgb(hex);
+    var b = hexToRgb(target);
+    return rgbToHex({
+      r: a.r + (b.r - a.r) * amount,
+      g: a.g + (b.g - a.g) * amount,
+      b: a.b + (b.b - a.b) * amount
+    });
+  }
+
+  function applyCustomColor(hex) {
+    var rgb = hexToRgb(hex);
+    root.style.setProperty("--visitor-accent", hex);
+    root.style.setProperty("--visitor-accent-hover", mix(hex, "#000000", 0.16));
+    root.style.setProperty("--visitor-accent-light", mix(hex, "#ffffff", 0.84));
+    root.style.setProperty("--visitor-bg-start", mix(hex, "#ffffff", 0.78));
+    root.style.setProperty("--visitor-bg-mid", mix(hex, "#e8f0ff", 0.62));
+    root.style.setProperty("--visitor-bg-end", mix(hex, "#fff5f0", 0.66));
+    root.style.setProperty("--visitor-border", mix(hex, "#ffffff", 0.70));
+    root.style.setProperty("--visitor-border-light", mix(hex, "#ffffff", 0.86));
+    root.style.setProperty("--visitor-nav-bg", "rgba(" + rgb.r + "," + rgb.g + "," + rgb.b + ",0.12)");
+  }
+
+  function setActive(theme) {
+    buttons.forEach(function (btn) {
+      btn.classList.toggle("active", btn.dataset.theme === theme);
+    });
+    if (customWrap) customWrap.classList.toggle("active", theme === "custom");
+  }
+
+  function applyTheme(theme, color, persist) {
+    var nextTheme = theme || "light";
+    var nextColor = color || colorInput.value || "#8b5cf6";
+    applyCustomColor(nextColor);
+    root.setAttribute("data-page-theme", nextTheme);
+    colorInput.value = nextColor;
+    setActive(nextTheme);
+    if (persist) {
+      localStorage.setItem(STORAGE_KEY, nextTheme);
+      localStorage.setItem(COLOR_KEY, nextColor);
+    }
+  }
+
+  buttons.forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      applyTheme(btn.dataset.theme, colorInput.value, true);
+    });
+  });
+
+  if (customWrap) {
+    customWrap.addEventListener("click", function () {
+      applyTheme("custom", colorInput.value, true);
+    });
+  }
+
+  colorInput.addEventListener("input", function () {
+    applyTheme("custom", colorInput.value, true);
+  });
+
+  applyTheme(localStorage.getItem(STORAGE_KEY) || "light", localStorage.getItem(COLOR_KEY) || colorInput.value, false);
+})();
+
 // ===== Tiger Heart Interaction =====
 (function () {
   var tiger = document.querySelector(".tiger-corner");
