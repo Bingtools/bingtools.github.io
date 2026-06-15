@@ -27,14 +27,15 @@ maya_time_machine.show()`,
       "个人 Maya 工具箱插件，用分类、收藏、快捷键和工具注册信息管理脚本，适合把零散 Python/MEL 工具集中起来。",
     tags: ["Toolbox", "Python", "MEL", "EXE"],
     features: [
-      "内置动画、绑定、模型、特效、其他等五大分类，可按需自定义分类结构。",
-      "支持工具图标、收藏星标、快捷键注册和本地配置持久化。",
+      "内置动画、绑定、模型、特效、其他等常用工具分类，可按需扩展个人工具库。",
+      "支持工具图标、收藏星标、快捷入口、自定义菜单和本地配置持久化。",
+      "可把 Python、MEL、EXE、文件夹和常用命令统一登记到工具箱中管理。",
       "已按 Maya 2020-2027 全版本兼容方向整理，EXE 安装包一键部署。"
     ],
     command: `// 在 Maya Script Editor 的 Python 标签中执行:
 exec(open(r"D:/Codex/maya/Bingo_ToolBox_01/install.mel", "r").read())`,
     path: "D:/Codex/maya/Bingo_ToolBox_01/",
-    download: "https://raw.githubusercontent.com/Bingtools/Bingo-Tools/main/Bingo_ToolBox_Maya2020-2026_CustomMenu_Setup.exe",
+    download: "https://github.com/Bingtools/Bingo-Tools/releases/download/toolbox-latest/Bingo_ToolBox_Maya2020-2026_CustomMenu_Setup.exe",
     tutorial: [
       {
         title: "1. 安装方式",
@@ -47,17 +48,27 @@ exec(open(r"D:/Codex/maya/Bingo_ToolBox_01/install.mel", "r").read())`,
         code: "Maya 菜单栏 → Bingo → ToolBox"
       },
       {
-        title: "3. 注册脚本工具",
+        title: "3. 工具简介",
+        content: "Bingo ToolBox 用来把制作中常用的动画、绑定、模型、特效和其他脚本集中到一个面板里。每个工具都可以配置名称、说明、图标、分类和执行命令，适合把零散的 Python、MEL、EXE、文件夹入口或常用流程整理成可点击的工具卡片。",
+        code: "工具类型示例:\nAnimation: 姿势镜像、时间轴辅助、选择控制器\nRigging: 蒙皮检查、控制器工具、权重辅助\nModel: 清理场景、批量命名、模型检查\nFX/Other: 特效脚本、文件夹入口、外部程序"
+      },
+      {
+        title: "4. 使用方法简介",
+        content: "打开 ToolBox 后先选择左侧分类，再点击工具卡片即可执行。新增工具时右键分类区域选择「新建工具」，填入工具名称、简介、图标和 Python/MEL/EXE 命令；常用工具可以收藏或加入 Maya 顶部菜单，方便日常制作时快速调用。",
+        code: "推荐流程:\n1. 选择分类或新建分类\n2. 右键新建工具并填写说明\n3. 粘贴 Python/MEL/EXE 启动命令\n4. 选择图标并保存\n5. 点击工具卡片运行，常用工具可收藏或加入菜单"
+      },
+      {
+        title: "5. 注册脚本工具",
         content: "在工具箱界面中右键点击分类区域，选择「新建工具」。填写工具名称、描述，粘贴 Python 或 MEL 代码，指定图标和快捷键。保存后工具即出现在对应分类中，点击即可执行。",
         code: "# 示例：注册一个快速选择所有控制器的工具\nimport maya.cmds as cmds\nctrls = cmds.ls(\"*_ctrl\", type=\"transform\")\ncmds.select(ctrls)\nprint(f\"已选择 {len(ctrls)} 个控制器\")"
       },
       {
-        title: "4. 自定义菜单",
+        title: "6. 自定义菜单",
         content: "Bingo ToolBox 支持在 Maya 主菜单栏创建自定义下拉菜单，将常用工具直接暴露在菜单层级中。进入工具箱设置 → 菜单编辑器，拖拽工具到菜单树中即可。",
         code: "// 自定义菜单示例结构：\nBingo/\n  ├── Animation/\n  │   ├── Pose Mirror\n  │   └── Time Machine\n  ├── Rigging/\n  │   ├── Skin Mirror\n  │   └── Controller Check\n  └── Utility/\n      ├── Clean Scene\n      └── Batch Rename"
       },
       {
-        title: "5. 卸载方式",
+        title: "7. 卸载方式",
         content: "安装目录下自带卸载脚本。运行 uninstall_Bingo_ToolBox.cmd 会移除 Maya module 入口，之后可手动删除工具目录完成彻底卸载。",
         code: "运行: Documents\\maya\\Bingo_ToolBox\\uninstall_Bingo_ToolBox.cmd\n手动删除: Documents\\maya\\Bingo_ToolBox\\"
       }
