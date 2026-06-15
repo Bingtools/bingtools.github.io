@@ -36,6 +36,23 @@ maya_time_machine.show()`,
 exec(open(r"D:/Codex/maya/Bingo_ToolBox_01/install.mel", "r").read())`,
     path: "D:/Codex/maya/Bingo_ToolBox_01/",
     download: "https://github.com/Bingtools/Bingo-Tools/releases/download/toolbox-latest/Bingo_ToolBox_Maya2020-2026_CustomMenu_Setup.exe",
+    screenshots: [
+      {
+        title: "Picker 面板预览",
+        src: "assets/toolbox-ui-picker.gif",
+        caption: "用于角色控制器选择和动画操作的 Picker 界面，可把常用控制器整理成直观按钮。"
+      },
+      {
+        title: "编辑器界面预览",
+        src: "assets/toolbox-ui-editor.gif",
+        caption: "编辑模式下可创建、调整和管理按钮、面板、层级与显示方式。"
+      },
+      {
+        title: "创建按钮流程",
+        src: "assets/toolbox-ui-createbuttons.gif",
+        caption: "展示按钮创建与绑定流程，方便把脚本或选择命令做成可点击工具。"
+      }
+    ],
     tutorial: [
       {
         title: "1. 安装方式",
@@ -304,6 +321,19 @@ function renderDetail(tool) {
     return;
   }
 
+  var screenshotHTML = "";
+  if (tool.screenshots && tool.screenshots.length) {
+    screenshotHTML = '<div class="tool-screenshot-section"><p class="eyebrow" style="margin-top:0">UI Preview</p>' +
+      '<div class="tool-screenshot-grid">' +
+      tool.screenshots.map(function (shot) {
+        return '<figure class="tool-screenshot-card">' +
+          '<img src="' + escapeAttribute(shot.src) + '" alt="' + escapeAttribute(shot.title) + '" loading="lazy">' +
+          '<figcaption><strong>' + escapeHtml(shot.title) + '</strong><span>' + escapeHtml(shot.caption) + '</span></figcaption>' +
+        '</figure>';
+      }).join("") +
+      '</div></div>';
+  }
+
   var tutorialHTML = "";
   if (tool.tutorial) {
     tutorialHTML = '<div class="tutorial-section"><p class="eyebrow" style="margin-top:0">Tutorial</p>' +
@@ -329,6 +359,7 @@ function renderDetail(tool) {
     '<ul class="feature-list">' +
       tool.features.map(function (f) { return '<li>' + escapeHtml(f) + '</li>'; }).join("") +
     '</ul>' +
+    screenshotHTML +
     tutorialHTML +
     '<div class="detail-actions" style="margin-top:16px">' +
       '<button class="copy-btn" type="button" data-code="' + escapeAttribute(tool.command) + '">Copy Command</button>' +
