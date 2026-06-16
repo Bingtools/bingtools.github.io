@@ -1,252 +1,5 @@
 const tools = [
   {
-    name: "暴力帧拷贝",
-    category: "Animation",
-    icon: "assets/python.png",
-    version: "Maya 2020-2026",
-    status: "Animation Tool",
-    summary:
-      "一键复制/粘贴控制器姿态与动画数据，支持命名空间处理",
-    tags: ["Copy", "Paste", "Pose", "Animation"],
-    features: [
-      "姿态模式：复制/粘贴当前帧的控制器数值",
-      "动画模式：按帧范围批量拷贝动画曲线数据",
-      "支持自定义动画范围",
-      "忽略命名空间匹配",
-      "本地数值存储，支持分类管理"
-    ],
-    command: `// 暴力帧拷贝
-import Bingo_ToolBox.tools.animation.copy_paste as cp
-cp.show()`,
-    path: "D:/Codex/maya/Bingo_ToolBox_01/tools/animation/"
-  },
-  {
-    name: "动画镜像",
-    category: "Animation",
-    icon: "assets/python.png",
-    version: "Maya 2020-2026",
-    status: "Animation Tool",
-    summary:
-      "基于左右配对控制器镜像姿态与关键帧动画",
-    tags: ["Mirror", "Pose", "Animation", "Keyframe"],
-    features: [
-      "镜像姿态：将选中控制器的姿态镜像到对侧",
-      "镜像动画：在指定帧范围内批量镜像关键帧",
-      "支持 L→R / R→L 两种方向",
-      "自定义左右配对规则（如 L_* ↔ R_*）",
-      "IK/FK 通道取反预设",
-      "支持镜像骨骼方向 (Joint Orient)"
-    ],
-    command: `// 动画镜像
-import Bingo_ToolBox.tools.animation.mirror_anim as ma
-ma.show()`,
-    path: "D:/Codex/maya/Bingo_ToolBox_01/tools/animation/"
-  },
-  {
-    name: "视频参考",
-    category: "Animation",
-    icon: "assets/settings.png",
-    version: "Maya 2020-2026",
-    status: "Animation Tool",
-    summary:
-      "加载参考视频到 Maya 视口上方，同步时间线逐帧预览",
-    tags: ["Video", "Reference", "Animation", "FFmpeg"],
-    features: [
-      "加载 MP4/MOV/AVI 等常见视频格式",
-      "FFmpeg 逐帧提取并同步 Maya 时间线",
-      "帧偏移调整，匹配动画起始帧",
-      "透明度控制（窗口级真透明）",
-      "支持拖拽视频文件到窗口加载",
-      "自动设置 Maya 帧范围与视频匹配",
-      "紧凑模式：双击缩小为小窗悬浮"
-    ],
-    command: `// 视频参考
-import Bingo_ToolBox.tools.animation.video_ref as vr
-vr.show()`,
-    path: "D:/Codex/maya/Bingo_ToolBox_01/tools/animation/"
-  },
-  {
-    name: "路径指认",
-    category: "Animation",
-    icon: "assets/settings.png",
-    version: "Maya 2020-2026",
-    status: "Utility",
-    summary:
-      "文件浏览器，收藏常用目录，快速筛选并打开/导入 Maya 文件",
-    tags: ["File", "Browser", "Import", "Favorites"],
-    features: [
-      "文件夹浏览，支持上一级/路径手动输入",
-      "按文件类型筛选：MA/MB/FBX/OBJ/ABC 等",
-      "收藏常用目录，双击快速跳转",
-      "双击文件打开场景或导入",
-      "FBX 静默导入模式",
-      "单击文件查看大小和修改时间"
-    ],
-    command: `// 路径指认
-import Bingo_ToolBox.tools.animation.file_browser as fb
-fb.show()`,
-    path: "D:/Codex/maya/Bingo_ToolBox_01/tools/animation/"
-  },
-  {
-    name: "批量导入",
-    category: "Animation",
-    icon: "assets/settings.png",
-    version: "Maya 2020-2026",
-    status: "Import Tool",
-    summary:
-      "批量选择并导入 MA/MB/FBX/OBJ/ABC 等文件到 Maya 场景",
-    tags: ["Import", "Batch", "FBX", "OBJ"],
-    features: [
-      "添加多个文件到导入列表",
-      "支持 MA/MB/FBX/OBJ/ABC/DXF/AI/EPS/PS/SVG",
-      "导入到当前场景 或 每个文件新建场景",
-      "进度条显示导入进度",
-      "文件类型过滤",
-      "导入完成提示成功/失败统计"
-    ],
-    command: `// 批量导入
-import Bingo_ToolBox.tools.animation.batch_import as bi
-bi.show()`,
-    path: "D:/Codex/maya/Bingo_ToolBox_01/tools/animation/"
-  },
-  {
-    name: "创建控制器",
-    category: "Rigging",
-    icon: "assets/settings.png",
-    version: "Maya 2020-2026",
-    status: "Rigging Tool",
-    summary:
-      "批量创建/镜像/合并 Maya 控制器曲线，支持多种预设形状",
-    tags: ["Controller", "Rigging", "Curve", "Batch"],
-    features: [
-      "支持圆形/方形/箭头/十字/星形等 30+ 预设形状",
-      "批量选中骨骼后自动创建对应控制器",
-      "可选吸附到选中物体、创建 Zero Group",
-      "X/Y/Z 轴镜像已有控制器",
-      "合并多个控制器形状",
-      "居中轴心、冻结变换",
-      "自定义颜色索引"
-    ],
-    command: `// 创建控制器
-import Bingo_ToolBox.tools.rigging.create_ctrl as cc
-cc.show()`,
-    path: "D:/Codex/maya/Bingo_ToolBox_01/tools/rigging/"
-  },
-  {
-    name: "对称镜像",
-    category: "Rigging",
-    icon: "assets/settings.png",
-    version: "Maya 2020-2026",
-    status: "Rigging Tool",
-    summary:
-      "一键对称镜像骨骼/曲线/网格/定位器，支持命名规则和自定义镜像中心",
-    tags: ["Mirror", "Rigging", "Symmetry", "Bone"],
-    features: [
-      "支持骨骼、曲线、网格、定位器等对象类型",
-      "X/Y/Z 轴镜像，可自定义镜像中心点",
-      "多种预设命名规则：L_* ↔ R_* / *_l ↔ *_r 等",
-      "自定义查找/替换命名规则",
-      "骨骼镜像：自动处理 Joint Orient",
-      "预览模式：先预览结果再确认执行",
-      "自动复制蒙皮权重"
-    ],
-    command: `// 对称镜像
-import Bingo_ToolBox.tools.rigging.symmetry_mirror as sm
-sm.show()`,
-    path: "D:/Codex/maya/Bingo_ToolBox_01/tools/rigging/"
-  },
-  {
-    name: "批量对齐",
-    category: "Rigging",
-    icon: "assets/settings.png",
-    version: "Maya 2020-2026",
-    status: "Rigging Tool",
-    summary:
-      "批量将多个对象对齐到目标对象的位移/旋转，支持等距分布",
-    tags: ["Align", "Rigging", "Batch", "Distribution"],
-    features: [
-      "位置对齐：将源对象移动到目标对象位置",
-      "旋转对齐：将源对象旋转匹配目标对象",
-      "全对齐：位置 + 旋转一键对齐",
-      "X/Y/Z 轴自由勾选",
-      "等距分布：在指定轴上均匀分布选中对象",
-      "左右交换：快速交换源/目标列表",
-      "支持按顺序配对 或 全部对齐到同一目标"
-    ],
-    command: `// 批量对齐
-import Bingo_ToolBox.tools.rigging.batch_align as ba
-ba.show()`,
-    path: "D:/Codex/maya/Bingo_ToolBox_01/tools/rigging/"
-  },
-  {
-    name: "批量约束",
-    category: "Rigging",
-    icon: "assets/settings.png",
-    version: "Maya 2020-2026",
-    status: "Rigging Tool",
-    summary:
-      "批量创建 Parent/Point/Orient/Scale/Aim 约束，支持配对匹配",
-    tags: ["Constraint", "Rigging", "Parent", "Batch"],
-    features: [
-      "Parent 约束 / Point 约束 / Orient 约束 / Scale 约束 / Aim 约束",
-      "约束时自动匹配位移/旋转",
-      "按顺序配对 或 全部约束到同一目标",
-      "左右交换源/目标列表",
-      "删除选中约束，批量撤销",
-      "约束结果自动分组便于管理"
-    ],
-    command: `// 批量约束
-import Bingo_ToolBox.tools.rigging.batch_constraint as bc
-bc.show()`,
-    path: "D:/Codex/maya/Bingo_ToolBox_01/tools/rigging/"
-  },
-  {
-    name: "P4 连接器",
-    category: "Others",
-    icon: "assets/settings.png",
-    version: "Maya 2020-2026",
-    status: "P4 Tool",
-    summary:
-      "Perforce 版本控制集成，文件浏览、发布、提交、同步一条龙",
-    tags: ["P4", "Perforce", "Version Control", "Submit"],
-    features: [
-      "文件浏览器 + P4 操作集成",
-      "自动识别/手动指定 P4 目标路径",
-      "发布 Maya 文件到 P4 Workspace",
-      "批量 P4 Submit 提交",
-      "P4 Check Out / Add / Revert",
-      "P4 Get Latest 同步",
-      "P4 Status / Info 状态查看",
-      "发布当前场景到 P4"
-    ],
-    command: `// P4 连接器
-import Bingo_ToolBox.tools.others.p4_connector as p4
-p4.show()`,
-    path: "D:/Codex/maya/Bingo_ToolBox_01/tools/others/"
-  },
-  {
-    name: "杀毒",
-    category: "Others",
-    icon: "assets/mel.png",
-    version: "Maya 2020-2026",
-    status: "Security Tool",
-    summary:
-      "扫描 Maya 场景中的恶意脚本和可疑节点，一键清理病毒",
-    tags: ["Security", "Virus", "Script", "Clean"],
-    features: [
-      "扫描当前 Maya 场景中所有脚本节点",
-      "病毒库匹配：识别已知病毒名称和代码模式",
-      "自动勾选病毒节点",
-      "代码可疑度检测",
-      "预览脚本内容，确认后删除",
-      "一键删除所有病毒节点"
-    ],
-    command: `// 杀毒
-import Bingo_ToolBox.tools.others.virus_scan as vs
-vs.show()`,
-    path: "D:/Codex/maya/Bingo_ToolBox_01/tools/others/"
-  },
-  {
     name: "Bingo ToolBox",
     category: "Toolbox",
     icon: "assets/bingo-icon.png",
@@ -319,6 +72,408 @@ exec(open(r"D:/Codex/maya/Bingo_ToolBox_01/install.mel", "r").read())`,
         code: "运行: Documents\\maya\\Bingo_ToolBox\\uninstall_Bingo_ToolBox.cmd\n手动删除: Documents\\maya\\Bingo_ToolBox\\"
       }
     ]
+  },,
+
+  {
+    name: "暴力帧拷贝",
+    category: "Animation",
+    icon: "assets/python.png",
+    version: "Maya 2020-2026",
+    status: "Animation Tool",
+    summary:
+      "一键复制/粘贴控制器姿态与动画数据，支持命名空间处理",
+    tags: ["Copy", "Paste", "Pose", "Animation"],
+    features: [
+      "姿态模式：复制/粘贴当前帧的控制器数值",
+      "动画模式：按帧范围批量拷贝动画曲线数据",
+      "支持自定义动画范围",
+      "忽略命名空间匹配",
+      "本地数值存储，支持分类管理"
+    ],
+    command: `// 暴力帧拷贝
+import Bingo_ToolBox.tools.animation.copy_paste as cp
+cp.show()`,
+    path: "D:/Codex/maya/Bingo_ToolBox_01/tools/animation/",
+    screenshots: [
+      {
+            "title": "暴力帧拷贝界面",
+            "src": "assets/tool-01-copy-paste.png",
+            "caption": "一键复制/粘贴控制器姿态与动画数据"
+      }
+],
+    tutorial: [
+      {
+            "title": "使用方法",
+            "content": "在 Maya 中选中源控制器，设置姿态/动画模式，点击「一键拷贝」保存数据；选中目标控制器后点击「一键粘贴」。",
+            "code": "1. 选择源控制器\n2. 设置模式（姿态/动画）\n3. 点击「一键拷贝」\n4. 选择目标控制器\n5. 点击「一键粘贴」"
+      }
+]
+  },
+  {
+    name: "动画镜像",
+    category: "Animation",
+    icon: "assets/python.png",
+    version: "Maya 2020-2026",
+    status: "Animation Tool",
+    summary:
+      "基于左右配对控制器镜像姿态与关键帧动画",
+    tags: ["Mirror", "Pose", "Animation", "Keyframe"],
+    features: [
+      "镜像姿态：将选中控制器的姿态镜像到对侧",
+      "镜像动画：在指定帧范围内批量镜像关键帧",
+      "支持 L→R / R→L 两种方向",
+      "自定义左右配对规则（如 L_* ↔ R_*）",
+      "IK/FK 通道取反预设",
+      "支持镜像骨骼方向 (Joint Orient)"
+    ],
+    command: `// 动画镜像
+import Bingo_ToolBox.tools.animation.mirror_anim as ma
+ma.show()`,
+    path: "D:/Codex/maya/Bingo_ToolBox_01/tools/animation/",
+    screenshots: [
+      {
+            "title": "动画镜像界面",
+            "src": "assets/tool-02-mirror-anim.png",
+            "caption": "左右配对控制器镜像姿态与关键帧"
+      }
+],
+    tutorial: [
+      {
+            "title": "使用方法",
+            "content": "选择控制器，设置镜像方向和左右配对标记，点击「镜像姿态」或「镜像动画」即可。",
+            "code": "1. 选择控制器\n2. 设置镜像方向\n3. 配置左右配对规则\n4. 点击「镜像姿态」或「镜像动画」"
+      }
+]
+  },
+  {
+    name: "视频参考",
+    category: "Animation",
+    icon: "assets/settings.png",
+    version: "Maya 2020-2026",
+    status: "Animation Tool",
+    summary:
+      "加载参考视频到 Maya 视口上方，同步时间线逐帧预览",
+    tags: ["Video", "Reference", "Animation", "FFmpeg"],
+    features: [
+      "加载 MP4/MOV/AVI 等常见视频格式",
+      "FFmpeg 逐帧提取并同步 Maya 时间线",
+      "帧偏移调整，匹配动画起始帧",
+      "透明度控制（窗口级真透明）",
+      "支持拖拽视频文件到窗口加载",
+      "自动设置 Maya 帧范围与视频匹配",
+      "紧凑模式：双击缩小为小窗悬浮"
+    ],
+    command: `// 视频参考
+import Bingo_ToolBox.tools.animation.video_ref as vr
+vr.show()`,
+    path: "D:/Codex/maya/Bingo_ToolBox_01/tools/animation/",
+    screenshots: [
+      {
+            "title": "视频参考界面",
+            "src": "assets/tool-03-video-ref.png",
+            "caption": "加载参考视频同步时间线逐帧预览"
+      }
+],
+    tutorial: [
+      {
+            "title": "使用方法",
+            "content": "打开工具后点击「加载视频」或拖拽视频文件。需要先安装 FFmpeg，工具会引导安装。",
+            "code": "1. 打开视频参考工具\n2. 点击「加载视频」或拖拽文件\n3. 调整帧偏移\n4. 设置透明度\n5. 双击可切换紧凑模式"
+      }
+]
+  },
+  {
+    name: "路径指认",
+    category: "Animation",
+    icon: "assets/settings.png",
+    version: "Maya 2020-2026",
+    status: "Utility",
+    summary:
+      "文件浏览器，收藏常用目录，快速筛选并打开/导入 Maya 文件",
+    tags: ["File", "Browser", "Import", "Favorites"],
+    features: [
+      "文件夹浏览，支持上一级/路径手动输入",
+      "按文件类型筛选：MA/MB/FBX/OBJ/ABC 等",
+      "收藏常用目录，双击快速跳转",
+      "双击文件打开场景或导入",
+      "FBX 静默导入模式",
+      "单击文件查看大小和修改时间"
+    ],
+    command: `// 路径指认
+import Bingo_ToolBox.tools.animation.file_browser as fb
+fb.show()`,
+    path: "D:/Codex/maya/Bingo_ToolBox_01/tools/animation/",
+    screenshots: [
+      {
+            "title": "路径指认界面",
+            "src": "assets/tool-04-file-browser.png",
+            "caption": "文件浏览器，收藏常用目录"
+      }
+],
+    tutorial: [
+      {
+            "title": "使用方法",
+            "content": "点击「浏览」选择目录，或直接输入路径回车。左侧添加常用路径收藏，右侧双击文件打开。",
+            "code": "1. 浏览或输入路径\n2. 左侧添加收藏目录\n3. 选择文件类型过滤\n4. 双击文件打开或导入"
+      }
+]
+  },
+  {
+    name: "批量导入",
+    category: "Animation",
+    icon: "assets/settings.png",
+    version: "Maya 2020-2026",
+    status: "Import Tool",
+    summary:
+      "批量选择并导入 MA/MB/FBX/OBJ/ABC 等文件到 Maya 场景",
+    tags: ["Import", "Batch", "FBX", "OBJ"],
+    features: [
+      "添加多个文件到导入列表",
+      "支持 MA/MB/FBX/OBJ/ABC/DXF/AI/EPS/PS/SVG",
+      "导入到当前场景 或 每个文件新建场景",
+      "进度条显示导入进度",
+      "文件类型过滤",
+      "导入完成提示成功/失败统计"
+    ],
+    command: `// 批量导入
+import Bingo_ToolBox.tools.animation.batch_import as bi
+bi.show()`,
+    path: "D:/Codex/maya/Bingo_ToolBox_01/tools/animation/",
+    screenshots: [
+      {
+            "title": "批量导入界面",
+            "src": "assets/tool-05-batch-import.png",
+            "caption": "批量导入文件到 Maya 场景"
+      }
+],
+    tutorial: [
+      {
+            "title": "使用方法",
+            "content": "点击「添加文件」选择要导入的文件，选择导入模式，点击「开始导入」。",
+            "code": "1. 点击「添加文件」\n2. 选择导入模式\n3. 设置文件类型过滤\n4. 点击「开始导入」"
+      }
+]
+  },
+  {
+    name: "创建控制器",
+    category: "Rigging",
+    icon: "assets/settings.png",
+    version: "Maya 2020-2026",
+    status: "Rigging Tool",
+    summary:
+      "批量创建/镜像/合并 Maya 控制器曲线，支持多种预设形状",
+    tags: ["Controller", "Rigging", "Curve", "Batch"],
+    features: [
+      "支持圆形/方形/箭头/十字/星形等 30+ 预设形状",
+      "批量选中骨骼后自动创建对应控制器",
+      "可选吸附到选中物体、创建 Zero Group",
+      "X/Y/Z 轴镜像已有控制器",
+      "合并多个控制器形状",
+      "居中轴心、冻结变换",
+      "自定义颜色索引"
+    ],
+    command: `// 创建控制器
+import Bingo_ToolBox.tools.rigging.create_ctrl as cc
+cc.show()`,
+    path: "D:/Codex/maya/Bingo_ToolBox_01/tools/rigging/",
+    screenshots: [
+      {
+            "title": "创建控制器界面",
+            "src": "assets/tool-06-create-ctrl.png",
+            "caption": "批量创建 Maya 控制器曲线"
+      }
+],
+    tutorial: [
+      {
+            "title": "使用方法",
+            "content": "选择形状类型、大小和颜色后，点击「创建单个」生成控制器；选择骨骼后点击「为骨骼批量创建」批量生成。",
+            "code": "1. 选择形状类型和大小\n2. 设置颜色\n3. 点击「创建单个」\n4. 或选择骨骼后点击「为骨骼批量创建」"
+      }
+]
+  },
+  {
+    name: "对称镜像",
+    category: "Rigging",
+    icon: "assets/settings.png",
+    version: "Maya 2020-2026",
+    status: "Rigging Tool",
+    summary:
+      "一键对称镜像骨骼/曲线/网格/定位器，支持命名规则和自定义镜像中心",
+    tags: ["Mirror", "Rigging", "Symmetry", "Bone"],
+    features: [
+      "支持骨骼、曲线、网格、定位器等对象类型",
+      "X/Y/Z 轴镜像，可自定义镜像中心点",
+      "多种预设命名规则：L_* ↔ R_* / *_l ↔ *_r 等",
+      "自定义查找/替换命名规则",
+      "骨骼镜像：自动处理 Joint Orient",
+      "预览模式：先预览结果再确认执行",
+      "自动复制蒙皮权重"
+    ],
+    command: `// 对称镜像
+import Bingo_ToolBox.tools.rigging.symmetry_mirror as sm
+sm.show()`,
+    path: "D:/Codex/maya/Bingo_ToolBox_01/tools/rigging/",
+    screenshots: [
+      {
+            "title": "对称镜像界面",
+            "src": "assets/tool-07-symmetry-mirror.png",
+            "caption": "一键对称镜像骨骼/曲线/网格"
+      }
+],
+    tutorial: [
+      {
+            "title": "使用方法",
+            "content": "选择对象，设置镜像轴和命名规则，点击「预览」确认后点击「执行镜像」。",
+            "code": "1. 选择要镜像的对象\n2. 设置镜像轴\n3. 配置命名规则\n4. 点击「预览」检查\n5. 确认后点击「执行镜像」"
+      }
+]
+  },
+  {
+    name: "批量对齐",
+    category: "Rigging",
+    icon: "assets/settings.png",
+    version: "Maya 2020-2026",
+    status: "Rigging Tool",
+    summary:
+      "批量将多个对象对齐到目标对象的位移/旋转，支持等距分布",
+    tags: ["Align", "Rigging", "Batch", "Distribution"],
+    features: [
+      "位置对齐：将源对象移动到目标对象位置",
+      "旋转对齐：将源对象旋转匹配目标对象",
+      "全对齐：位置 + 旋转一键对齐",
+      "X/Y/Z 轴自由勾选",
+      "等距分布：在指定轴上均匀分布选中对象",
+      "左右交换：快速交换源/目标列表",
+      "支持按顺序配对 或 全部对齐到同一目标"
+    ],
+    command: `// 批量对齐
+import Bingo_ToolBox.tools.rigging.batch_align as ba
+ba.show()`,
+    path: "D:/Codex/maya/Bingo_ToolBox_01/tools/rigging/",
+    screenshots: [
+      {
+            "title": "批量对齐界面",
+            "src": "assets/tool-08-batch-align.png",
+            "caption": "批量对齐对象位移/旋转"
+      }
+],
+    tutorial: [
+      {
+            "title": "使用方法",
+            "content": "选择源对象点击左栏「+ 添加」，选择目标对象点击右栏「+ 添加」，设置匹配模式后执行对齐。",
+            "code": "1. 选择源对象，点击「+ 添加」到左栏\n2. 选择目标对象，点击「+ 添加」到右栏\n3. 设置对齐模式\n4. 勾选需要对齐的轴\n5. 点击执行"
+      }
+]
+  },
+  {
+    name: "批量约束",
+    category: "Rigging",
+    icon: "assets/settings.png",
+    version: "Maya 2020-2026",
+    status: "Rigging Tool",
+    summary:
+      "批量创建 Parent/Point/Orient/Scale/Aim 约束，支持配对匹配",
+    tags: ["Constraint", "Rigging", "Parent", "Batch"],
+    features: [
+      "Parent 约束 / Point 约束 / Orient 约束 / Scale 约束 / Aim 约束",
+      "约束时自动匹配位移/旋转",
+      "按顺序配对 或 全部约束到同一目标",
+      "左右交换源/目标列表",
+      "删除选中约束，批量撤销",
+      "约束结果自动分组便于管理"
+    ],
+    command: `// 批量约束
+import Bingo_ToolBox.tools.rigging.batch_constraint as bc
+bc.show()`,
+    path: "D:/Codex/maya/Bingo_ToolBox_01/tools/rigging/",
+    screenshots: [
+      {
+            "title": "批量约束界面",
+            "src": "assets/tool-09-batch-constraint.png",
+            "caption": "批量创建各种约束"
+      }
+],
+    tutorial: [
+      {
+            "title": "使用方法",
+            "content": "选择源对象和目标对象分别添加到左右列表，选择约束类型和匹配选项，点击「执行约束」。",
+            "code": "1. 选择源对象添加到左栏\n2. 选择目标对象添加到右栏\n3. 选择约束类型\n4. 设置匹配选项\n5. 点击「执行约束」"
+      }
+]
+  },
+  {
+    name: "P4 连接器",
+    category: "Others",
+    icon: "assets/settings.png",
+    version: "Maya 2020-2026",
+    status: "P4 Tool",
+    summary:
+      "Perforce 版本控制集成，文件浏览、发布、提交、同步一条龙",
+    tags: ["P4", "Perforce", "Version Control", "Submit"],
+    features: [
+      "文件浏览器 + P4 操作集成",
+      "自动识别/手动指定 P4 目标路径",
+      "发布 Maya 文件到 P4 Workspace",
+      "批量 P4 Submit 提交",
+      "P4 Check Out / Add / Revert",
+      "P4 Get Latest 同步",
+      "P4 Status / Info 状态查看",
+      "发布当前场景到 P4"
+    ],
+    command: `// P4 连接器
+import Bingo_ToolBox.tools.others.p4_connector as p4
+p4.show()`,
+    path: "D:/Codex/maya/Bingo_ToolBox_01/tools/others/",
+    screenshots: [
+      {
+            "title": "P4 连接器界面",
+            "src": "assets/tool-10-p4-connector.png",
+            "caption": "Perforce 版本控制集成"
+      }
+],
+    tutorial: [
+      {
+            "title": "使用方法",
+            "content": "先在「设置 P4 连接」中配置 P4PORT/P4USER/P4CLIENT。选择本地文件后右键关联 P4 目标，即可执行 P4 操作。",
+            "code": "1. 设置 P4 连接信息\n2. 浏览本地文件\n3. 右键关联 P4 目标路径\n4. 执行 P4 操作（Add/Edit/Submit 等）"
+      }
+]
+  },
+  {
+    name: "杀毒",
+    category: "Others",
+    icon: "assets/mel.png",
+    version: "Maya 2020-2026",
+    status: "Security Tool",
+    summary:
+      "扫描 Maya 场景中的恶意脚本和可疑节点，一键清理病毒",
+    tags: ["Security", "Virus", "Script", "Clean"],
+    features: [
+      "扫描当前 Maya 场景中所有脚本节点",
+      "病毒库匹配：识别已知病毒名称和代码模式",
+      "自动勾选病毒节点",
+      "代码可疑度检测",
+      "预览脚本内容，确认后删除",
+      "一键删除所有病毒节点"
+    ],
+    command: `// 杀毒
+import Bingo_ToolBox.tools.others.virus_scan as vs
+vs.show()`,
+    path: "D:/Codex/maya/Bingo_ToolBox_01/tools/others/",
+    screenshots: [
+      {
+            "title": "杀毒工具界面",
+            "src": "assets/tool-11-virus-scan.png",
+            "caption": "扫描并清理 Maya 场景病毒"
+      }
+],
+    tutorial: [
+      {
+            "title": "使用方法",
+            "content": "打开工具后自动列出场景中所有脚本节点。点击「自动勾选病毒节点」，确认无误后点击「删除选中节点」或「一键删除所有病毒节点」。",
+            "code": "1. 打开杀毒工具\n2. 点击「自动勾选病毒节点」\n3. 检查勾选结果\n4. 点击「删除选中节点」清理"
+      }
+]
   },
   {
     name: "Selected Ctrl Mirror",
