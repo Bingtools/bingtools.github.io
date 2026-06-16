@@ -606,14 +606,13 @@ function renderModuleGrid() {
       state.category = "All";
       if (searchInput) searchInput.value = "";
       state.query = "";
-      // 跳过 render()，直接单独更新详情面板
+      document.getElementById("tools").scrollIntoView({ behavior: "smooth" });
       var found = tools.find(function (t) { return t.name === state.selected; });
       if (found) {
         renderFilters();
         renderToolGrid();
         renderDetail(found);
       }
-      document.getElementById("tools").scrollIntoView({ behavior: "smooth" });
     });
   });
 }
