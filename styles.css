@@ -1856,33 +1856,6 @@ body::after {
   text-decoration: underline;
 }
 
-/* ===== Force marked UI text to black ===== */
-/* 用户标注的浅色标签/筛选按钮/工具说明等区域统一改为黑色，提升可读性。 */
-.badge,
-.hero-desc,
-.section-header p,
-.download-info li,
-.download-action small,
-.sha-details summary,
-.module-card .module-status,
-.module-card p,
-.module-tag,
-.filter-btn:not(.active),
-.filter-btn:not(.active):hover,
-.tool-card .card-status,
-.tool-card p,
-.tool-card .card-tag,
-.detail-panel > p,
-.detail-meta .tag,
-.detail-meta .status-tag,
-.feature-list li,
-.tool-screenshot-card figcaption strong,
-.tool-screenshot-card figcaption span,
-.tutorial-item h4,
-.tutorial-item p,
-.tutorial-copy-btn {
-  color: #000 !important;
-}
 
 /* ===== Responsive ===== */
 @media (max-width: 960px) {
