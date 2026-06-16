@@ -35,7 +35,7 @@ maya_time_machine.show()`,
     command: `// 在 Maya Script Editor 的 Python 标签中执行:
 exec(open(r"D:/Codex/maya/Bingo_ToolBox_01/install.mel", "r").read())`,
     path: "D:/Codex/maya/Bingo_ToolBox_01/",
-    download: "https://github.com/Bingtools/Bingo-Tools/releases/download/toolbox-latest/Bingo_ToolBox_Maya2020-2026_CustomMenu_Setup.exe",
+    download: "https://github.com/Bingtools/Bingo-Tools/releases/download/toolbox-latest/Bingo_ToolBox_Maya2020-2026.exe",
     screenshots: [
       {
         title: "Picker 面板预览",
