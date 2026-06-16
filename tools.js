@@ -606,10 +606,12 @@ function renderModuleGrid() {
       state.category = "All";
       if (searchInput) searchInput.value = "";
       state.query = "";
-      document.getElementById("tools").scrollIntoView({ behavior: "smooth" });
-      render();
+      // 直接更新详情面板，跳过完整重渲染以规避潜在的状态竞争
       var found = tools.find(function (t) { return t.name === state.selected; });
       if (found) renderDetail(found);
+      // 然后渲染工具列表和筛选栏
+      document.getElementById("tools").scrollIntoView({ behavior: "smooth" });
+      render();
     });
   });
 }
