@@ -609,6 +609,7 @@ window.selectToolByName = function (name, shouldScroll) {
 
 // ===== Module Grid (hero下面) =====
 function renderModuleGrid() {
+  if (!moduleGrid) return;
   moduleGrid.innerHTML = tools.map(function (tool) {
     return '<div class="module-card" data-tool="' + escapeAttribute(tool.name) + '" onclick="selectToolByName(this.dataset.tool, true)">' +
       '<div class="module-card-header">' +
@@ -634,6 +635,7 @@ function renderModuleGrid() {
 }
 
 function renderModuleGridFiltered() {
+  if (!moduleGrid) return;
   moduleGrid.querySelectorAll(".module-card").forEach(function (card) {
     var name = card.dataset.tool.toLowerCase();
     var query = state.query.toLowerCase();
