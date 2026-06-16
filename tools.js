@@ -751,6 +751,9 @@ function renderDetail(tool) {
 function render() {
   renderFilters();
   renderToolGrid();
+  // 确保详情面板更新到当前选中的工具
+  var found = tools.find(function (t) { return t.name === state.selected; });
+  if (found) renderDetail(found);
 }
 
 // ===== Init =====
