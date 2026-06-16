@@ -516,7 +516,7 @@ vs.show()`,
     status: "Installer",
     summary:
       "用于注册 Bingo ToolBox 工具的安装入口，适合在新机器或新 Maya 版本中快速恢复工具菜单。",
-    tags: ["Install", "Menu", "Shelf"],
+    tags: [],
     features: [
       "通过 Script Editor 执行安装脚本即可写入工具入口。",
       "适合跟随工具仓库一起发布，减少手动配置步骤。",
