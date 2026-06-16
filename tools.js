@@ -668,6 +668,7 @@ function renderToolGrid() {
   filtered.forEach((tool) => {
     const card = document.createElement("button");
     card.type = "button";
+    card.dataset.tool = tool.name;
     card.className = "tool-card" + (state.selected === tool.name ? " active" : "");
     card.addEventListener("click", () => {
       selectTool(tool.name, false);
@@ -777,6 +778,29 @@ if (searchInput) {
 
   });
 }
+
+// 兜底点击处理：确保点击任何工具卡片都会刷新右侧详情面板
+// 使用捕获阶段处理，避免按钮焦点/滚动导致详情面板停留在旧工具。
+document.addEventListener("click", function (event) {
+  var card = event.target.closest && event.target.closest(".module-card, .tool-card");
+  if (!card) return;
+  var name = card.dataset.tool;
+  if (!name) {
+    var title = card.querySelector("h3");
+    name = title ? title.textContent.trim() : "";
+  }
+  if (!name) return;
+  if (card.classList.contains("module-card")) {
+    state.category = "All";
+    state.query = "";
+    if (searchInput) searchInput.value = "";
+  }
+  state.selected = name;
+  renderFilters();
+  renderToolGrid();
+  renderDetail(getToolByName(name));
+}, true);
+
 // ===== Donate QR =====
 (function () {
   var donateBtn = document.getElementById("donateBtn");
