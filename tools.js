@@ -571,6 +571,7 @@ function normalize(value) {
 }
 
 function getVisibleTags(tool) {
+  if (tool && tool.name === "Selected Ctrl Mirror") return [];
   var hidden = { Install: true, Menu: true, Shelf: true };
   return (tool.tags || []).filter(function (tag) { return !hidden[tag]; });
 }
