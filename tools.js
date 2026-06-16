@@ -597,10 +597,15 @@ function selectTool(name, shouldScroll) {
   }
 }
 
+// 暴露给内联 onclick，确保动态卡片点击在各种浏览器缓存/重绘场景下都能切换详情。
+window.selectToolByName = function (name, shouldScroll) {
+  selectTool(name, shouldScroll);
+};
+
 // ===== Module Grid (hero下面) =====
 function renderModuleGrid() {
   moduleGrid.innerHTML = tools.map(function (tool) {
-    return '<div class="module-card" data-tool="' + escapeAttribute(tool.name) + '">' +
+    return '<div class="module-card" data-tool="' + escapeAttribute(tool.name) + '" onclick="selectToolByName(this.dataset.tool, true)">' +
       '<div class="module-card-header">' +
         '<img src="' + tool.icon + '" alt="" loading="lazy">' +
         '<div><h3>' + escapeHtml(tool.name) + '</h3>' +
@@ -669,6 +674,7 @@ function renderToolGrid() {
     const card = document.createElement("button");
     card.type = "button";
     card.dataset.tool = tool.name;
+    card.setAttribute("onclick", "selectToolByName(this.dataset.tool, false)");
     card.className = "tool-card" + (state.selected === tool.name ? " active" : "");
     card.addEventListener("click", () => {
       selectTool(tool.name, false);
