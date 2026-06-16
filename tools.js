@@ -608,6 +608,8 @@ function renderModuleGrid() {
       state.query = "";
       document.getElementById("tools").scrollIntoView({ behavior: "smooth" });
       render();
+      var found = tools.find(function (t) { return t.name === state.selected; });
+      if (found) renderDetail(found);
     });
   });
 }
@@ -661,6 +663,7 @@ function renderToolGrid() {
     card.addEventListener("click", () => {
       state.selected = tool.name;
       render();
+      renderDetail(tool);
     });
     card.innerHTML = `
       <div class="tool-card-header">
