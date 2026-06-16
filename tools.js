@@ -72,8 +72,7 @@ exec(open(r"D:/Codex/maya/Bingo_ToolBox_01/install.mel", "r").read())`,
         code: "运行: Documents\\maya\\Bingo_ToolBox\\uninstall_Bingo_ToolBox.cmd\n手动删除: Documents\\maya\\Bingo_ToolBox\\"
       }
     ]
-  },,
-
+  },
   {
     name: "暴力帧拷贝",
     category: "Animation",
