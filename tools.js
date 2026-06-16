@@ -584,6 +584,20 @@ function getFilteredTools() {
   });
 }
 
+function getToolByName(name) {
+  return tools.find(function (tool) { return tool.name === name; }) || tools[0];
+}
+
+function selectTool(name, shouldScroll) {
+  state.selected = name;
+  renderFilters();
+  renderToolGrid();
+  renderDetail(getToolByName(state.selected));
+  if (shouldScroll) {
+    document.getElementById("tools").scrollIntoView({ behavior: "smooth" });
+  }
+}
+
 // ===== Module Grid (hero下面) =====
 function renderModuleGrid() {
   moduleGrid.innerHTML = tools.map(function (tool) {
@@ -602,17 +616,10 @@ function renderModuleGrid() {
 
   moduleGrid.querySelectorAll(".module-card").forEach(function (card) {
     card.addEventListener("click", function () {
-      state.selected = card.dataset.tool;
       state.category = "All";
       if (searchInput) searchInput.value = "";
       state.query = "";
-      document.getElementById("tools").scrollIntoView({ behavior: "smooth" });
-      var found = tools.find(function (t) { return t.name === state.selected; });
-      if (found) {
-        renderFilters();
-        renderToolGrid();
-        renderDetail(found);
-      }
+      selectTool(card.dataset.tool, true);
     });
   });
 }
@@ -664,9 +671,7 @@ function renderToolGrid() {
     card.type = "button";
     card.className = "tool-card" + (state.selected === tool.name ? " active" : "");
     card.addEventListener("click", () => {
-      state.selected = tool.name;
-      render();
-      renderDetail(tool);
+      selectTool(tool.name, false);
     });
     card.innerHTML = `
       <div class="tool-card-header">
@@ -684,7 +689,6 @@ function renderToolGrid() {
     toolGrid.appendChild(card);
   });
 
-  renderDetail(tools.find((t) => t.name === state.selected));
 }
 
 // ===== Detail Panel =====
@@ -757,9 +761,7 @@ function renderDetail(tool) {
 function render() {
   renderFilters();
   renderToolGrid();
-  // 确保详情面板更新到当前选中的工具
-  var found = tools.find(function (t) { return t.name === state.selected; });
-  if (found) renderDetail(found);
+  renderDetail(getToolByName(state.selected));
 }
 
 // ===== Init =====
