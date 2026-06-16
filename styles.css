@@ -991,8 +991,9 @@ body::after {
 .tool-screenshot-card img {
   display: block;
   width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
+  height: auto;
+  max-height: none;
+  object-fit: contain;
   background: #1f2937;
   border-bottom: 1px solid var(--c-border-light);
 }
