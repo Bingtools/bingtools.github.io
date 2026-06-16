@@ -570,6 +570,11 @@ function normalize(value) {
   return value.toLowerCase().trim();
 }
 
+function getVisibleTags(tool) {
+  var hidden = { Install: true, Menu: true, Shelf: true };
+  return (tool.tags || []).filter(function (tag) { return !hidden[tag]; });
+}
+
 function getCategories() {
   return ["All", ...Array.from(new Set(tools.map((t) => t.category)))];
 }
@@ -613,7 +618,7 @@ function renderModuleGrid() {
       '</div>' +
       '<p>' + escapeHtml(tool.summary) + '</p>' +
       '<div class="module-tags">' +
-        tool.tags.slice(0, 4).map(function (tag) { return '<span class="module-tag">' + escapeHtml(tag) + '</span>'; }).join("") +
+        getVisibleTags(tool).slice(0, 4).map(function (tag) { return '<span class="module-tag">' + escapeHtml(tag) + '</span>'; }).join("") +
       '</div>' +
     '</div>';
   }).join("");
@@ -689,7 +694,7 @@ function renderToolGrid() {
       </div>
       <p>${escapeHtml(tool.summary)}</p>
       <div class="card-tags">
-        ${tool.tags.slice(0, 4).map((tag) => `<span class="card-tag">${escapeHtml(tag)}</span>`).join("")}
+        ${getVisibleTags(tool).slice(0, 4).map((tag) => `<span class="card-tag">${escapeHtml(tag)}</span>`).join("")}
       </div>
     `;
     toolGrid.appendChild(card);
@@ -737,7 +742,7 @@ function renderDetail(tool) {
     '<div class="detail-meta">' +
       '<span class="tag">' + escapeHtml(tool.version) + '</span>' +
       '<span class="status-tag">' + escapeHtml(tool.status) + '</span>' +
-      tool.tags.map(function (tag) { return '<span class="tag">' + escapeHtml(tag) + '</span>'; }).join("") +
+      getVisibleTags(tool).map(function (tag) { return '<span class="tag">' + escapeHtml(tag) + '</span>'; }).join("") +
     '</div>' +
     '<ul class="feature-list">' +
       tool.features.map(function (f) { return '<li>' + escapeHtml(f) + '</li>'; }).join("") +
