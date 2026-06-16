@@ -482,7 +482,7 @@ vs.show()`,
     status: "Controller Utility",
     summary:
       "面向已选控制器的轻量镜像脚本，用来检查具体控制器的左右通道映射和镜像结果。",
-    tags: ["Selection", "Controller", "Mirror"],
+    tags: [],
     features: [
       "只处理当前选中的控制器，便于定位单个控制器镜像异常。",
       "保留当前 Maya 场景上下文，不强制处理整套绑定。",
