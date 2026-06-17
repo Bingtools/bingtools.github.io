@@ -253,6 +253,36 @@ body::after {
   border-color: var(--c-border);
 }
 
+:root[data-page-theme="dark"] .badge {
+  background: rgba(40,30,60,0.85);
+  color: #e8dcff;
+  border-color: rgba(180,160,220,0.35);
+}
+
+:root[data-page-theme="dark"] .filter-btn:not(.active) {
+  background: rgba(40,30,60,0.7);
+  color: #c4b5fd;
+  border-color: rgba(180,160,220,0.3);
+}
+
+:root[data-page-theme="dark"] .filter-btn:not(.active):hover {
+  color: #e8dcff;
+  border-color: var(--c-accent);
+  background: rgba(50,38,72,0.85);
+}
+
+:root[data-page-theme="dark"] .module-tag,
+:root[data-page-theme="dark"] .tool-card .card-tag {
+  color: #c4b5fd;
+  background: rgba(100,80,160,0.22);
+}
+
+:root[data-page-theme="dark"] .module-card .module-status,
+:root[data-page-theme="dark"] .tool-card .card-status {
+  color: #c4b5fd;
+  background: rgba(100,80,160,0.25);
+}
+
 :root[data-page-theme="dark"] .section-alt {
   background: linear-gradient(180deg, rgba(33,26,47,0.42) 0%, rgba(47,37,67,0.52) 50%, rgba(33,26,47,0.42) 100%);
 }
