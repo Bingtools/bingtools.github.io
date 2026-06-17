@@ -475,23 +475,6 @@ vs.show()`,
 ]
   },
   {
-    name: "Selected Ctrl Mirror",
-    category: "Rigging",
-    icon: "assets/python.png",
-    version: "Maya Python",
-    status: "Controller Utility",
-    summary:
-      "面向已选控制器的轻量镜像脚本，用来检查具体控制器的左右通道映射和镜像结果。",
-    tags: [],
-    features: [
-      "只处理当前选中的控制器，便于定位单个控制器镜像异常。",
-      "保留当前 Maya 场景上下文，不强制处理整套绑定。",
-      "适合调试 Animcraft_Mouth_CtrlKey 等特殊控制器。"
-    ],
-    command: `exec(open(r"D:/Codex/maya/mirror_selected_animcraft_ctrls.py", "r").read())`,
-    path: "D:/Codex/maya/mirror_selected_animcraft_ctrls.py"
-  },
-  {
     name: "Safe Skin Weight Mirror",
     category: "Rigging",
     icon: "assets/mel.png",
