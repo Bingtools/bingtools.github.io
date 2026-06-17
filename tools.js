@@ -21,6 +21,11 @@ exec(open(r"D:/Maya_Tool/Bingo_Tools/install.mel", "r").read())`,
     download: "https://github.com/Bingtools/Bingo-Tools/releases/download/toolbox-latest/Bingo_ToolBox_Maya2020-2026.exe",
     screenshots: [
       {
+        title: "Bingo ToolBox 使用演示",
+        src: "assets/Bingo_tools.mp4",
+        caption: "Bingo ToolBox 完整操作演示视频，展示工具安装、分类管理和日常使用方法。"
+      },
+      {
         title: "Picker 面板预览",
         src: "assets/toolbox-ui-picker.gif",
         caption: "用于角色控制器选择和动画操作的 Picker 界面，可把常用控制器整理成直观按钮。"
@@ -667,8 +672,12 @@ function renderDetail(tool) {
     screenshotHTML = '<div class="tool-screenshot-section"><p class="eyebrow" style="margin-top:0">UI Preview</p>' +
       '<div class="tool-screenshot-grid">' +
       tool.screenshots.map(function (shot) {
+        var isVideo = shot.src && /\.mp4$/i.test(shot.src);
+        var mediaHTML = isVideo
+          ? '<video src="' + escapeAttribute(shot.src) + '" controls playsinline muted loop style="width:100%;height:auto;display:block;background:#1f2937;border-bottom:1px solid var(--c-border-light)"></video>'
+          : '<img src="' + escapeAttribute(shot.src) + '" alt="' + escapeAttribute(shot.title) + '" loading="lazy">';
         return '<figure class="tool-screenshot-card">' +
-          '<img src="' + escapeAttribute(shot.src) + '" alt="' + escapeAttribute(shot.title) + '" loading="lazy">' +
+          mediaHTML +
           '<figcaption><strong>' + escapeHtml(shot.title) + '</strong><span>' + escapeHtml(shot.caption) + '</span></figcaption>' +
         '</figure>';
       }).join("") +
