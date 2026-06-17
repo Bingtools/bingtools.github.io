@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Bingo Maya Tools — 专为 Maya 动画师打造的个人工具集</title>
   <meta name="description" content="Bingo Maya Tools — 个人 Maya 动画工具集，涵盖日常制作、P4 流程、表情控制器镜像、蒙皮辅助与工具箱管理。">
-  <link rel="stylesheet" href="styles.css?v=20260617-tutorial-page">
+  <link rel="stylesheet" href="styles.css?v=20260617-tutorial-modal">
   <link rel="icon" href="assets/bingo-icon.png">
 </head>
 <body>
@@ -27,7 +27,7 @@
       <nav class="nav-links">
         <a href="#download">下载安装</a>
         <a href="#tools">工具列表</a>
-        <a href="#tutorial">使用教程</a>
+        <a href="#tutorial" id="tutorialNavBtn">使用教程</a>
       </nav>
       <div class="theme-switcher" aria-label="页面颜色设置">
         <button class="theme-btn active" type="button" data-theme="light">浅色</button>
@@ -132,97 +132,78 @@
   </div>
 
 
-  <!-- ===== 使用教程 ===== -->
-  <section id="tutorial" class="section">
-    <div class="section-header">
-      <h2>Bingo ToolBox 使用教程</h2>
-      <p>从安装到日常使用的完整教程，新手建议按顺序阅读</p>
-    </div>
-
-    <div class="tutorial-page">
-      <div class="tutorial-intro">
-        <h3>Bingo ToolBox — 个人 Maya 工具箱插件</h3>
-        <p>EXE 安装包支持自定义安装路径（默认 D:/Maya_Tool/Bingo_Tools），用分类、收藏、快捷键和工具注册信息管理脚本，适合把零散 Python/MEL 工具集中起来。</p>
-        <ul class="tutorial-features">
-          <li>内置动画、绑定、模型、特效、其他等常用工具分类</li>
-          <li>支持工具图标、收藏星标、快捷入口和自定义菜单</li>
-          <li>可把 Python / MEL / EXE / 文件夹统一登记管理</li>
-          <li>已按 Maya 2020–2027 全版本兼容方向整理</li>
-        </ul>
+  <!-- ===== 使用教程弹窗 ===== -->
+  <div class="tutorial-overlay" id="tutorialOverlay">
+    <div class="tutorial-modal">
+      <button class="tutorial-close" id="tutorialClose">&times;</button>
+      <div class="tutorial-modal-header">
+        <h2>Bingo ToolBox 使用教程</h2>
+        <p>从安装到日常使用的完整教程，新手建议按顺序阅读</p>
       </div>
+      <div class="tutorial-modal-body">
+        <div class="tutorial-intro">
+          <h3>Bingo ToolBox — 个人 Maya 工具箱插件</h3>
+          <p>EXE 安装包支持自定义安装路径（默认 D:/Maya_Tool/Bingo_Tools），用分类、收藏、快捷键和工具注册信息管理脚本，适合把零散 Python/MEL 工具集中起来。</p>
+          <ul class="tutorial-features">
+            <li>内置动画、绑定、模型、特效、其他等常用工具分类</li>
+            <li>支持工具图标、收藏星标、快捷入口和自定义菜单</li>
+            <li>可把 Python / MEL / EXE / 文件夹统一登记管理</li>
+            <li>已按 Maya 2020–2027 全版本兼容方向整理</li>
+          </ul>
+        </div>
 
-      <div class="tutorial-steps">
-        <div class="tutorial-step">
-          <h4>1. 安装方式</h4>
-          <p>双击运行 EXE 安装包，安装程序会弹出路径选择窗口，默认路径为 D:/Maya_Tool/Bingo_Tools，可点击「浏览」自定义安装路径。工具文件直接放入所选目录，不会多套一层版本文件夹。Maya 启动时会自动通过 Documents/maya/modules/Bingo_ToolBox.mod 指向实际安装路径。</p>
-          <pre><code>默认安装路径: D:\Maya_Tool\Bingo_Tools
+        <div class="tutorial-steps">
+          <div class="tutorial-step">
+            <h4>1. 安装方式</h4>
+            <p>双击运行 EXE 安装包，安装程序会弹出路径选择窗口，默认路径为 D:/Maya_Tool/Bingo_Tools，可点击「浏览」自定义安装路径。工具文件直接放入所选目录，不会多套一层版本文件夹。Maya 启动时会自动通过 Documents/maya/modules/Bingo_ToolBox.mod 指向实际安装路径。</p>
+            <pre><code>默认安装路径: D:\Maya_Tool\Bingo_Tools
 Module 入口: Documents\maya\modules\Bingo_ToolBox.mod
 备份: 安装目录_backup_时间戳
 主入口: scripts\maya_plugin_manager_ui.py</code></pre>
-        </div>
-
-        <div class="tutorial-step">
-          <h4>2. 打开工具箱</h4>
-          <p>安装完成后重新启动 Maya，在 Maya 顶部菜单栏找到 Bingo 菜单，点击 ToolBox 即可打开工具箱主界面。</p>
-          <pre><code>Maya 菜单栏 → Bingo → ToolBox</code></pre>
-        </div>
-
-        <div class="tutorial-step">
-          <h4>3. 工具简介</h4>
-          <p>Bingo ToolBox 用来把制作中常用的动画、绑定、模型、特效和其他脚本集中到一个面板里。每个工具都可以配置名称、说明、图标、分类和执行命令，适合把零散的 Python、MEL、EXE、文件夹入口或常用流程整理成可点击的工具卡片。</p>
-          <pre><code>工具类型示例:
-Animation: 姿势镜像、时间轴辅助、选择控制器
-Rigging: 蒙皮检查、控制器工具、权重辅助
-Model: 清理场景、批量命名、模型检查
-FX/Other: 特效脚本、文件夹入口、外部程序</code></pre>
-        </div>
-
-        <div class="tutorial-step">
-          <h4>4. 使用方法简介</h4>
-          <p>打开 ToolBox 后先选择左侧分类，再点击工具卡片即可执行。新增工具时右键分类区域选择「新建工具」，填入工具名称、简介、图标和 Python/MEL/EXE 命令；常用工具可以收藏或加入 Maya 顶部菜单，方便日常制作时快速调用。</p>
-          <pre><code>推荐流程:
-1. 选择分类或新建分类
+          </div>
+          <div class="tutorial-step">
+            <h4>2. 打开工具箱</h4>
+            <p>安装完成后重新启动 Maya，在 Maya 顶部菜单栏找到 Bingo 菜单，点击 ToolBox 即可打开工具箱主界面。</p>
+            <pre><code>Maya 菜单栏 → Bingo → ToolBox</code></pre>
+          </div>
+          <div class="tutorial-step">
+            <h4>3. 工具简介</h4>
+            <p>Bingo ToolBox 用来把制作中常用的动画、绑定、模型、特效和其他脚本集中到一个面板里。每个工具都可以配置名称、说明、图标、分类和执行命令。</p>
+            <pre><code>工具类型: Animation / Rigging / Model / FX / Other</code></pre>
+          </div>
+          <div class="tutorial-step">
+            <h4>4. 使用方法</h4>
+            <p>打开 ToolBox 后先选择左侧分类，再点击工具卡片即可执行。右键分类区域可新建工具，填入名称、简介、图标和命令。</p>
+            <pre><code>1. 选择分类或新建分类
 2. 右键新建工具并填写说明
 3. 粘贴 Python/MEL/EXE 启动命令
 4. 选择图标并保存
-5. 点击工具卡片运行，常用工具可收藏或加入菜单</code></pre>
-        </div>
-
-        <div class="tutorial-step">
-          <h4>5. 注册脚本工具</h4>
-          <p>在工具箱界面中右键点击分类区域，选择「新建工具」。填写工具名称、描述，粘贴 Python 或 MEL 代码，指定图标和快捷键。保存后工具即出现在对应分类中，点击即可执行。</p>
-          <pre><code># 示例：注册快速选择所有控制器的工具
-import maya.cmds as cmds
+5. 点击工具卡片运行</code></pre>
+          </div>
+          <div class="tutorial-step">
+            <h4>5. 注册脚本工具</h4>
+            <p>右键分类区域 →「新建工具」，填写名称、描述，粘贴 Python 或 MEL 代码，指定图标和快捷键后保存。</p>
+            <pre><code>import maya.cmds as cmds
 ctrls = cmds.ls("*_ctrl", type="transform")
-cmds.select(ctrls)
-print(f"已选择 {len(ctrls)} 个控制器")</code></pre>
-        </div>
-
-        <div class="tutorial-step">
-          <h4>6. 自定义菜单</h4>
-          <p>Bingo ToolBox 支持在 Maya 主菜单栏创建自定义下拉菜单，将常用工具直接暴露在菜单层级中。进入工具箱设置 → 菜单编辑器，拖拽工具到菜单树中即可。</p>
-          <pre><code>自定义菜单示例结构:
-Bingo/
+cmds.select(ctrls)</code></pre>
+          </div>
+          <div class="tutorial-step">
+            <h4>6. 自定义菜单</h4>
+            <p>进入工具箱设置 → 菜单编辑器，拖拽工具到菜单树中即可在 Maya 主菜单栏创建层级菜单。</p>
+            <pre><code>Bingo/
   ├── Animation/
-  │   ├── Pose Mirror
-  │   └── Time Machine
   ├── Rigging/
-  │   ├── Skin Mirror
-  │   └── Controller Check
-  └── Utility/
-      ├── Clean Scene
-      └── Batch Rename</code></pre>
-        </div>
-
-        <div class="tutorial-step">
-          <h4>7. 卸载方式</h4>
-          <p>安装目录下自带卸载脚本。运行 uninstall_Bingo_ToolBox.cmd 会移除 Maya module 入口，之后可手动删除工具目录完成彻底卸载。</p>
-          <pre><code>运行: Documents\maya\Bingo_ToolBox\uninstall_Bingo_ToolBox.cmd
-手动删除: Documents\maya\Bingo_ToolBox\</code></pre>
+  └── Utility/</code></pre>
+          </div>
+          <div class="tutorial-step">
+            <h4>7. 卸载方式</h4>
+            <p>运行安装目录下的 uninstall_Bingo_ToolBox.cmd 移除 Maya module 入口，再手动删除工具目录。</p>
+            <pre><code>uninstall_Bingo_ToolBox.cmd</code></pre>
+          </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
 
 
   <!-- ===== 留言板 ===== -->
@@ -273,7 +254,7 @@ Bingo/
     return ["g","h","p","_"].join("") + s + e;
   })();
   </script>
-  <script src="tools.js?v=20260617-bingo-tools-video"></script>
+  <script src="tools.js?v=20260617-tutorial-modal"></script>
   <script>
   // ===== 全局爱心计数（GitHub Issue 存储，所有访客共享）=====
   (function () {
