@@ -1291,6 +1291,22 @@ document.addEventListener("click", function (event) {
   applyTheme(localStorage.getItem(STORAGE_KEY) || "light", localStorage.getItem(COLOR_KEY) || colorInput.value, false);
 })();
 
+// ===== Tutorial Modal =====
+(function () {
+  var overlay = document.getElementById("tutorialOverlay");
+  var closeBtn = document.getElementById("tutorialClose");
+  var navBtn = document.getElementById("tutorialNavBtn");
+  if (!overlay || !closeBtn || !navBtn) return;
+
+  function open() { overlay.classList.add("open"); document.body.style.overflow = "hidden"; }
+  function close() { overlay.classList.remove("open"); document.body.style.overflow = ""; }
+
+  navBtn.addEventListener("click", function (e) { e.preventDefault(); open(); });
+  closeBtn.addEventListener("click", close);
+  overlay.addEventListener("click", function (e) { if (e.target === overlay) close(); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") close(); });
+})();
+
 // ===== Tiger Heart Interaction =====
 (function () {
   var tiger = document.querySelector(".tiger-corner");
