@@ -473,23 +473,6 @@ vs.show()`,
             "code": "1. 打开杀毒工具\n2. 点击「自动勾选病毒节点」\n3. 检查勾选结果\n4. 点击「删除选中节点」清理"
       }
 ]
-  },
-  {
-    name: "Safe Skin Weight Mirror",
-    category: "Rigging",
-    icon: "assets/mel.png",
-    version: "Maya Native",
-    status: "Skin Utility",
-    summary:
-      "基于 Maya 原生 copySkinWeights 思路的蒙皮权重镜像辅助脚本，用于在保存备份后尝试修复左右权重不一致。",
-    tags: ["Skin", "Weights", "Mirror", "Rigging"],
-    features: [
-      "尽量调用 Maya 原生命令完成权重镜像，减少自定义计算带来的风险。",
-      "适合在模型拓扑和骨骼命名基本对称时使用。",
-      "执行前建议另存文件，并检查 influence 命名和蒙皮对象是否正确。"
-    ],
-    command: `exec(open(r"D:/Codex/maya/safe_maya_mirror_skin_weights.py", "r").read())`,
-    path: "D:/Codex/maya/safe_maya_mirror_skin_weights.py"
   }
 ];
 
