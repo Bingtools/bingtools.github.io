@@ -1312,6 +1312,9 @@ document.addEventListener("click", function (event) {
   var tiger = document.querySelector(".tiger-corner");
   if (!tiger) return;
   tiger.addEventListener("click", function (e) {
+    // 同步触发爱心计数 +1
+    var donateBtn = document.getElementById("donateBtn");
+    if (donateBtn) donateBtn.click();
     for (var i = 0; i < 5; i++) {
       var heart = document.createElement("span");
       heart.className = "tiger-heart";
