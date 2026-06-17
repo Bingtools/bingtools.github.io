@@ -713,7 +713,6 @@ function renderDetail(tool) {
     tutorialHTML +
     '<div class="detail-actions" style="margin-top:16px">' +
       '<button class="copy-btn" type="button" data-code="' + escapeAttribute(tool.command) + '">Copy Command</button>' +
-      (tool.download ? '<a class="download-btn-detail" href="' + tool.download + '" download>下载 EXE</a>' : "") +
     '</div>';
 
   // bind copy buttons
