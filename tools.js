@@ -102,7 +102,7 @@ cp.show()`,
     screenshots: [
       {
             "title": "暴力帧拷贝界面",
-            "src": "assets/tool-01-copy-paste.png",
+            "src": "assets/tool-copy-paste-new.png",
             "caption": "一键复制/粘贴控制器姿态与动画数据"
       }
 ],
