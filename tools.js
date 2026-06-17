@@ -6,17 +6,18 @@ const tools = [
     version: "Maya 2020-2027",
     status: "Installer",
     summary:
-      "个人 Maya 工具箱插件，用分类、收藏、快捷键和工具注册信息管理脚本，适合把零散 Python/MEL 工具集中起来。",
+      "个人 Maya 工具箱插件，EXE 安装包支持自定义安装路径（默认 D:/Maya_Tool/Bingo_Tools），用分类、收藏、快捷键和工具注册信息管理脚本，适合把零散 Python/MEL 工具集中起来。",
     tags: ["Toolbox", "Python", "MEL", "EXE"],
     features: [
       "内置动画、绑定、模型、特效、其他等常用工具分类，可按需扩展个人工具库。",
       "支持工具图标、收藏星标、快捷入口、自定义菜单和本地配置持久化。",
       "可把 Python、MEL、EXE、文件夹和常用命令统一登记到工具箱中管理。",
-      "已按 Maya 2020-2027 全版本兼容方向整理，EXE 安装包一键部署。"
+      "EXE 安装包支持自定义安装路径，默认 D:/Maya_Tool/Bingo_Tools，自动创建目录并备份旧版。",
+      "已按 Maya 2020-2027 全版本兼容方向整理，一键部署注册 Maya module。"
     ],
     command: `// 在 Maya Script Editor 的 Python 标签中执行:
-exec(open(r"D:/Codex/maya/Bingo_ToolBox_01/install.mel", "r").read())`,
-    path: "D:/Codex/maya/Bingo_ToolBox_01/",
+exec(open(r"D:/Maya_Tool/Bingo_Tools/install.mel", "r").read())`,
+    path: "D:/Maya_Tool/Bingo_Tools/",
     download: "https://github.com/Bingtools/Bingo-Tools/releases/download/toolbox-latest/Bingo_ToolBox_Maya2020-2026.exe",
     screenshots: [
       {
@@ -38,8 +39,8 @@ exec(open(r"D:/Codex/maya/Bingo_ToolBox_01/install.mel", "r").read())`,
     tutorial: [
       {
         title: "1. 安装方式",
-        content: "双击运行 EXE 安装包，安装程序会自动将工具文件释放到 Documents/maya/Bingo_ToolBox/ 目录，并注册 Maya module 入口。如已安装旧版，安装程序会自动备份后覆盖升级。",
-        code: "安装路径: Documents\\maya\\Bingo_ToolBox\\\nModule 入口: Documents\\maya\\modules\\Bingo_ToolBox.mod\n备份目录: Documents\\maya\\Bingo_ToolBox_backup\\"
+        content: "双击运行 EXE 安装包，安装程序会弹出路径选择窗口，默认路径为 D:/Maya_Tool/Bingo_Tools，可点击「浏览」自定义安装路径。工具文件直接放入所选目录，不会多套一层版本文件夹。Maya 启动时会自动通过 Documents/maya/modules/Bingo_ToolBox.mod 指向实际安装路径。",
+        code: "默认安装路径: D:\\Maya_Tool\\Bingo_Tools\nModule 入口: Documents\\maya\\modules\\Bingo_ToolBox.mod\n备份: 安装目录_backup_时间戳\n主入口: scripts\\maya_plugin_manager_ui.py"
       },
       {
         title: "2. 打开工具箱",
