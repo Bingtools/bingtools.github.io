@@ -211,8 +211,8 @@ fb.show()`,
     screenshots: [
       {
             "title": "路径指认界面",
-            "src": "assets/tool-04-file-browser.png",
-            "caption": "文件浏览器，收藏常用目录"
+            "src": "assets/tool-browser-import.png",
+            "caption": "文件浏览器与批量导入工具界面"
       }
 ],
     tutorial: [
@@ -247,8 +247,8 @@ bi.show()`,
     screenshots: [
       {
             "title": "批量导入界面",
-            "src": "assets/tool-05-batch-import.png",
-            "caption": "批量导入文件到 Maya 场景"
+            "src": "assets/tool-browser-import.png",
+            "caption": "文件浏览器与批量导入工具界面"
       }
 ],
     tutorial: [
