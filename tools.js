@@ -490,23 +490,6 @@ vs.show()`,
     ],
     command: `exec(open(r"D:/Codex/maya/safe_maya_mirror_skin_weights.py", "r").read())`,
     path: "D:/Codex/maya/safe_maya_mirror_skin_weights.py"
-  },
-  {
-    name: "Maya Install Helper",
-    category: "Install",
-    icon: "assets/shortcut.png",
-    version: "Python",
-    status: "Installer",
-    summary:
-      "用于注册 Bingo ToolBox 工具的安装入口，适合在新机器或新 Maya 版本中快速恢复工具菜单。",
-    tags: [],
-    features: [
-      "通过 Script Editor 执行安装脚本即可写入工具入口。",
-      "适合跟随工具仓库一起发布，减少手动配置步骤。",
-      "建议每个独立工具都保留一段可复制的启动命令。"
-    ],
-    command: `exec(open(r"D:/Codex/maya/install.py", "r").read())`,
-    path: "D:/Codex/maya/install.py"
   }
 ];
 
