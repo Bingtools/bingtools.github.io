@@ -684,7 +684,8 @@ vs.show()`,
       "自定义颜色索引"
     ],
     screenshots: [
-      { "title": "创建控制器界面", "src": "assets/tool-06-create-ctrl.png", "caption": "批量创建 Maya 控制器曲线" }
+      { "title": "创建控制器界面", "src": "assets/tool-06-create-ctrl.png", "caption": "批量创建 Maya 控制器曲线" },
+      { "title": "控制搭建使用教程", "src": "assets/new-tools/ctrl-builder-tutorial.mp4", "caption": "控制搭建操作演示" }
     ],
     tutorial: [
       {
