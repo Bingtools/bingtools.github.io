@@ -508,6 +508,9 @@ vs.show()`,
       "一键在 IK / FK 模式间切换，保持角色姿态不变。",
       "支持四肢和脊椎的 IK/FK 匹配。",
       "适用于标准命名规则的绑定控制器。"
+    ],
+    screenshots: [
+      { "title": "IKFK无缝切换界面", "src": "assets/new-tools/img_1781690775313.png", "caption": "一键切换 IK/FK 控制模式" }
     ]
   },
   {
@@ -524,7 +527,11 @@ vs.show()`,
       "支持姿态缩略图预览和分类管理。",
       "跨场景导入导出动画数据。",
       "支持多角色姿态批量管理。"
+    ],
+    screenshots: [
+      { "title": "Studio Library 界面", "src": "assets/new-tools/img_1781756535694.png", "caption": "姿态库管理与预览" }
     ]
+
   },
   {
     name: "动画路径",
@@ -539,6 +546,9 @@ vs.show()`,
       "为选中对象生成运动轨迹线。",
       "支持自定义轨迹颜色和显示时长。",
       "实时更新跟随动画播放。"
+    ],
+    screenshots: [
+      { "title": "动画路径界面", "src": "assets/new-tools/img_1782093823108.png", "caption": "Motion Trail 运动轨迹" }
     ]
   },
   {
@@ -554,6 +564,9 @@ vs.show()`,
       "在视口中实时显示对象运动轨迹。",
       "支持视频匹配模式，可将轨迹叠加到参考视频上。",
       "方便检查和调整动画的运动弧线。"
+    ],
+    screenshots: [
+      { "title": "实时路径界面", "src": "assets/new-tools/img_1782093832005.png", "caption": "实时 Motion Trail 显示" }
     ]
   },
   {
@@ -569,6 +582,9 @@ vs.show()`,
       "自定义关键帧在时间轴上的颜色显示。",
       "支持按对象或类型批量改色。",
       "方便在时间轴上快速识别关键帧类型。"
+    ],
+    screenshots: [
+      { "title": "改帧颜色界面", "src": "assets/new-tools/img_1782093841730.png", "caption": "自定义时间轴关键帧颜色" }
     ]
   },
   {
@@ -584,6 +600,9 @@ vs.show()`,
       "批量为选中模型转换三角面为四边面。",
       "支持设置转换角度阈值和面数限制。",
       "保留原始 UV 和材质信息。"
+    ],
+    screenshots: [
+      { "title": "三转四面界面", "src": "assets/new-tools/img_1781783204487.png", "caption": "三角面批量转四边面" }
     ]
   },
   {
@@ -599,6 +618,9 @@ vs.show()`,
       "一键切换多边形/曲线/骨骼等对象的强制显示。",
       "无视 Maya 视图面板的显示过滤设置。",
       "适合在复杂场景中快速检查模型拓扑。"
+    ],
+    screenshots: [
+      { "title": "强制显示界面", "src": "assets/new-tools/img_1781783216604.png", "caption": "强制对象显示/隐藏" }
     ]
   },
   {
@@ -614,6 +636,9 @@ vs.show()`,
       "调用 QuadRemesher 引擎进行自动重拓扑。",
       "搬运工具，仅做集成收录。",
       "需要安装 QuadRemesher 插件才能使用。"
+    ],
+    screenshots: [
+      { "title": "拓扑界面", "src": "assets/new-tools/img_1781916997778.png", "caption": "QuadRemesher 自动重拓扑" }
     ]
   },
   {
