@@ -214,7 +214,8 @@ fb.show()`,
             "title": "路径指认界面",
             "src": "assets/tool-browser-import.png",
             "caption": "文件浏览器与批量导入工具界面"
-      }
+      },
+      { "title": "路径指认使用教程", "src": "assets/new-tools/file-browser-tutorial.mp4", "caption": "路径指认与文件浏览器操作演示" }
 ],
     tutorial: [
       {
