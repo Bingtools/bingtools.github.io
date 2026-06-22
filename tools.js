@@ -513,7 +513,8 @@ vs.show()`,
       "适用于标准命名规则的绑定控制器。"
     ],
     screenshots: [
-      { "title": "IKFK无缝切换界面", "src": "assets/new-tools/img_1781690775313.png", "caption": "一键切换 IK/FK 控制模式" }
+      { "title": "IKFK无缝切换界面", "src": "assets/new-tools/img_1781690775313.png", "caption": "一键切换 IK/FK 控制模式" },
+      { "title": "IKFK 使用教程", "src": "assets/new-tools/ikfk-tutorial.mp4", "caption": "IKFK 无缝切换操作演示" }
     ]
   },
   {
