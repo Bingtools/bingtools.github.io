@@ -479,6 +479,195 @@ vs.show()`,
             "code": "1. 打开杀毒工具\n2. 点击「自动勾选病毒节点」\n3. 检查勾选结果\n4. 点击「删除选中节点」清理"
       }
 ]
+  },
+  {
+    name: "动画助手",
+    category: "Animation",
+    icon: "assets/python.png",
+    version: "Maya 2020-2026",
+    status: "搬运工具",
+    summary:
+      "动画助手辅助工具，提供常用动画快捷操作功能。注意：搬运工具，Maya 2021 不支持。",
+    tags: ["Animation", "Helper", "搬运"],
+    features: [
+      "提供常用动画快捷操作面板。",
+      "搬运工具，仅做集成收录。",
+      "Maya 2021 版本不兼容，请使用其他版本。"
+    ],
+    command: `exec(open(r"D:/Maya_Tool/Bingo_Tools/tools/Animation/Animation Helper.py", "r").read())`,
+    path: "D:/Maya_Tool/Bingo_Tools/tools/Animation/"
+  },
+  {
+    name: "IKFK无缝切换",
+    category: "Animation",
+    icon: "assets/python.png",
+    version: "Maya 2020-2026",
+    status: "Animation Tool",
+    summary:
+      "在 IK 和 FK 控制器之间无缝切换，保留当前姿态不变，适合动画制作中快速切换控制模式。",
+    tags: ["IK", "FK", "Switch", "Rig"],
+    features: [
+      "一键在 IK / FK 模式间切换，保持角色姿态不变。",
+      "支持四肢和脊椎的 IK/FK 匹配。",
+      "适用于标准命名规则的绑定控制器。"
+    ],
+    command: `exec(open(r"D:/Maya_Tool/Bingo_Tools/tools/Animation/IKFK无缝切换.py", "r").read())`,
+    path: "D:/Maya_Tool/Bingo_Tools/tools/Animation/"
+  },
+  {
+    name: "Studio Library",
+    category: "Animation",
+    icon: "assets/python.png",
+    version: "Maya 2020-2026",
+    status: "Animation Tool",
+    summary:
+      "动画姿态与动作库管理工具，可保存、预览、导入导出角色姿态和动画片段。",
+    tags: ["Pose", "Library", "Animation", "Preview"],
+    features: [
+      "保存和导出角色姿态到本地库。",
+      "支持姿态缩略图预览和分类管理。",
+      "跨场景导入导出动画数据。",
+      "支持多角色姿态批量管理。"
+    ],
+    command: `exec(open(r"D:/Maya_Tool/Bingo_Tools/tools/Animation/studiolibrary.py", "r").read())`,
+    path: "D:/Maya_Tool/Bingo_Tools/tools/Animation/"
+  },
+  {
+    name: "动画路径",
+    category: "Animation",
+    icon: "assets/python.png",
+    version: "Maya 2020-2026",
+    status: "Animation Tool",
+    summary:
+      "为动画对象生成运动轨迹线（Motion Trail），直观查看运动路径和节奏变化。",
+    tags: ["Motion", "Trail", "Path", "Animation"],
+    features: [
+      "为选中对象生成运动轨迹线。",
+      "支持自定义轨迹颜色和显示时长。",
+      "实时更新跟随动画播放。"
+    ],
+    command: `exec(open(r"D:/Maya_Tool/Bingo_Tools/tools/Animation/动画路径.py", "r").read())`,
+    path: "D:/Maya_Tool/Bingo_Tools/tools/Animation/"
+  },
+  {
+    name: "实时路径",
+    category: "Animation",
+    icon: "assets/python.png",
+    version: "Maya 2020-2026",
+    status: "Animation Tool",
+    summary:
+      "实时运动轨迹显示工具，支持视频匹配模式，可在视口中同步展示动画对象的实时运动轨迹。",
+    tags: ["Motion", "Trail", "Real-time", "Video"],
+    features: [
+      "在视口中实时显示对象运动轨迹。",
+      "支持视频匹配模式，可将轨迹叠加到参考视频上。",
+      "方便检查和调整动画的运动弧线。"
+    ],
+    command: `exec(open(r"D:/Maya_Tool/Bingo_Tools/tools/Animation/实时路径.py", "r").read())`,
+    path: "D:/Maya_Tool/Bingo_Tools/tools/Animation/"
+  },
+  {
+    name: "改帧颜色",
+    category: "Animation",
+    icon: "assets/python.png",
+    version: "Maya 2020-2026",
+    status: "Animation Tool",
+    summary:
+      "修改 Maya 时间轴上关键帧的颜色标记，用于区分不同类型的关键帧或动画阶段。",
+    tags: ["Frame", "Color", "Timeline", "Keyframe"],
+    features: [
+      "自定义关键帧在时间轴上的颜色显示。",
+      "支持按对象或类型批量改色。",
+      "方便在时间轴上快速识别关键帧类型。"
+    ],
+    command: `exec(open(r"D:/Maya_Tool/Bingo_Tools/tools/Animation/改帧颜色.py", "r").read())`,
+    path: "D:/Maya_Tool/Bingo_Tools/tools/Animation/"
+  },
+  {
+    name: "三转四面",
+    category: "Modeling",
+    icon: "assets/python.png",
+    version: "Maya 2020-2026",
+    status: "Modeling Tool",
+    summary:
+      "将选中模型中的三角面批量转换为四边面（Tri to Quad），优化布线拓扑。",
+    tags: ["Modeling", "Tri", "Quad", "Retopo"],
+    features: [
+      "批量为选中模型转换三角面为四边面。",
+      "支持设置转换角度阈值和面数限制。",
+      "保留原始 UV 和材质信息。"
+    ],
+    command: `exec(open(r"D:/Maya_Tool/Bingo_Tools/tools/Modeling/三转四面.py", "r").read())`,
+    path: "D:/Maya_Tool/Bingo_Tools/tools/Modeling/"
+  },
+  {
+    name: "强制显示",
+    category: "Modeling",
+    icon: "assets/python.png",
+    version: "Maya 2020-2026",
+    status: "Modeling Tool",
+    summary:
+      "强制在视口中显示/隐藏指定类型的对象，无视当前视图过滤器设置，方便快速查看模型细节。",
+    tags: ["Display", "Viewport", "Modeling", "Filter"],
+    features: [
+      "一键切换多边形/曲线/骨骼等对象的强制显示。",
+      "无视 Maya 视图面板的显示过滤设置。",
+      "适合在复杂场景中快速检查模型拓扑。"
+    ],
+    command: `exec(open(r"D:/Maya_Tool/Bingo_Tools/tools/Modeling/强制显示.py", "r").read())`,
+    path: "D:/Maya_Tool/Bingo_Tools/tools/Modeling/"
+  },
+  {
+    name: "拓扑",
+    category: "Modeling",
+    icon: "assets/python.png",
+    version: "Maya 2020-2026",
+    status: "搬运工具",
+    summary:
+      "基于 QuadRemesher 的自动重拓扑工具，可将高模自动转为干净的四边面拓扑。搬运工具。",
+    tags: ["Retopo", "QuadRemesher", "搬运"],
+    features: [
+      "调用 QuadRemesher 引擎进行自动重拓扑。",
+      "搬运工具，仅做集成收录。",
+      "需要安装 QuadRemesher 插件才能使用。"
+    ],
+    command: `exec(open(r"D:/Maya_Tool/Bingo_Tools/tools/Modeling/拓扑.py", "r").read())`,
+    path: "D:/Maya_Tool/Bingo_Tools/tools/Modeling/"
+  },
+  {
+    name: "DW Picker",
+    category: "Rigging",
+    icon: "assets/python.png",
+    version: "Maya 2020-2026",
+    status: "搬运工具",
+    summary:
+      "DW Picker 控制器选择面板，可创建自定义按钮面板用于快速选择 Maya 场景中的控制器。搬运工具。",
+    tags: ["Picker", "Controller", "Selection", "搬运"],
+    features: [
+      "创建自定义按钮面板快速选择控制器。",
+      "支持按钮布局、颜色和命名空间管理。",
+      "搬运工具，仅做集成收录。"
+    ],
+    command: `exec(open(r"D:/Maya_Tool/Bingo_Tools/tools/Rigging/DWPicker.py", "r").read())`,
+    path: "D:/Maya_Tool/Bingo_Tools/tools/Rigging/"
+  },
+  {
+    name: "控制搭建",
+    category: "Rigging",
+    icon: "assets/python.png",
+    version: "Maya 2020-2026",
+    status: "Rigging Tool",
+    summary:
+      "批量创建/镜像/合并 Maya 控制器曲线，集成多种预设形状，支持命名规则和镜像中心自定义。",
+    tags: ["Controller", "Rigging", "Curve", "Batch"],
+    features: [
+      "批量创建圆形、方形、箭头、十字等多种预设控制器。",
+      "支持左右对称镜像和自定义镜像中心。",
+      "可将多个曲线合并为单一控制器形状。",
+      "支持命名规则自动匹配和替换。"
+    ],
+    command: `exec(open(r"D:/Maya_Tool/Bingo_Tools/tools/Rigging/控制搭建.py", "r").read())`,
+    path: "D:/Maya_Tool/Bingo_Tools/tools/Rigging/"
   }
 ];
 
