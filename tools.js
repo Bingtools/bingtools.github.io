@@ -493,9 +493,7 @@ vs.show()`,
       "提供常用动画快捷操作面板。",
       "搬运工具，仅做集成收录。",
       "Maya 2021 版本不兼容，请使用其他版本。"
-    ],
-    command: `exec(open(r"D:/Maya_Tool/Bingo_Tools/tools/Animation/Animation Helper.py", "r").read())`,
-    path: "D:/Maya_Tool/Bingo_Tools/tools/Animation/"
+    ]
   },
   {
     name: "IKFK无缝切换",
@@ -510,9 +508,7 @@ vs.show()`,
       "一键在 IK / FK 模式间切换，保持角色姿态不变。",
       "支持四肢和脊椎的 IK/FK 匹配。",
       "适用于标准命名规则的绑定控制器。"
-    ],
-    command: `exec(open(r"D:/Maya_Tool/Bingo_Tools/tools/Animation/IKFK无缝切换.py", "r").read())`,
-    path: "D:/Maya_Tool/Bingo_Tools/tools/Animation/"
+    ]
   },
   {
     name: "Studio Library",
@@ -528,9 +524,7 @@ vs.show()`,
       "支持姿态缩略图预览和分类管理。",
       "跨场景导入导出动画数据。",
       "支持多角色姿态批量管理。"
-    ],
-    command: `exec(open(r"D:/Maya_Tool/Bingo_Tools/tools/Animation/studiolibrary.py", "r").read())`,
-    path: "D:/Maya_Tool/Bingo_Tools/tools/Animation/"
+    ]
   },
   {
     name: "动画路径",
@@ -545,9 +539,7 @@ vs.show()`,
       "为选中对象生成运动轨迹线。",
       "支持自定义轨迹颜色和显示时长。",
       "实时更新跟随动画播放。"
-    ],
-    command: `exec(open(r"D:/Maya_Tool/Bingo_Tools/tools/Animation/动画路径.py", "r").read())`,
-    path: "D:/Maya_Tool/Bingo_Tools/tools/Animation/"
+    ]
   },
   {
     name: "实时路径",
@@ -562,9 +554,7 @@ vs.show()`,
       "在视口中实时显示对象运动轨迹。",
       "支持视频匹配模式，可将轨迹叠加到参考视频上。",
       "方便检查和调整动画的运动弧线。"
-    ],
-    command: `exec(open(r"D:/Maya_Tool/Bingo_Tools/tools/Animation/实时路径.py", "r").read())`,
-    path: "D:/Maya_Tool/Bingo_Tools/tools/Animation/"
+    ]
   },
   {
     name: "改帧颜色",
@@ -579,9 +569,7 @@ vs.show()`,
       "自定义关键帧在时间轴上的颜色显示。",
       "支持按对象或类型批量改色。",
       "方便在时间轴上快速识别关键帧类型。"
-    ],
-    command: `exec(open(r"D:/Maya_Tool/Bingo_Tools/tools/Animation/改帧颜色.py", "r").read())`,
-    path: "D:/Maya_Tool/Bingo_Tools/tools/Animation/"
+    ]
   },
   {
     name: "三转四面",
@@ -596,9 +584,7 @@ vs.show()`,
       "批量为选中模型转换三角面为四边面。",
       "支持设置转换角度阈值和面数限制。",
       "保留原始 UV 和材质信息。"
-    ],
-    command: `exec(open(r"D:/Maya_Tool/Bingo_Tools/tools/Modeling/三转四面.py", "r").read())`,
-    path: "D:/Maya_Tool/Bingo_Tools/tools/Modeling/"
+    ]
   },
   {
     name: "强制显示",
@@ -613,9 +599,7 @@ vs.show()`,
       "一键切换多边形/曲线/骨骼等对象的强制显示。",
       "无视 Maya 视图面板的显示过滤设置。",
       "适合在复杂场景中快速检查模型拓扑。"
-    ],
-    command: `exec(open(r"D:/Maya_Tool/Bingo_Tools/tools/Modeling/强制显示.py", "r").read())`,
-    path: "D:/Maya_Tool/Bingo_Tools/tools/Modeling/"
+    ]
   },
   {
     name: "拓扑",
@@ -630,9 +614,7 @@ vs.show()`,
       "调用 QuadRemesher 引擎进行自动重拓扑。",
       "搬运工具，仅做集成收录。",
       "需要安装 QuadRemesher 插件才能使用。"
-    ],
-    command: `exec(open(r"D:/Maya_Tool/Bingo_Tools/tools/Modeling/拓扑.py", "r").read())`,
-    path: "D:/Maya_Tool/Bingo_Tools/tools/Modeling/"
+    ]
   },
   {
     name: "DW Picker",
@@ -647,9 +629,7 @@ vs.show()`,
       "创建自定义按钮面板快速选择控制器。",
       "支持按钮布局、颜色和命名空间管理。",
       "搬运工具，仅做集成收录。"
-    ],
-    command: `exec(open(r"D:/Maya_Tool/Bingo_Tools/tools/Rigging/DWPicker.py", "r").read())`,
-    path: "D:/Maya_Tool/Bingo_Tools/tools/Rigging/"
+    ]
   },
   {
     name: "控制搭建",
@@ -665,9 +645,7 @@ vs.show()`,
       "支持左右对称镜像和自定义镜像中心。",
       "可将多个曲线合并为单一控制器形状。",
       "支持命名规则自动匹配和替换。"
-    ],
-    command: `exec(open(r"D:/Maya_Tool/Bingo_Tools/tools/Rigging/控制搭建.py", "r").read())`,
-    path: "D:/Maya_Tool/Bingo_Tools/tools/Rigging/"
+    ]
   }
 ];
 
@@ -900,9 +878,12 @@ function renderDetail(tool) {
     '</ul>' +
     screenshotHTML +
     tutorialHTML +
-    '<div class="detail-actions" style="margin-top:16px">' +
-      '<button class="copy-btn" type="button" data-code="' + escapeAttribute(tool.command) + '">Copy Command</button>' +
-    '</div>';
+    (tool.command
+      ? '<div class="detail-actions" style="margin-top:16px">' +
+          '<button class="copy-btn" type="button" data-code="' + escapeAttribute(tool.command) + '">Copy Command</button>' +
+        '</div>'
+      : '<div class="detail-actions" style="margin-top:16px"><span class="toolbox-badge">已集成至 Bingo ToolBox</span></div>'
+    );
 
   // bind copy buttons
   detailPanel.querySelectorAll(".copy-btn, .tutorial-copy-btn").forEach(function (btn) {
