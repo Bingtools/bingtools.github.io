@@ -570,7 +570,8 @@ vs.show()`,
       "方便检查和调整动画的运动弧线。"
     ],
     screenshots: [
-      { "title": "实时路径界面", "src": "assets/new-tools/img_1782093832005.png", "caption": "实时 Motion Trail 显示" }
+      { "title": "实时路径界面", "src": "assets/new-tools/img_1782093832005.png", "caption": "实时 Motion Trail 显示" },
+      { "title": "实时路径使用教程", "src": "assets/new-tools/motiontrail-tutorial.mp4", "caption": "实时路径操作演示" }
     ]
   },
   {
