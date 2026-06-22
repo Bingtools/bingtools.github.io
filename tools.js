@@ -400,7 +400,8 @@ bc.show()`,
             "title": "批量约束界面",
             "src": "assets/tool-09-batch-constraint.png",
             "caption": "批量创建各种约束"
-      }
+      },
+      { "title": "批量约束使用教程", "src": "assets/new-tools/batch-constrain-tutorial.mp4", "caption": "批量约束操作演示" }
 ],
     tutorial: [
       {
