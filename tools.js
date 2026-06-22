@@ -493,6 +493,9 @@ vs.show()`,
       "提供常用动画快捷操作面板。",
       "搬运工具，仅做集成收录。",
       "Maya 2021 版本不兼容，请使用其他版本。"
+    ],
+    screenshots: [
+      { "title": "动画助手演示视频", "src": "assets/new-tools/animation-helper-demo.mp4", "caption": "Animation Helper Update 1.0.3 功能演示" }
     ]
   },
   {
