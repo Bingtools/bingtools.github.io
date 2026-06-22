@@ -326,7 +326,8 @@ sm.show()`,
             "title": "对称镜像界面",
             "src": "assets/tool-07-symmetry-mirror.png",
             "caption": "一键对称镜像骨骼/曲线/网格"
-      }
+      },
+      { "title": "对称镜像使用教程", "src": "assets/new-tools/symmetry-mirror-tutorial.mp4", "caption": "对称镜像操作演示" }
 ],
     tutorial: [
       {
