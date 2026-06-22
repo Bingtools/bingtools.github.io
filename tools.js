@@ -178,7 +178,8 @@ vr.show()`,
             "title": "视频参考界面",
             "src": "assets/tool-03-video-ref.png",
             "caption": "加载参考视频同步时间线逐帧预览"
-      }
+      },
+      { "title": "视频参考使用教程", "src": "assets/new-tools/video-ref-tutorial.mp4", "caption": "视频参考操作演示" }
 ],
     tutorial: [
       {
