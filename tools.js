@@ -495,7 +495,7 @@ vs.show()`,
       "Maya 2021 版本不兼容，请使用其他版本。"
     ],
     screenshots: [
-      { "title": "动画助手演示视频", "src": "assets/new-tools/animation-helper-demo.mp4", "caption": "Animation Helper Update 1.0.3 功能演示" }
+      { "title": "动画助手演示视频", "src": "assets/new-tools/animation-helper-demo.mp4", "caption": "Animation Helper Update 1.3.3 功能演示" }
     ]
   },
   {
