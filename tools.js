@@ -140,7 +140,8 @@ ma.show()`,
             "title": "动画镜像界面",
             "src": "assets/tool-02-mirror-anim.png",
             "caption": "左右配对控制器镜像姿态与关键帧"
-      }
+      },
+      { "title": "动画镜像使用教程", "src": "assets/new-tools/anim-mirror-tutorial.mp4", "caption": "动画镜像操作演示" }
 ],
     tutorial: [
       {
