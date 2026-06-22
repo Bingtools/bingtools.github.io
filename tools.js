@@ -365,7 +365,8 @@ ba.show()`,
             "src": "assets/tool-08-batch-align.png",
             "caption": "批量对齐对象位移/旋转"
       },
-      { "title": "批量对齐使用教程", "src": "assets/new-tools/batch-align-tutorial.mp4", "caption": "批量对齐操作演示" }
+      { "title": "批量对齐使用教程", "src": "assets/new-tools/batch-align-tutorial.mp4", "caption": "批量对齐操作演示" },
+      { "title": "对齐工具教程", "src": "assets/new-tools/align-tool-tutorial.mp4", "caption": "对齐工具功能演示" }
 ],
     tutorial: [
       {
