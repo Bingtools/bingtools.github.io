@@ -1327,6 +1327,17 @@ body::after {
   color: #c8b8f0;
 }
 
+/* ===== ToolBox Badge ===== */
+.toolbox-badge {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--c-accent);
+  background: var(--c-accent-light);
+  padding: 6px 14px;
+  border-radius: var(--radius-xl);
+}
+
 /* ===== Empty State ===== */
 .empty-state {
   grid-column: 1 / -1;
