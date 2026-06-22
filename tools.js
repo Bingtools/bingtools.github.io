@@ -553,7 +553,8 @@ vs.show()`,
       "实时更新跟随动画播放。"
     ],
     screenshots: [
-      { "title": "动画路径界面", "src": "assets/new-tools/img_1782093823108.png", "caption": "Motion Trail 运动轨迹" }
+      { "title": "动画路径界面", "src": "assets/new-tools/img_1782093823108.png", "caption": "Motion Trail 运动轨迹" },
+      { "title": "动画路径使用教程", "src": "assets/new-tools/motionpath-tutorial.mp4", "caption": "Motion Trail 操作演示" }
     ]
   },
   {
