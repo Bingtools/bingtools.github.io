@@ -1338,6 +1338,38 @@ body::after {
   border-radius: var(--radius-xl);
 }
 
+/* ===== Changelog ===== */
+.changelog-list {
+  max-height: 380px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.changelog-item {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--c-border-light);
+}
+
+.changelog-item:last-child { border-bottom: none; }
+
+.changelog-date {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--c-accent);
+  margin-bottom: 4px;
+}
+
+.changelog-text {
+  font-size: 13px;
+  color: var(--c-text-muted);
+  font-weight: 600;
+  line-height: 1.7;
+}
+
+:root[data-page-theme="dark"] .changelog-date { color: #c4b5fd; }
+:root[data-page-theme="dark"] .changelog-text { color: #b8a8e0; }
+:root[data-page-theme="dark"] .changelog-item { border-color: var(--c-border); }
+
 /* ===== Empty State ===== */
 .empty-state {
   grid-column: 1 / -1;
