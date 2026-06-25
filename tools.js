@@ -1528,6 +1528,98 @@ document.addEventListener("click", function (event) {
   document.addEventListener("keydown", function (e) { if (e.key === "Escape") close(); });
 })();
 
+// ===== Changelog Modal =====
+(function () {
+  var overlay = document.getElementById("changelogOverlay");
+  var closeBtn = document.getElementById("changelogClose");
+  var navBtn = document.getElementById("changelogNavBtn");
+  var listEl = document.getElementById("changelogList");
+  var formEl = document.getElementById("changelogForm");
+  var inputEl = document.getElementById("changelogInput");
+  var sendBtn = document.getElementById("changelogSend");
+  var hintEl = document.getElementById("changelogHint");
+  if (!overlay || !closeBtn || !navBtn || !listEl) return;
+
+  var G = localStorage.getItem("bingo_github_token") || (window._GHT || "");
+  var isAuthor = localStorage.getItem("bingo_author_auth") === "bingo2026";
+  var API = "https://api.github.com/repos/Bingtools/Bingo-Tools/issues/88";
+  var entries = [];
+
+  function open() {
+    overlay.classList.add("open"); document.body.style.overflow = "hidden";
+    if (isAuthor) formEl.style.display = "block";
+    load();
+  }
+  function close() { overlay.classList.remove("open"); document.body.style.overflow = ""; }
+
+  function render() {
+    if (entries.length === 0) {
+      listEl.innerHTML = '<p style="color:var(--c-text-muted);text-align:center;padding:20px 0">暂无更新记录</p>';
+      return;
+    }
+    listEl.innerHTML = entries.map(function (e) {
+      var d = e.date, t = e.text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+      return '<div class="changelog-item"><div class="changelog-date">' + d + '</div><div class="changelog-text">' + t + '</div></div>';
+    }).join("");
+  }
+
+  function load() {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", API, true);
+    xhr.setRequestHeader("Authorization", "Bearer " + G);
+    xhr.setRequestHeader("Accept", "application/vnd.github+json");
+    xhr.onload = function () {
+      try {
+        var body = JSON.parse(xhr.responseText).body || "";
+        entries = body.split("\n").filter(function (line) {
+          return line.indexOf("|") > -1;
+        }).map(function (line) {
+          var idx = line.indexOf("|");
+          return { date: line.slice(0, idx).trim(), text: line.slice(idx + 1).trim() };
+        }).reverse();
+        render();
+      } catch (e) { render(); }
+    };
+    xhr.onerror = function () { listEl.innerHTML = '<p style="color:var(--c-text-muted);text-align:center;padding:20px 0">加载失败</p>'; };
+    xhr.send();
+  }
+
+  function submit() {
+    var text = inputEl.value.trim();
+    if (!text) return;
+    sendBtn.disabled = true; hintEl.style.display = "inline"; hintEl.textContent = "提交中...";
+
+    var today = new Date().toISOString().slice(0, 10);
+    var newLine = today + "|" + text;
+    var newBody = entries.reverse().map(function (e) { return e.date + "|" + e.text; }).join("\n") + "\n" + newLine;
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("PATCH", API, true);
+    xhr.setRequestHeader("Authorization", "Bearer " + G);
+    xhr.setRequestHeader("Accept", "application/vnd.github+json");
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onload = function () {
+      sendBtn.disabled = false;
+      if (xhr.status === 200) {
+        inputEl.value = "";
+        hintEl.textContent = "✅ 已提交";
+        setTimeout(function () { hintEl.style.display = "none"; }, 2000);
+        load();
+      } else {
+        hintEl.textContent = "❌ 提交失败";
+      }
+    };
+    xhr.onerror = function () { sendBtn.disabled = false; hintEl.textContent = "❌ 提交失败"; };
+    xhr.send(JSON.stringify({ body: newBody }));
+  }
+
+  navBtn.addEventListener("click", function (e) { e.preventDefault(); open(); });
+  closeBtn.addEventListener("click", close);
+  overlay.addEventListener("click", function (e) { if (e.target === overlay) close(); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") close(); });
+  if (sendBtn) sendBtn.addEventListener("click", submit);
+})();
+
 // ===== Tiger Heart Interaction =====
 (function () {
   var tiger = document.querySelector(".tiger-corner");
