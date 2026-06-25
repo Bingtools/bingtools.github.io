@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Bingo Maya Tools — 专为 Maya 动画师打造的个人工具集</title>
   <meta name="description" content="Bingo Maya Tools — 个人 Maya 动画工具集，涵盖日常制作、P4 流程、表情控制器镜像、蒙皮辅助与工具箱管理。">
-  <link rel="stylesheet" href="styles.css?v=20260625-v8">
+  <link rel="stylesheet" href="styles.css?v=20260625-changelog">
   <link rel="icon" href="assets/bingo-icon.png">
 </head>
 <body>
@@ -28,6 +28,7 @@
         <a href="#download">下载安装</a>
         <a href="#tools">工具列表</a>
         <a href="#tutorial" id="tutorialNavBtn">使用教程</a>
+        <a href="#" id="changelogNavBtn">更新日志</a>
       </nav>
       <div class="theme-switcher" aria-label="页面颜色设置">
         <button class="theme-btn active" type="button" data-theme="light">浅色</button>
@@ -237,6 +238,28 @@ cmds.select(ctrls)</code></pre>
     </div>
   </section>
 
+  <!-- ===== 更新日志弹窗 ===== -->
+  <div class="tutorial-overlay" id="changelogOverlay">
+    <div class="tutorial-modal" style="max-width:640px">
+      <button class="tutorial-close" id="changelogClose">&times;</button>
+      <div class="tutorial-modal-header">
+        <h2>📋 更新日志</h2>
+        <p>每次工具更新的记录</p>
+      </div>
+      <div class="tutorial-modal-body">
+        <div class="changelog-list" id="changelogList">
+          <p style="color:var(--c-text-muted);text-align:center;padding:20px 0">加载中...</p>
+        </div>
+        <div class="changelog-form" id="changelogForm" style="display:none">
+          <hr style="border-color:var(--c-border-light);margin:16px 0">
+          <textarea id="changelogInput" class="msg-input" placeholder="新的更新内容..." maxlength="300" rows="2" style="width:100%"></textarea>
+          <button class="copy-btn" type="button" id="changelogSend" style="margin-top:8px;font-size:13px;padding:7px 20px">提交更新</button>
+          <span class="changelog-hint" id="changelogHint" style="display:none;margin-left:10px;font-size:12px;color:var(--c-accent);font-weight:700"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <footer class="footer">
     <div class="footer-inner">
       <p class="footer-tagline">献给每一位在 Maya 中雕琢细节的动画人</p>
@@ -254,7 +277,7 @@ cmds.select(ctrls)</code></pre>
     return ["g","h","p","_"].join("") + s + e;
   })();
   </script>
-  <script src="tools.js?v=20260625-v8"></script>
+  <script src="tools.js?v=20260625-changelog"></script>
   <script>
   // ===== 全局爱心计数（GitHub Issue 存储，所有访客共享）=====
   (function () {
