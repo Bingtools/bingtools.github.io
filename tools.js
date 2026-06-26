@@ -637,24 +637,6 @@ vs.show()`,
     ]
   },
   {
-    name: "拓扑",
-    category: "Modeling",
-    icon: "assets/python.png",
-    version: "Maya 2020-2026",
-    status: "搬运工具",
-    summary:
-      "基于 QuadRemesher 的自动重拓扑工具，可将高模自动转为干净的四边面拓扑。搬运工具。",
-    tags: ["Retopo", "QuadRemesher", "搬运"],
-    features: [
-      "调用 QuadRemesher 引擎进行自动重拓扑。",
-      "搬运工具，仅做集成收录。",
-      "需要安装 QuadRemesher 插件才能使用。"
-    ],
-    screenshots: [
-      { "title": "拓扑界面", "src": "assets/new-tools/img_1781916997778.png", "caption": "QuadRemesher 自动重拓扑" }
-    ]
-  },
-  {
     name: "DW Picker",
     category: "Rigging",
     icon: "assets/python.png",
