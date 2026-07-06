@@ -680,6 +680,96 @@ vs.show()`,
             "code": "1. 选择形状类型和大小\n2. 设置颜色\n3. 点击「创建单个」\n4. 或选择骨骼后点击「为骨骼批量创建」"
       }
     ]
+  },
+  {
+    name: "平滑曲线",
+    category: "Animation",
+    icon: "assets/python.png",
+    version: "Maya 2020-2026",
+    status: "Animation Tool",
+    summary:
+      "平滑动画曲线，一键消除关键帧抖动与毛刺，让运动更顺滑自然。",
+    tags: ["Curve", "Smooth", "Animation", "Filter"],
+    features: [
+      "对选中曲线批量做平滑处理。",
+      "可调节平滑强度，避免过度丢失细节。",
+      "有效消除动作抖动和高频噪点。"
+    ],
+    screenshots: [
+      { "title": "平滑曲线界面", "src": "assets/new-tools/smooth-curve.png", "caption": "平滑动画曲线消除抖动" }
+    ]
+  },
+  {
+    name: "路径描绘",
+    category: "Animation",
+    icon: "assets/python.png",
+    version: "Maya 2020-2026",
+    status: "Animation Tool",
+    summary:
+      "增强版运动轨迹描绘工具，可视化对象运动路径，方便检查与调整运动弧线。",
+    tags: ["Motion", "Trail", "Path", "Animation"],
+    features: [
+      "为选中对象生成可视化运动轨迹。",
+      "整合多种轨迹显示与编辑功能。",
+      "直观检查运动弧线与节奏。"
+    ],
+    screenshots: [
+      { "title": "路径描绘界面", "src": "assets/new-tools/path-draw.png", "caption": "可视化运动轨迹描绘" }
+    ]
+  },
+  {
+    name: "模面显隐",
+    category: "Modeling",
+    icon: "assets/python.png",
+    version: "Maya 2020-2026",
+    status: "Modeling Tool",
+    summary:
+      "快速切换模型面片的显示与隐藏，方便在复杂场景中查看和编辑指定模型。",
+    tags: ["Display", "Face", "Modeling", "Toggle"],
+    features: [
+      "一键显示/隐藏选中模型的面片。",
+      "适合在密集场景中隔离查看模型。",
+      "提升建模与检查效率。"
+    ],
+    screenshots: [
+      { "title": "模面显隐界面", "src": "assets/new-tools/face-toggle.png", "caption": "模型面片显示/隐藏切换" }
+    ]
+  },
+  {
+    name: "曲线显示调整",
+    category: "Rigging",
+    icon: "assets/python.png",
+    version: "Maya 2020-2026",
+    status: "Rigging Tool",
+    summary:
+      "调整控制器曲线的显示样式，如线宽、颜色等，让绑定控制器更清晰易辨。",
+    tags: ["Controller", "Curve", "Display", "Rigging"],
+    features: [
+      "批量调整控制器曲线线宽。",
+      "自定义曲线显示样式与颜色。",
+      "让控制器在视口中更易识别。"
+    ],
+    screenshots: [
+      { "title": "曲线显示调整界面", "src": "assets/new-tools/curve-display.png", "caption": "调整控制器曲线显示样式" }
+    ]
+  },
+  {
+    name: "文件预览",
+    category: "Others",
+    icon: "assets/python.png",
+    version: "Maya 2020-2026",
+    status: "Utility",
+    summary:
+      "在导入/打开前快速预览 Maya 文件内容，帮助快速定位所需资源。",
+    tags: ["File", "Preview", "Browser", "Utility"],
+    features: [
+      "预览 Maya 场景文件内容。",
+      "快速定位所需资源，减少反复打开。",
+      "配合路径指认使用效率更高。"
+    ],
+    screenshots: [
+      { "title": "文件预览界面", "src": "assets/new-tools/file-preview.png", "caption": "快速预览 Maya 文件内容" }
+    ]
   }
 ];
 
