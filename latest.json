@@ -1,7 +1,7 @@
 {
   "version": "8.8.52",
   "title": "Bingo_ToolBox 新版本可用",
-  "message": "这里填写更新内容。测试弹窗时，把 version 改成比本地更高，例如 8.8.52。",
+  "message": "测试更新提示：检测到 Bingo_ToolBox 有新版本可用，点击下载可打开安装包页面。",
   "download_url": "https://bingtools.github.io/",
   "force": false
 }
