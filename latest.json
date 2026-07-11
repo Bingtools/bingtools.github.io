@@ -1,5 +1,5 @@
 {
-  "version": "8.8.51",
+  "version": "8.8.52",
   "title": "Bingo_ToolBox 新版本可用",
   "message": "这里填写更新内容。测试弹窗时，把 version 改成比本地更高，例如 8.8.52。",
   "download_url": "https://bingtools.github.io/",
