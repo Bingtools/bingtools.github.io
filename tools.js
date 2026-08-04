@@ -18,7 +18,7 @@ const tools = [
     command: `// 在 Maya Script Editor 的 Python 标签中执行:
 exec(open(r"D:/Maya_Tool/Bingo_Tools/install.mel", "r").read())`,
     path: "D:/Maya_Tool/Bingo_Tools/",
-    download: "https://github.com/Bingtools/Bingo-Tools/releases/download/toolbox-latest/Bingo_ToolBox_8.8.52.exe",
+    download: "https://github.com/Bingtools/Bingo-Tools/releases/download/toolbox-latest/Bingo_ToolBox_v8.8.55_20260804.exe",
     screenshots: [
       {
         title: "Bingo ToolBox 使用演示",
@@ -98,7 +98,8 @@ exec(open(r"D:/Maya_Tool/Bingo_Tools/install.mel", "r").read())`,
     command: `// 暴力帧拷贝
 import Bingo_ToolBox.tools.animation.copy_paste as cp
 cp.show()`,
-    path: "D:/Codex/maya/Bingo_ToolBox_01/tools/animation/",
+    path: "D:/Codex/maya/Bingo_ToolBox_01/tools/animation/"
+,
     screenshots: [
       {
             "title": "暴力帧拷贝界面",
@@ -134,7 +135,8 @@ cp.show()`,
     command: `// 动画镜像
 import Bingo_ToolBox.tools.animation.mirror_anim as ma
 ma.show()`,
-    path: "D:/Codex/maya/Bingo_ToolBox_01/tools/animation/",
+    path: "D:/Codex/maya/Bingo_ToolBox_01/tools/animation/"
+,
     screenshots: [
       {
             "title": "动画镜像界面",
@@ -172,7 +174,8 @@ ma.show()`,
     command: `// 视频参考
 import Bingo_ToolBox.tools.animation.video_ref as vr
 vr.show()`,
-    path: "D:/Codex/maya/Bingo_ToolBox_01/tools/animation/",
+    path: "D:/Codex/maya/Bingo_ToolBox_01/tools/animation/"
+,
     screenshots: [
       {
             "title": "视频参考界面",
@@ -209,7 +212,8 @@ vr.show()`,
     command: `// 路径指认
 import Bingo_ToolBox.tools.animation.file_browser as fb
 fb.show()`,
-    path: "D:/Codex/maya/Bingo_ToolBox_01/tools/animation/",
+    path: "D:/Codex/maya/Bingo_ToolBox_01/tools/animation/"
+,
     screenshots: [
       {
             "title": "路径指认界面",
@@ -246,7 +250,8 @@ fb.show()`,
     command: `// 批量导入
 import Bingo_ToolBox.tools.animation.batch_import as bi
 bi.show()`,
-    path: "D:/Codex/maya/Bingo_ToolBox_01/tools/animation/",
+    path: "D:/Codex/maya/Bingo_ToolBox_01/tools/animation/"
+,
     screenshots: [
       {
             "title": "批量导入界面",
@@ -283,7 +288,8 @@ bi.show()`,
     command: `// 创建控制器
 import Bingo_ToolBox.tools.rigging.create_ctrl as cc
 cc.show()`,
-    path: "D:/Codex/maya/Bingo_ToolBox_01/tools/rigging/",
+    path: "D:/Codex/maya/Bingo_ToolBox_01/tools/rigging/"
+,
     screenshots: [
       {
             "title": "创建控制器界面",
@@ -320,7 +326,8 @@ cc.show()`,
     command: `// 对称镜像
 import Bingo_ToolBox.tools.rigging.symmetry_mirror as sm
 sm.show()`,
-    path: "D:/Codex/maya/Bingo_ToolBox_01/tools/rigging/",
+    path: "D:/Codex/maya/Bingo_ToolBox_01/tools/rigging/"
+,
     screenshots: [
       {
             "title": "对称镜像界面",
@@ -358,7 +365,8 @@ sm.show()`,
     command: `// 批量对齐
 import Bingo_ToolBox.tools.rigging.batch_align as ba
 ba.show()`,
-    path: "D:/Codex/maya/Bingo_ToolBox_01/tools/rigging/",
+    path: "D:/Codex/maya/Bingo_ToolBox_01/tools/rigging/"
+,
     screenshots: [
       {
             "title": "批量对齐界面",
@@ -396,7 +404,8 @@ ba.show()`,
     command: `// 批量约束
 import Bingo_ToolBox.tools.rigging.batch_constraint as bc
 bc.show()`,
-    path: "D:/Codex/maya/Bingo_ToolBox_01/tools/rigging/",
+    path: "D:/Codex/maya/Bingo_ToolBox_01/tools/rigging/"
+,
     screenshots: [
       {
             "title": "批量约束界面",
@@ -435,7 +444,8 @@ bc.show()`,
     command: `// P4 连接器
 import Bingo_ToolBox.tools.others.p4_connector as p4
 p4.show()`,
-    path: "D:/Codex/maya/Bingo_ToolBox_01/tools/others/",
+    path: "D:/Codex/maya/Bingo_ToolBox_01/tools/others/"
+,
     screenshots: [
       {
             "title": "P4 连接器界面",
@@ -471,7 +481,8 @@ p4.show()`,
     command: `// 杀毒
 import Bingo_ToolBox.tools.others.virus_scan as vs
 vs.show()`,
-    path: "D:/Codex/maya/Bingo_ToolBox_01/tools/others/",
+    path: "D:/Codex/maya/Bingo_ToolBox_01/tools/others/"
+,
     screenshots: [
       {
             "title": "杀毒工具界面",
