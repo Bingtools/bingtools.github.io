@@ -18,7 +18,7 @@ const tools = [
     command: `// 在 Maya Script Editor 的 Python 标签中执行:
 exec(open(r"D:/Maya_Tool/Bingo_Tools/install.mel", "r").read())`,
     path: "D:/Maya_Tool/Bingo_Tools/",
-    download: "https://github.com/Bingtools/bingtools.github.io/releases/download/toolbox-v8.8.56/Bingo_ToolBox_v8.8.56_20260808_2101_Installer.exe",
+    download: "https://github.com/Bingtools/bingtools.github.io/releases/download/toolbox-v8.8.56/Bingo_ToolBox_v8.8.56_20260813.exe",
     screenshots: [
       {
         title: "Bingo ToolBox 使用演示",
