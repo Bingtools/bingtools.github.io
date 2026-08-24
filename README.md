@@ -1,21 +1,9 @@
-# Bingo Maya Tools Site
+# Bingo ToolBox Website
 
-Static GitHub Pages site for Maya tool documentation and launch snippets.
+Official GitHub Pages source for Bingo ToolBox.
 
-## Local Preview
+- Main site: `/` and `/stellar-source/`
+- Tool workbench: `/workbench/`
+- Maya support: 2020–2026
 
-Open this file in a browser:
-
-```text
-D:/Codex/maya/maya_tools_site/index.html
-```
-
-## Add A Tool
-
-Edit `tools.js` and add a new item to the `tools` array.
-
-## Publish To GitHub Pages
-
-Option A: create a repository named `your-name.github.io`, then copy all files in this folder to the repository root.
-
-Option B: copy this folder content to a repository `docs` folder, then set GitHub Pages source to `docs`.
+The pre-replacement site is preserved on branch `backup-before-local-assets-2026-08-24`.

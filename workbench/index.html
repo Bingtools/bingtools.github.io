@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bingo Production Workbench — Maya 技术工作台</title>
+  <meta name="description" content="Bingo Maya Tools 专业技术工作台：浏览工具、操作说明与安装方式。">
+  <link rel="stylesheet" href="/workbench/workbench.css?v=workbench-1">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="side-rail" id="mainNav">
+      <a class="product-mark" href="#overview" aria-label="Bingo Production Workbench">
+        <img src="https://bingtools.github.io/assets/bingo-icon.png" alt="">
+        <span><b>BINGO</b><small>PRODUCTION TOOLS</small></span>
+      </a>
+
+      <div class="rail-section-label">WORKSPACE</div>
+      <nav class="rail-nav" aria-label="主导航">
+        <a class="active" href="#overview"><i>01</i><span>总览</span><kbd>OVERVIEW</kbd></a>
+        <a href="#tools"><i>02</i><span>工具注册表</span><kbd>REGISTRY</kbd></a>
+        <a href="#download"><i>03</i><span>安装与部署</span><kbd>DEPLOY</kbd></a>
+        <button type="button" id="tutorialNavBtn"><i>04</i><span>操作文档</span><kbd>DOCS</kbd></button>
+      </nav>
+
+      <div class="rail-system">
+        <div class="rail-section-label">SYSTEM</div>
+        <dl>
+          <div><dt>STATUS</dt><dd><span class="live-dot"></span>LOCAL READY</dd></div>
+          <div><dt>VERSION</dt><dd>8.8.61</dd></div>
+          <div><dt>MAYA</dt><dd>2020—2026</dd></div>
+          <div><dt>MODULES</dt><dd>40</dd></div>
+        </dl>
+      </div>
+
+      <div class="rail-foot">
+        <span>LOCAL DESIGN PROTOTYPE</span>
+        <small>仓库与线上版本未修改</small>
+      </div>
+    </aside>
+
+    <div class="workspace">
+      <header class="topbar">
+        <button class="menu-toggle" id="mobileMenuBtn" type="button" aria-label="打开导航" aria-expanded="false"><span></span><span></span><span></span></button>
+        <div class="breadcrumbs"><span>BINGO</span><i>/</i><b>PRODUCTION WORKBENCH</b></div>
+        <div class="topbar-actions">
+          <div class="runtime"><span class="live-dot"></span><b>RUNTIME ONLINE</b><small>LOCALHOST:4173</small></div>
+          <a class="top-action" href="#download">INSTALL PACKAGE</a>
+        </div>
+      </header>
+
+      <main>
+        <section class="overview" id="overview">
+          <div class="overview-copy">
+            <div class="eyebrow">MAYA PIPELINE / LOCAL REGISTRY</div>
+            <h1>Production<br>Workbench</h1>
+            <p>面向 Maya 动画师与 TD 的本地制作系统。集中检索、检查和部署动画、绑定、模型、特效与流程工具。</p>
+            <div class="overview-actions">
+              <a class="command primary" href="#tools"><span>OPEN REGISTRY</span><kbd>↵</kbd></a>
+              <button class="command" type="button" id="previewDownloadBtn"><span>GET INSTALLER</span><kbd>EXE</kbd></button>
+            </div>
+          </div>
+
+          <div class="system-monitor" aria-label="工具系统状态">
+            <div class="monitor-head"><span>REGISTRY MONITOR</span><b><i></i>LIVE</b></div>
+            <div class="monitor-primary"><small>REGISTERED MODULES</small><strong>40</strong><span>39 INTERNAL + 1 STANDALONE</span></div>
+            <div class="monitor-grid">
+              <div><small>ANIMATION</small><b>15</b><span>37.5%</span></div>
+              <div><small>RIGGING</small><b>11</b><span>27.5%</span></div>
+              <div><small>MODELING</small><b>04</b><span>10.0%</span></div>
+              <div><small>FX / OTHER</small><b>10</b><span>25.0%</span></div>
+            </div>
+            <div class="monitor-log"><span>SCAN</span><code>D:\maya_tool\Bingo_Tools</code><b>OK</b></div>
+          </div>
+        </section>
+
+        <section class="registry" id="tools">
+          <header class="panel-heading">
+            <div><span>02 / TOOL REGISTRY</span><h2>工具注册表</h2><p>从本地工具箱读取工具名称、分类、启动器、操作文档与兼容信息。</p></div>
+            <div class="registry-total"><strong id="previewToolCount">40</strong><span>VISIBLE<br>MODULES</span></div>
+          </header>
+
+          <div class="registry-toolbar">
+            <label class="registry-search"><span>⌕</span><input id="searchInput" type="search" placeholder="搜索工具名称、用途或分类..."><kbd>CTRL K</kbd></label>
+            <div id="filterBar" class="filters"></div>
+          </div>
+
+          <div class="content-grid">
+            <div class="tool-list">
+              <div class="list-head"><span>MODULE / DESCRIPTION</span><span>CLASS / TAGS</span></div>
+              <div id="toolGrid" class="tool-grid registry-collapsed"></div>
+              <button class="show-more-btn" id="showMoreBtn" type="button">LOAD ALL MODULES <span>↓</span></button>
+            </div>
+            <aside id="detailPanel" class="detail-panel"></aside>
+          </div>
+        </section>
+
+        <section class="deploy-panel" id="download">
+          <header class="panel-heading compact">
+            <div><span>03 / DEPLOYMENT</span><h2>安装与部署</h2><p>通过 EXE 安装包自动注册 Maya module，无需手动配置路径。</p></div>
+            <div class="deploy-version"><small>RELEASE</small><b>8.8.61</b></div>
+          </header>
+          <div class="deploy-console">
+            <div class="deploy-specs">
+              <span><small>TARGET</small><b>Maya 2020—2026</b></span>
+              <span><small>PACKAGE</small><b>Windows EXE</b></span>
+              <span><small>MODULES</small><b>40 Registered</b></span>
+              <span><small>INTEGRITY</small><b>SHA256 Available</b></span>
+            </div>
+            <div class="deploy-actions">
+              <button class="deploy-button" type="button" id="previewDownloadBtnSecondary"><span>DOWNLOAD INSTALLER</span><small>PUBLIC RELEASE / v8.8.56</small></button>
+              <button class="docs-button" type="button" id="tutorialShortcut">OPEN INSTALL GUIDE</button>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div class="modal-layer" id="tutorialOverlay" aria-hidden="true">
+    <div class="docs-window" role="dialog" aria-modal="true" aria-labelledby="docsTitle">
+      <header><div><span>DOCUMENTATION / QUICK START</span><h2 id="docsTitle">Bingo ToolBox 使用手册</h2></div><button type="button" id="tutorialClose" aria-label="关闭教程">×</button></header>
+      <div class="docs-body">
+        <ol>
+          <li><b>安装工具箱</b><p>运行 EXE 安装程序并选择工具箱目录。安装器会自动创建 Maya module 入口。</p><code>默认路径 D:\Maya_Tool\Bingo_Tools</code></li>
+          <li><b>重新启动 Maya</b><p>安装完成后重新启动 Maya，从顶部 Bingo 菜单进入 ToolBox。</p><code>Maya → Bingo → ToolBox</code></li>
+          <li><b>查找与运行工具</b><p>按动画、绑定、模型或特效分类筛选，选择工具后查看功能、步骤和注意事项。</p></li>
+          <li><b>添加自定义脚本</b><p>在工具箱内新建工具，填写名称、说明、图标和 Python / MEL 执行命令。</p></li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="previewToast" role="status"></div>
+  <script src="/workbench/actual-tools.js?v=workbench-1"></script>
+  <script src="/workbench/workbench.js?v=workbench-1"></script>
+</body>
+</html>
