@@ -14,9 +14,14 @@
       this.dragY = 0;
       this.pointerDown = false;
       this.lastPointer = null;
-      this.init();
-      this.bind();
-      this.animate();
+      try {
+        this.init();
+        this.bind();
+        this.animate();
+      } catch (error) {
+        this.container.replaceChildren();
+        document.body.classList.add('no-webgl');
+      }
     }
 
     init() {
@@ -31,18 +36,70 @@
       this.container.appendChild(this.renderer.domElement);
       this.clock = new THREE.Clock();
 
+      const createParticleTexture = (type) => {
+        const canvas = document.createElement('canvas');
+        canvas.width = 64;
+        canvas.height = 64;
+        const context = canvas.getContext('2d');
+        context.clearRect(0, 0, 64, 64);
+        if (type === 'star') {
+          const glow = context.createRadialGradient(32, 32, 1, 32, 32, 31);
+          glow.addColorStop(0, 'rgba(255,255,255,.82)');
+          glow.addColorStop(.18, 'rgba(255,255,255,.28)');
+          glow.addColorStop(.58, 'rgba(255,255,255,.08)');
+          glow.addColorStop(1, 'rgba(255,255,255,0)');
+          context.fillStyle = glow;
+          context.fillRect(0, 0, 64, 64);
+          context.save();
+          context.translate(32, 32);
+          context.beginPath();
+          for (let index = 0; index < 8; index += 1) {
+            const angle = -Math.PI / 2 + index * Math.PI / 4;
+            const radius = index % 2 === 0 ? 27 : 5.2;
+            const x = Math.cos(angle) * radius;
+            const y = Math.sin(angle) * radius;
+            if (index === 0) context.moveTo(x, y);
+            else context.lineTo(x, y);
+          }
+          context.closePath();
+          context.shadowColor = 'rgba(255,255,255,.72)';
+          context.shadowBlur = 5;
+          context.fillStyle = 'rgba(255,255,255,.96)';
+          context.fill();
+          context.restore();
+        } else {
+          const dot = context.createRadialGradient(32, 32, 0, 32, 32, 30);
+          dot.addColorStop(0, 'rgba(255,255,255,1)');
+          dot.addColorStop(.2, 'rgba(255,255,255,.92)');
+          dot.addColorStop(.52, 'rgba(255,255,255,.34)');
+          dot.addColorStop(1, 'rgba(255,255,255,0)');
+          context.fillStyle = dot;
+          context.fillRect(0, 0, 64, 64);
+        }
+        const texture = typeof THREE.CanvasTexture === 'function' ? new THREE.CanvasTexture(canvas) : new THREE.Texture(canvas);
+        texture.needsUpdate = true;
+        texture.minFilter = THREE.LinearFilter;
+        texture.magFilter = THREE.LinearFilter;
+        return texture;
+      };
+      const starTexture = createParticleTexture('star');
+      const dotTexture = createParticleTexture('dot');
+
       const foregroundGeometry = new THREE.BufferGeometry();
       const foregroundCount = innerWidth < 800 ? 1800 : 3000;
       const foregroundPositions = new Float32Array(foregroundCount * 3);
       for (let i = 0; i < foregroundPositions.length; i++) foregroundPositions[i] = (Math.random() - .5) * 25;
       foregroundGeometry.setAttribute('position', new THREE.BufferAttribute(foregroundPositions, 3));
       const foregroundMaterial = new THREE.PointsMaterial({
-        size: .03,
+        size: 2.4,
         color: 0xffffff,
+        map: starTexture,
         transparent: true,
         opacity: .82,
         blending: THREE.AdditiveBlending,
-        depthWrite: false
+        depthWrite: false,
+        alphaTest: .015,
+        sizeAttenuation: false
       });
       this.foreground = new THREE.Points(foregroundGeometry, foregroundMaterial);
       this.scene.add(this.foreground);
@@ -53,12 +110,15 @@
       for (let i = 0; i < backgroundPositions.length; i++) backgroundPositions[i] = (Math.random() - .5) * 80;
       backgroundGeometry.setAttribute('position', new THREE.BufferAttribute(backgroundPositions, 3));
       const backgroundMaterial = new THREE.PointsMaterial({
-        size: .05,
+        size: 1.55,
         color: 0x88ccff,
+        map: dotTexture,
         transparent: true,
         opacity: .58,
         blending: THREE.AdditiveBlending,
-        depthWrite: false
+        depthWrite: false,
+        alphaTest: .01,
+        sizeAttenuation: false
       });
       this.background = new THREE.Points(backgroundGeometry, backgroundMaterial);
       this.scene.add(this.background);
@@ -69,12 +129,15 @@
       for (let i = 0; i < accentPositions.length; i++) accentPositions[i] = (Math.random() - .5) * 38;
       accentGeometry.setAttribute('position', new THREE.BufferAttribute(accentPositions, 3));
       const accentMaterial = new THREE.PointsMaterial({
-        size: .085,
+        size: 6.4,
         color: 0xa788ff,
+        map: starTexture,
         transparent: true,
-        opacity: .68,
+        opacity: .62,
         blending: THREE.AdditiveBlending,
-        depthWrite: false
+        depthWrite: false,
+        alphaTest: .015,
+        sizeAttenuation: false
       });
       this.accents = new THREE.Points(accentGeometry, accentMaterial);
       this.scene.add(this.accents);
@@ -121,6 +184,8 @@
       requestAnimationFrame(() => this.animate());
     }
   }
+
+  new CosmicUniverse('canvas-container');
 
   const source = window.BINGO_LOCAL_TOOL_PREVIEW;
   if (!source) return;
@@ -186,6 +251,8 @@
   let galleryDragMoved = false;
   let galleryPointerCardIndex = null;
   let galleryPointerId = null;
+  let catalogCategory = 'all';
+  let catalogQuery = '';
   const panelReturnFocus = new Map();
 
   const categoryLabel = (tool) => categoryInfo[tool.category]?.label || tool.category;
@@ -200,6 +267,72 @@
       ownershipClass: thirdParty ? 'third-party' : 'self-developed'
     };
   }
+
+  function catalogSearchText(tool) {
+    return [tool.name, tool.desc, tool.category, categoryLabel(tool), ...(tool.tags || [])].join(' ').toLocaleLowerCase('zh-CN');
+  }
+
+  function renderCatalogFilters() {
+    const host = document.getElementById('catalogFilters');
+    const keys = ['all', ...categoryKeys];
+    host.innerHTML = keys.map((key) => {
+      const label = key === 'all' ? '全部' : categoryInfo[key].label;
+      const count = key === 'all' ? allTools.length : allTools.filter((tool) => tool.category === key).length;
+      return `<button class="${catalogCategory === key ? 'active' : ''}" type="button" data-catalog-category="${esc(key)}" aria-pressed="${catalogCategory === key}">${esc(label)}<span>${String(count).padStart(2, '0')}</span></button>`;
+    }).join('');
+  }
+
+  function catalogCard(tool, index) {
+    const credit = toolCredit(tool);
+    const displayIndex = String(index + 1).padStart(2, '0');
+    const tags = (tool.tags || []).slice(0, 3);
+    return `<button class="catalog-card" type="button" data-tool-index="${index}" data-category="${esc(tool.category)}" data-index="${displayIndex}" aria-label="打开${esc(tool.name)}使用说明">
+      <span class="catalog-card-head">
+        <img class="catalog-card-icon" src="${iconUrl(tool)}" alt="${esc(tool.name)}工具图标" loading="lazy">
+        <span class="catalog-card-identity"><small>${esc(tool.category.toUpperCase())} / ${esc(categoryLabel(tool))}</small><strong>${esc(tool.name)}</strong></span>
+        <span class="catalog-origin ${credit.ownershipClass}">${esc(credit.ownership)}</span>
+      </span>
+      <span class="catalog-card-desc">${esc(tool.desc)}</span>
+      <span class="catalog-card-tags">${tags.map((tag) => `<span>${esc(tag)}</span>`).join('')}</span>
+      <span class="catalog-card-footer"><small>作者：${esc(credit.author)}</small><b>查看使用说明 <i>↗</i></b></span>
+    </button>`;
+  }
+
+  function renderToolCatalog() {
+    renderCatalogFilters();
+    const normalizedQuery = catalogQuery.trim().toLocaleLowerCase('zh-CN');
+    const entries = allTools
+      .map((tool, index) => ({ tool, index }))
+      .filter(({ tool }) => (catalogCategory === 'all' || tool.category === catalogCategory)
+        && (!normalizedQuery || catalogSearchText(tool).includes(normalizedQuery)));
+    const grid = document.getElementById('catalogGrid');
+    grid.innerHTML = entries.map(({ tool, index }) => catalogCard(tool, index)).join('');
+    document.getElementById('catalogCount').textContent = String(entries.length);
+    document.getElementById('catalogEmpty').hidden = entries.length > 0;
+    grid.querySelectorAll('.catalog-card-icon').forEach((image) => {
+      image.addEventListener('error', () => {
+        image.onerror = null;
+        image.src = fallbackToolIcon;
+      }, { once: true });
+    });
+  }
+
+  document.getElementById('catalogSearch').addEventListener('input', (event) => {
+    catalogQuery = event.currentTarget.value;
+    renderToolCatalog();
+  });
+  document.getElementById('catalogFilters').addEventListener('click', (event) => {
+    const button = event.target.closest('[data-catalog-category]');
+    if (!button) return;
+    catalogCategory = button.dataset.catalogCategory;
+    renderToolCatalog();
+  });
+  document.getElementById('catalogGrid').addEventListener('click', (event) => {
+    const card = event.target.closest('.catalog-card');
+    if (!card) return;
+    openToolRecord(allTools[Number(card.dataset.toolIndex)]);
+  });
+  renderToolCatalog();
 
   function renderCategories() {
     const host = document.getElementById('categorySwitch');
@@ -227,7 +360,7 @@
   function toolCard(tool, index) {
     return `<button class="orbit-card" type="button" data-index="${index}" aria-label="${esc(tool.name)}">
       <span class="card-inner"><span class="card-glare"></span><span class="card-top">
-        <span class="card-index"><small>LOCAL ARCHIVE</small><b>${String(index + 1).padStart(2, '0')} / ${String(currentItems.length).padStart(2, '0')}</b></span>
+        <span class="card-index"><small>MAYA ARCHIVE</small><b>${String(index + 1).padStart(2, '0')} / ${String(currentItems.length).padStart(2, '0')}</b></span>
         <img class="card-icon" src="${iconUrl(tool)}" alt="">
       </span><span class="card-main"><small>${esc(categoryLabel(tool))} / ${esc(tool.category.toUpperCase())}</small><h2>${esc(tool.name)}</h2><p>${esc(tool.desc)}</p></span>
       <span class="card-bottom"><span>${esc(tool.tags.slice(0, 2).join(' · '))}</span><b>OPEN ARCHIVE ↗</b></span></span>
@@ -235,12 +368,13 @@
   }
 
   function updateCard(item, index) {
-    return `<button class="orbit-card update-card" type="button" data-index="${index}" aria-label="${esc(item.title)}">
+    const previewChanges = item.changes.slice(0, 2);
+    return `<button class="orbit-card update-card" type="button" data-index="${index}" aria-label="查看 ${esc(item.version)} 更新日志：${esc(item.title)}">
       <span class="card-inner"><span class="card-glare"></span><span class="card-top">
         <span class="card-index"><small>${esc(item.date)}</small><b>${String(index + 1).padStart(2, '0')} / ${String(currentItems.length).padStart(2, '0')}</b></span>
         <span class="update-version">${esc(item.version)}</span>
-      </span><span class="card-main"><small>${esc(item.typeLabel)} / CHANGE LOG</small><h2>${esc(item.title)}</h2><p>${esc(item.summary)}</p></span>
-      <span class="card-bottom"><span>${esc(item.tags.join(' · '))}</span><b>READ UPDATE ↗</b></span></span>
+      </span><span class="card-main"><small>更新内容 / ${esc(item.typeLabel)}</small><h2>${esc(item.title)}</h2><ul class="update-card-changes">${previewChanges.map((change) => `<li>${esc(change)}</li>`).join('')}</ul></span>
+      <span class="card-bottom"><span>${esc(item.tags.join(' · '))}</span><b>查看完整日志 ↗</b></span></span>
     </button>`;
   }
 
@@ -252,8 +386,11 @@
       card.addEventListener('click', () => {
         const index = Number(card.dataset.index);
         if (dragMoved) return;
-        if (index === activeIndex) openActiveItem();
-        else { activeIndex = index; updateStack(false); }
+        if (index !== activeIndex) {
+          activeIndex = index;
+          updateStack(false);
+        }
+        openActiveItem();
       });
     });
     updateStack(true);
@@ -323,6 +460,25 @@
     if (event.deltaY < 0 && activeIndex > 0) { move(-1); lastWheel = now; }
   }, { passive: true });
 
+  function orbitCardIndexAtPoint(clientX, clientY) {
+    const candidates = [...stage.querySelectorAll('.orbit-card')]
+      .map((card) => {
+        const index = Number(card.dataset.index);
+        const rect = card.getBoundingClientRect();
+        const visible = Number.parseFloat(card.style.opacity || '0') > .05 && card.style.pointerEvents !== 'none';
+        const inside = clientX >= rect.left && clientX <= rect.right && clientY >= rect.top && clientY <= rect.bottom;
+        return {
+          index,
+          valid: visible && inside && index !== activeIndex,
+          zIndex: Number.parseInt(card.style.zIndex || '0', 10),
+          distance: Math.abs(clientY - (rect.top + rect.height / 2)) + Math.abs(clientX - (rect.left + rect.width / 2)) * .08
+        };
+      })
+      .filter((candidate) => candidate.valid)
+      .sort((a, b) => b.zIndex - a.zIndex || a.distance - b.distance);
+    return candidates.length ? candidates[0].index : null;
+  }
+
   stage.addEventListener('pointerdown', (event) => {
     dragStart = event.clientY;
     dragMoved = false;
@@ -334,11 +490,28 @@
     if (Math.abs(delta) > 8) dragMoved = true;
     if (Math.abs(delta) > 48) { move(delta > 0 ? -1 : 1); dragStart = event.clientY; }
   });
-  stage.addEventListener('pointerup', () => { dragStart = null; setTimeout(() => { dragMoved = false; }, 0); });
+  stage.addEventListener('pointerup', () => {
+    dragStart = null;
+    setTimeout(() => { dragMoved = false; }, 0);
+  });
+  stage.addEventListener('click', (event) => {
+    if (dragMoved || event.target.closest('.orbit-card')) return;
+    const proxyIndex = orbitCardIndexAtPoint(event.clientX, event.clientY);
+    if (proxyIndex === null) return;
+    activeIndex = proxyIndex;
+    updateStack(false);
+    openActiveItem();
+  });
+  stage.addEventListener('pointercancel', () => {
+    dragStart = null;
+    dragMoved = false;
+  });
   document.getElementById('stackPrev').addEventListener('click', () => move(-1));
   document.getElementById('stackNext').addEventListener('click', () => move(1));
   document.getElementById('stackOpen').addEventListener('click', openActiveItem);
   document.getElementById('galleryOpen').addEventListener('click', openToolGallery);
+  document.getElementById('catalogGalleryOpen').addEventListener('click', openToolGallery);
+  document.getElementById('directoryGalleryOpen').addEventListener('click', openToolGallery);
   document.getElementById('galleryPrev').addEventListener('click', () => moveToolGallery(-1));
   document.getElementById('galleryNext').addEventListener('click', () => moveToolGallery(1));
   document.getElementById('galleryDetailOpen').addEventListener('click', openGalleryTool);
@@ -405,7 +578,20 @@
 
   function setPanel(id, open) {
     const panel = document.getElementById(id);
-    if (open) panelReturnFocus.set(id, document.activeElement);
+    if (open) {
+      let returnTarget = document.activeElement;
+      document.querySelectorAll('.panel-overlay.open').forEach((otherPanel) => {
+        if (otherPanel === panel) return;
+        if (otherPanel.contains(returnTarget)) {
+          const inheritedTarget = panelReturnFocus.get(otherPanel.id);
+          if (inheritedTarget && document.contains(inheritedTarget)) returnTarget = inheritedTarget;
+        }
+        otherPanel.classList.remove('open');
+        otherPanel.setAttribute('aria-hidden', 'true');
+        panelReturnFocus.delete(otherPanel.id);
+      });
+      panelReturnFocus.set(id, returnTarget);
+    }
     panel.classList.toggle('open', open);
     panel.setAttribute('aria-hidden', String(!open));
     document.body.classList.toggle('panel-open', Boolean(document.querySelector('.panel-overlay.open')));
@@ -609,21 +795,21 @@
       document.getElementById('archiveKicker').textContent = 'BINGO / MAYA PRODUCTION SYSTEM';
       document.getElementById('archiveTitlePrimary').textContent = 'Explore More';
       document.getElementById('archiveTitleSecondary').textContent = '开启工具星域';
-      document.getElementById('archiveDescription').textContent = '把动画、绑定、模型与特效工具组织成一套可探索的本地制作系统。移动鼠标旋转星空，滚轮切换工具档案。';
-      document.getElementById('statLabelOne').textContent = 'LOCAL TOOLS'; document.getElementById('statValueOne').textContent = String(allTools.length);
+      document.getElementById('archiveDescription').textContent = '把动画、绑定、模型与特效工具组织成一套可探索的 Maya 制作系统。移动鼠标旋转星空，滚轮切换工具档案。';
+      document.getElementById('statLabelOne').textContent = 'MAYA TOOLS'; document.getElementById('statValueOne').textContent = String(allTools.length);
       document.getElementById('statLabelTwo').textContent = 'MAYA HOST'; document.getElementById('statValueTwo').textContent = '2020—26';
-      document.getElementById('statLabelThree').textContent = 'BUILD'; document.getElementById('statValueThree').textContent = 'V8.8.61';
+      document.getElementById('statLabelThree').textContent = 'BUILD'; document.getElementById('statValueThree').textContent = 'V8.8.87';
       document.querySelector('.archive-heading .archive-label').textContent = 'TOOL ARCHIVE';
       document.querySelector('#stackOpen span').textContent = '查看工具档案';
     } else {
       currentItems = updateLogs.slice();
       document.getElementById('archiveKicker').textContent = 'BINGO / TOOL UPDATE ORBIT';
       document.getElementById('archiveTitlePrimary').textContent = 'Update Orbit';
-      document.getElementById('archiveTitleSecondary').textContent = '记录工具轨迹';
+      document.getElementById('archiveTitleSecondary').textContent = '工具更新日志';
       document.getElementById('archiveDescription').textContent = '用时间轴记录工具新增、体验优化、问题修复与文档更新。滚动切换版本，再打开卡片查看完整变化。';
       document.getElementById('statLabelOne').textContent = 'LOG ENTRIES'; document.getElementById('statValueOne').textContent = String(updateLogs.length);
-      document.getElementById('statLabelTwo').textContent = 'CURRENT BUILD'; document.getElementById('statValueTwo').textContent = 'V8.8.61';
-      document.getElementById('statLabelThree').textContent = 'STATUS'; document.getElementById('statValueThree').textContent = 'DRAFT';
+      document.getElementById('statLabelTwo').textContent = 'CURRENT BUILD'; document.getElementById('statValueTwo').textContent = 'V8.8.87';
+      document.getElementById('statLabelThree').textContent = 'STATUS'; document.getElementById('statValueThree').textContent = 'ACTIVE';
       document.querySelector('.archive-heading .archive-label').textContent = 'CHANGE LOG';
       document.querySelector('#stackOpen span').textContent = '查看更新详情';
     }
@@ -633,47 +819,149 @@
 
   function showView(view, updateHash = true) {
     const home = view === 'home';
-    const archive = view === 'tools' || view === 'updates';
+    const directory = view === 'directory';
+    const catalog = view === 'tools';
+    const archive = view === 'tool-orbit' || view === 'updates';
+    document.body.dataset.view = view;
     document.getElementById('homeView').classList.toggle('active-view', home);
+    document.getElementById('directoryView').classList.toggle('active-view', directory);
+    document.getElementById('toolCatalogView').classList.toggle('active-view', catalog);
     document.getElementById('archiveView').classList.toggle('active-view', archive);
     document.getElementById('novaView').classList.toggle('active-view', view === 'nova');
     document.getElementById('interestView').classList.toggle('active-view', view === 'interest');
-    document.querySelectorAll('[data-view]').forEach((button) => button.classList.toggle('active', button.dataset.view === view));
+    document.querySelectorAll('[data-view]').forEach((button) => {
+      const isToolRoute = button.dataset.view === 'tools' && view === 'tool-orbit';
+      const active = button.dataset.view === view || isToolRoute;
+      button.classList.toggle('active', active);
+      if (active) button.setAttribute('aria-current', 'page');
+      else button.removeAttribute('aria-current');
+    });
     if (archive) configureArchive(view === 'updates' ? 'updates' : 'tools');
     if (updateHash) history.replaceState(null, '', `#${view}`);
   }
 
   document.querySelectorAll('[data-view]').forEach((button) => button.addEventListener('click', (event) => {
     event.preventDefault();
+    document.querySelectorAll('.panel-overlay.open').forEach((panel) => setPanel(panel.id, false));
     showView(button.dataset.view);
+    const ownerView = button.closest('main');
+    const focusDelay = ownerView && !ownerView.classList.contains('active-view') ? 650 : 0;
+    setTimeout(() => {
+      const buttonVisible = (!ownerView || ownerView.classList.contains('active-view'))
+        && getComputedStyle(button).visibility !== 'hidden'
+        && button.getClientRects().length > 0;
+      if (buttonVisible) button.focus({ preventScroll: true });
+      else {
+        const destination = document.querySelector('main.active-view h1') || document.querySelector('main.active-view');
+        if (destination) {
+          destination.setAttribute('tabindex', '-1');
+          destination.focus({ preventScroll: true });
+        }
+      }
+    }, focusDelay);
   }));
 
-  const tigerPortrait = document.querySelector('.tiger-portrait-stage');
-  const tigerVideo = tigerPortrait && tigerPortrait.querySelector('.tiger-portrait-video');
-  if (tigerVideo) {
-    const showTigerVideo = () => tigerPortrait.classList.add('video-playing');
-    const showTigerPoster = () => tigerPortrait.classList.remove('video-playing');
-    const tryTigerPlayback = () => {
-      if (document.hidden) return;
-      const playback = tigerVideo.play();
-      if (playback && typeof playback.catch === 'function') playback.catch(showTigerPoster);
+  addEventListener('hashchange', () => {
+    const view = location.hash.slice(1);
+    if (['home', 'directory', 'nova', 'tools', 'tool-orbit', 'interest', 'updates'].includes(view)) showView(view, false);
+  });
+
+  function bindResilientLoop(video, owner, playingClass, options = {}) {
+    if (!video || !owner) return;
+    let lastTime = -1;
+    let lastAdvance = performance.now();
+    let frameRevealPending = false;
+    let visibilityCanvas = null;
+    let visibilityContext = null;
+    const hasVisiblePixels = () => {
+      if (!options.requireVisibleFrame) return true;
+      try {
+        if (!visibilityCanvas) {
+          visibilityCanvas = document.createElement('canvas');
+          visibilityCanvas.width = 24;
+          visibilityCanvas.height = 24;
+          visibilityContext = visibilityCanvas.getContext('2d', { alpha: true, willReadFrequently: true });
+        }
+        if (!visibilityContext || !video.videoWidth || !video.videoHeight) return false;
+        visibilityContext.clearRect(0, 0, 24, 24);
+        visibilityContext.drawImage(video, 0, 0, 24, 24);
+        const pixels = visibilityContext.getImageData(0, 0, 24, 24).data;
+        let visiblePixelCount = 0;
+        for (let index = 3; index < pixels.length; index += 4) {
+          if (pixels[index] > 24 && ++visiblePixelCount >= 8) return true;
+        }
+        return false;
+      } catch (error) {
+        return true;
+      }
     };
-    tigerVideo.addEventListener('playing', showTigerVideo);
-    tigerVideo.addEventListener('loadeddata', () => {
-      if (!tigerVideo.paused) showTigerVideo();
+    const revealDecodedFrame = () => {
+      frameRevealPending = false;
+      if (!video.paused && video.readyState >= 2 && !document.hidden && hasVisiblePixels()) owner.classList.add(playingClass);
+      else owner.classList.remove(playingClass);
+    };
+    const showVideo = () => {
+      if (typeof video.requestVideoFrameCallback !== 'function') {
+        revealDecodedFrame();
+        return;
+      }
+      if (frameRevealPending) return;
+      frameRevealPending = true;
+      video.requestVideoFrameCallback(revealDecodedFrame);
+    };
+    const showFallback = () => owner.classList.remove(playingClass);
+    const restartAtLoopEdge = () => {
+      const duration = video.duration;
+      if (Number.isFinite(duration) && duration > 0 && video.currentTime >= duration - 0.08) video.currentTime = 0.001;
+    };
+    const tryPlayback = () => {
+      if (document.hidden) return;
+      restartAtLoopEdge();
+      const playback = video.play();
+      if (playback && typeof playback.catch === 'function') playback.catch(showFallback);
+    };
+    const registerProgress = () => {
+      restartAtLoopEdge();
+      const currentTime = video.currentTime;
+      if (Math.abs(currentTime - lastTime) > 0.012) {
+        lastTime = currentTime;
+        lastAdvance = performance.now();
+        if (!video.paused && video.readyState >= 2) showVideo();
+      }
+    };
+    video.addEventListener('playing', () => {
+      lastAdvance = performance.now();
+      showVideo();
     });
-    tigerVideo.addEventListener('pause', showTigerPoster);
-    ['error', 'abort', 'emptied', 'stalled'].forEach((eventName) => tigerVideo.addEventListener(eventName, showTigerPoster));
+    video.addEventListener('loadeddata', tryPlayback);
+    video.addEventListener('timeupdate', registerProgress);
+    video.addEventListener('pause', showFallback);
+    ['error', 'abort', 'emptied', 'stalled'].forEach((eventName) => video.addEventListener(eventName, showFallback));
     document.addEventListener('visibilitychange', () => {
-      if (document.hidden) showTigerPoster();
-      else tryTigerPlayback();
+      if (document.hidden) showFallback();
+      else tryPlayback();
     });
-    if (!tigerVideo.paused && tigerVideo.readyState >= 2) showTigerVideo();
-    else {
-      showTigerPoster();
-      tryTigerPlayback();
-    }
+    setInterval(() => {
+      if (document.hidden) return;
+      registerProgress();
+      if (video.paused || video.ended || video.readyState < 2) {
+        showFallback();
+        tryPlayback();
+      } else if (performance.now() - lastAdvance > 1500) {
+        showFallback();
+        video.currentTime = 0.001;
+        lastAdvance = performance.now();
+        tryPlayback();
+      }
+    }, 700);
+    tryPlayback();
   }
+
+  const mascotDisc = document.querySelector('.mascot-disc');
+  bindResilientLoop(mascotDisc && mascotDisc.querySelector('.tiger-motion'), mascotDisc, 'motion-playing', { requireVisibleFrame: true });
+
+  const tigerPortrait = document.querySelector('.tiger-portrait-stage');
+  bindResilientLoop(tigerPortrait && tigerPortrait.querySelector('.tiger-portrait-video'), tigerPortrait, 'video-playing');
   function setupTigerDissolve() {
     const stage = document.querySelector('.tiger-portrait-stage');
     const image = stage && stage.querySelector('.tiger-portrait-base');
@@ -891,6 +1179,7 @@
 
   document.getElementById('toolboxOpen').addEventListener('click', () => setPanel('downloadOverlay', true));
   document.getElementById('messageOpen').addEventListener('click', () => setPanel('messageOverlay', true));
+  document.querySelectorAll('[data-open-panel]').forEach((button) => button.addEventListener('click', () => setPanel(button.dataset.openPanel, true)));
   document.querySelectorAll('[data-close-panel]').forEach((button) => button.addEventListener('click', () => setPanel(button.closest('.panel-overlay').id, false)));
   document.querySelectorAll('.panel-overlay').forEach((panel) => panel.addEventListener('click', (event) => { if (event.target === panel) setPanel(panel.id, false); }));
 
@@ -902,9 +1191,12 @@
     toastTimer = setTimeout(() => element.classList.remove('show'), 3000);
   }
 
-  document.getElementById('previewDownload').addEventListener('click', () => {
+  function handlePreviewDownload() {
     window.location.href = 'https://github.com/Bingtools/bingtools.github.io/releases/download/toolbox-v8.8.56/Bingo_ToolBox_v8.8.56_20260813.exe';
-  });
+  }
+
+  document.getElementById('previewDownload').addEventListener('click', handlePreviewDownload);
+  document.getElementById('previewDownloadMark').addEventListener('click', handlePreviewDownload);
   const qr = document.getElementById('supportQr');
   const supportSwitch = document.getElementById('supportSwitch');
   supportSwitch.addEventListener('click', () => {
@@ -927,15 +1219,121 @@
     novaSwitch.querySelector('span').textContent = novaQrMode === 'wechat' ? '切换至支付宝' : '切换至微信';
   });
 
-  document.getElementById('messagePreviewSubmit').addEventListener('click', () => {
-    const message = document.getElementById('messageContent');
-    if (!message.value.trim()) {
+  const messageStorageKey = 'bingoToolbox.feedback.preview.v1';
+  const messageForm = document.getElementById('messageForm');
+  const messageNameInput = document.getElementById('messageName');
+  const messageInput = document.getElementById('messageContent');
+  const messageStream = document.getElementById('messageStream');
+  const messageCount = document.getElementById('messageCount');
+  let localMessageEntries = [];
+
+  function formatMessageTime(value) {
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return '刚刚';
+    const twoDigits = (number) => String(number).padStart(2, '0');
+    return `${twoDigits(date.getMonth() + 1)}.${twoDigits(date.getDate())} · ${twoDigits(date.getHours())}:${twoDigits(date.getMinutes())}`;
+  }
+
+  function createMessageEntry(entry, animate = false) {
+    const article = document.createElement('article');
+    article.className = `message-entry local-message-entry${animate ? ' is-new' : ''}`;
+    article.dataset.localMessage = entry.id;
+
+    const avatar = document.createElement('span');
+    avatar.className = 'message-avatar';
+    avatar.setAttribute('aria-hidden', 'true');
+    avatar.textContent = (Array.from(entry.author)[0] || '匿').toUpperCase();
+
+    const body = document.createElement('div');
+    const header = document.createElement('header');
+    const identity = document.createElement('span');
+    const author = document.createElement('b');
+    const time = document.createElement('time');
+    const type = document.createElement('small');
+    const content = document.createElement('p');
+
+    author.textContent = entry.author;
+    time.dateTime = entry.createdAt;
+    time.textContent = formatMessageTime(entry.createdAt);
+    type.textContent = entry.type;
+    content.textContent = entry.content;
+    identity.append(author, time);
+    header.append(identity, type);
+    body.append(header, content);
+    article.append(avatar, body);
+    return article;
+  }
+
+  function updateMessageCount() {
+    const total = messageStream.querySelectorAll('.message-entry').length;
+    messageCount.textContent = `${total} 条留言`;
+  }
+
+  function saveLocalMessages() {
+    try {
+      localStorage.setItem(messageStorageKey, JSON.stringify(localMessageEntries.slice(0, 30)));
+      return true;
+    } catch (error) {
+      console.warn('Local feedback could not be saved.', error);
+      return false;
+    }
+  }
+
+  try {
+    const storedMessages = JSON.parse(localStorage.getItem(messageStorageKey) || '[]');
+    if (Array.isArray(storedMessages)) {
+      localMessageEntries = storedMessages
+        .filter((entry) => entry && typeof entry.content === 'string' && entry.content.trim())
+        .map((entry, index) => ({
+          id: String(entry.id || `saved-${index}`),
+          author: String(entry.author || '匿名创作者').trim().slice(0, 24) || '匿名创作者',
+          content: entry.content.trim().slice(0, 240),
+          type: String(entry.type || '浏览器留言').slice(0, 12),
+          createdAt: String(entry.createdAt || new Date().toISOString())
+        }))
+        .sort((entryA, entryB) => {
+          const timeA = new Date(entryA.createdAt).getTime() || 0;
+          const timeB = new Date(entryB.createdAt).getTime() || 0;
+          return timeB - timeA;
+        })
+        .slice(0, 30);
+      localMessageEntries.slice().reverse().forEach((entry) => {
+        messageStream.prepend(createMessageEntry(entry));
+      });
+    }
+  } catch (error) {
+    console.warn('Local feedback could not be restored.', error);
+  }
+  updateMessageCount();
+
+  messageForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const content = messageInput.value.trim();
+    if (!content) {
       toast('先写下使用反馈或工具建议吧。');
-      message.focus();
+      messageInput.focus();
       return;
     }
-    toast('在线留言功能正在接入，请暂时通过 QQ 交流群提交建议。');
-    message.value = '';
+
+    const entry = {
+      id: `local-${Date.now().toString(36)}`,
+      author: messageNameInput.value.trim().slice(0, 24) || '匿名创作者',
+      content: content.slice(0, 240),
+      type: '浏览器留言',
+      createdAt: new Date().toISOString()
+    };
+    localMessageEntries = [entry, ...localMessageEntries].slice(0, 30);
+    messageStream.prepend(createMessageEntry(entry, true));
+    messageStream.querySelectorAll('.local-message-entry').forEach((element, index) => {
+      if (index >= 30) element.remove();
+    });
+    messageStream.scrollTop = 0;
+    updateMessageCount();
+    const savedLocally = saveLocalMessages();
+    messageInput.value = '';
+    toast(savedLocally
+      ? '留言已保存在当前浏览器。'
+      : '留言已显示在当前页面，但浏览器未能保存，刷新后可能消失。');
   });
 
   addEventListener('keydown', (event) => {
@@ -956,7 +1354,6 @@
     if (galleryRendered) updateToolGallery(false);
   }, { passive: true });
 
-  const initialView = ['nova', 'tools', 'interest', 'updates'].includes(location.hash.slice(1)) ? location.hash.slice(1) : 'home';
+  const initialView = ['directory', 'nova', 'tools', 'tool-orbit', 'interest', 'updates'].includes(location.hash.slice(1)) ? location.hash.slice(1) : 'home';
   showView(initialView, false);
-  new CosmicUniverse('canvas-container');
 })();

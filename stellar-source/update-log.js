@@ -1,77 +1,76 @@
 /*
  * Bingo ToolBox 更新日志数据。
- * 后续新增记录时，只需按相同格式向数组顶部添加一项。
- * 当前内容为本地页面设计草案，正式发布前可替换为真实发行记录。
+ * 当前五条为页面展示用版本记录，后续可按实际发行内容继续修改。
  */
 window.BINGO_UPDATE_LOGS = [
   {
-    date: '2026.08.22',
-    version: 'V8.8.61',
+    date: '2026.08.25',
+    version: 'V8.8.87',
     type: 'feature',
     typeLabel: '功能更新',
-    title: '本地工具档案系统',
-    summary: '完成 40 个本地工具的分类扫描、图标匹配与详情入口整理。',
+    title: '作者与工具来源标识',
+    summary: '完善工具作者、来源和第三方属性展示，让工具档案信息更加清晰。',
     changes: [
-      '整合动画、绑定、模型、特效与其他工具分类',
-      '工具卡片可直接打开功能说明与使用步骤',
-      '补充 Maya 2020—2026 兼容信息展示'
+      '自研工具统一标记作者 Bingo，并注明为自研工具',
+      'P4 连接器作者调整为祥子，保留独立作者信息',
+      'Animation Helper、studiolibrary 与 ADV 等工具标记为第三方工具'
     ],
-    tags: ['40 TOOLS', 'LOCAL ARCHIVE']
+    tags: ['AUTHOR', 'TOOL SOURCE']
   },
   {
-    date: '2026.08',
-    version: 'WEB / STELLAR',
+    date: '2026.08.24',
+    version: 'V8.8.86',
     type: 'improvement',
     typeLabel: '体验优化',
-    title: '星域交互界面',
-    summary: '加入三维星空、鼠标视角旋转与纵向档案卡片交互。',
+    title: '工具图标与页面图鉴',
+    summary: '完善工具原始图标展示，并优化立体页面图鉴的浏览与进入方式。',
     changes: [
-      '双层粒子星空支持鼠标视差与拖动旋转',
-      '工具卡片加入景深、翻滚与玻璃反光效果',
-      '下载、指南和支持入口统一为沉浸式浮层'
+      '工具档案卡片优先读取每个工具设置的原始图标',
+      '点击任意可见卡片可快速切换到中央焦点',
+      '点击中央卡片可直接进入对应工具的使用说明'
     ],
-    tags: ['THREE.JS', 'INTERACTION']
+    tags: ['TOOL ICON', '3D GALLERY']
   },
   {
-    date: '2026.08',
-    version: 'DOCS / 01',
+    date: '2026.08.24',
+    version: 'V8.8.85',
     type: 'docs',
     typeLabel: '文档更新',
-    title: '工具使用说明细化',
-    summary: '将工具介绍扩展为用途、操作步骤、使用建议与注意事项。',
+    title: '工具说明内容完善',
+    summary: '统一整理工具用途、操作步骤、使用建议和注意事项。',
     changes: [
-      '按工具读取本地说明文档与配图',
-      '统一展示功能描述、使用流程和兼容信息',
-      '缺少文档的工具保留清晰的待完善状态'
+      '为工具详情补充功能描述、使用步骤和注意事项',
+      '详情页面同步展示工具原始图标与分类标签',
+      '缺少说明的工具保留待完善提示，方便后续继续维护'
     ],
     tags: ['GUIDE', 'LOCAL DOCS']
   },
   {
-    date: '2026.08',
-    version: 'INSTALL / EXE',
+    date: '2026.08.23',
+    version: 'V8.8.84',
     type: 'improvement',
     typeLabel: '安装优化',
-    title: '一键安装流程说明',
-    summary: '整理 EXE 安装、Maya module 自动注册和首次启动流程。',
+    title: '安装器与 Maya 兼容',
+    summary: '整理 Windows EXE 安装流程，并完善 Maya 多版本部署说明。',
     changes: [
-      '明确安装前关闭 Maya 并保存场景',
-      '说明安装包自动注册 module，无需手动配置路径',
-      '补充安装完成后的菜单入口和启动步骤'
+      'Windows EXE 安装包支持选择 Maya 2020—2026',
+      '安装时自动写入 Bingo ToolBox module 配置',
+      '补充关闭 Maya、选择安装路径和首次启动说明'
     ],
-    tags: ['INSTALLER', 'MAYA MODULE']
+    tags: ['INSTALLER', 'MAYA 2020—2026']
   },
   {
-    date: '待记录',
-    version: 'NEXT / LOG',
-    type: 'planned',
-    typeLabel: '后续计划',
-    title: '在这里继续记录下一次更新',
-    summary: '正式更新工具后，可在日志数据文件顶部添加新版本记录。',
+    date: '2026.08.22',
+    version: 'V8.8.83',
+    type: 'fix',
+    typeLabel: '问题修复',
+    title: '工具箱稳定性修复',
+    summary: '修复资源读取与页面切换中的常见问题，提升本地使用稳定性。',
     changes: [
-      '填写发布日期和版本号',
-      '记录新增功能、修复内容与兼容变化',
-      '为重要更新添加对应工具和分类标签'
+      '修复部分工具图标缺失时卡片显示空白的问题',
+      '优化本地路径和中文目录下的资源读取',
+      '调整工具入口刷新逻辑，减少页面切换时的状态异常'
     ],
-    tags: ['DRAFT', 'NEXT RELEASE']
+    tags: ['STABILITY', 'COMPATIBILITY']
   }
 ];

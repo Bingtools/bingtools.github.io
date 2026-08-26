@@ -5,7 +5,7 @@
     'Animo v6.2.0': 'Animation Helper',
   };
   const sourceInfo = {
-    path: 'D:\\maya_tool\\Bingo_Tools\\tool + tools',
+    path: 'Bingo ToolBox public tool archive',
     version: '8.8.61',
     maya: '2020–2026',
     scannedAt: '2026-08-22',
@@ -213,9 +213,9 @@
       }
       if (steps.length) stepList.innerHTML = steps.map((item) => `<li>${escapeHtml(item)}</li>`).join('');
       if (notes.length) noteList.innerHTML = notes.map((item) => `<li>${escapeHtml(item)}</li>`).join('');
-      if (features.length || steps.length || notes.length) status.textContent = '已核对本地工具文档';
+      if (features.length || steps.length || notes.length) status.textContent = '已核对工具说明';
     } catch (error) {
-      // 本地文档不存在时保留依据注册信息整理的说明。
+      // 详细文档不存在时保留依据注册信息整理的说明。
     }
   }
 
@@ -242,7 +242,7 @@
         </div>
         <div class="actual-detail-tags">${tool.tags.map((tag) => `<span>${escapeHtml(tag)}</span>`).join('')}</div>
         <div class="actual-guide-card">
-          <div class="actual-guide-status"><span></span><b data-guide-status>根据本地注册信息整理</b></div>
+          <div class="actual-guide-status"><span></span><b data-guide-status>根据工具注册信息整理</b></div>
           <section class="actual-guide-section">
             <div class="actual-guide-label"><span>01</span>功能描述</div>
             <p>${escapeHtml(tool.desc)}</p>
@@ -258,9 +258,9 @@
           </section>
         </div>
         <details class="actual-source-details">
-          <summary>本地来源与兼容信息</summary>
+          <summary>工具来源与兼容信息</summary>
           <div class="actual-source-card">
-            <div class="actual-source-status"><span></span>${escapeHtml(tool.sourceType || '本地工具箱已注册')}</div>
+            <div class="actual-source-status"><span></span>${escapeHtml(tool.sourceType || 'Bingo ToolBox 工具')}</div>
             <code>${escapeHtml(tool.sourcePath || (category.label + ' / ' + tool.file))}</code>
             <small>将随 Bingo ToolBox 安装包提供，无需单独下载。</small>
           </div>

@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Bingo ToolBox · Source Orbit</title>
-  <meta name="description" content="Bingo ToolBox 官方网站：浏览 Maya 工具、安装指南、更新日志与创作助手计划。">
-  <link rel="stylesheet" href="/stellar-source/source.css?v=gallery-credit-v61">
+  <title>Bingo ToolBox · Maya 工具星域</title>
+  <meta name="description" content="Bingo ToolBox Maya 工具官网：浏览动画、绑定、模型与特效工具，查看更新日志并下载安装包。">
+  <link rel="stylesheet" href="/stellar-source/source.css?v=starfield-v92">
 </head>
 <body>
   <div id="canvas-container" aria-hidden="true"></div>
@@ -21,7 +21,7 @@
     <div class="orbit-nav-cluster">
       <button class="orbit-nav-icon message-trigger" type="button" id="messageOpen" aria-label="打开建议面板"><span>建议</span></button>
       <nav class="stellar-nav" aria-label="主要导航">
-        <button type="button" data-view="updates"><b>目录</b><small>目录</small></button>
+        <button type="button" data-view="directory"><b>目录</b><small>目录</small></button>
         <button type="button" data-view="tools"><b>工具</b><small>工具</small></button>
         <button type="button" data-view="interest"><b>助手</b><small>AI</small></button>
         <button type="button" data-view="nova"><b>支持</b><small>支持</small></button>
@@ -35,18 +35,33 @@
     </div>
   </header>
 
+  <a class="mascot-module" href="#home" data-view="home" aria-label="返回 Bingo ToolBox 主页" title="返回主页">
+    <div class="mascot-disc">
+      <img class="tiger-motion-poster" src="/stellar-source/assets/mascot-tiger-fallback-v86.png" alt="" aria-hidden="true">
+      <video class="tiger-motion" autoplay loop muted playsinline preload="auto" poster="/stellar-source/assets/mascot-tiger-fallback-v86.png" aria-label="Bingo 老虎动画">
+        <source src="/stellar-source/assets/mascot-tiger.webm" type="video/webm">
+      </video>
+    </div>
+    <div class="mascot-copy"><small>BINGO COMPANION / HOME</small><b>点击返回主页</b></div>
+    <span class="playing-state"><i></i> PLAYING</span>
+  </a>
+
   <main class="home-layout active-view" id="homeView">
     <section class="home-copy" aria-labelledby="homeTitle">
       <span class="section-code">BINGO / MAYA CREATIVE UNIVERSE</span>
       <h1 id="homeTitle">探索 Maya 的<br><b>创作边界</b></h1>
       <p>让复杂流程变成清晰轨道，让每一次创作都拥有更自由、更可靠的工具支持。</p>
       <ul>
-        <li>40 个本地工具，覆盖动画、绑定、模型与特效</li>
+        <li>40 个 Maya 工具，覆盖动画、绑定、模型与特效</li>
         <li>持续维护工具说明、兼容状态与版本更新</li>
       </ul>
       <div class="home-actions">
-        <button class="gallery-action" id="galleryOpen" type="button"><span>工具页面图鉴</span><b>✦</b></button>
-        <button class="secondary-action" type="button" data-view="updates">查看更新轨迹</button>
+        <button class="gallery-action home-tech-action" id="galleryOpen" type="button">
+          <span class="home-action-copy"><small>01 / TOOL ATLAS</small><strong>工具页面图鉴</strong></span><b aria-hidden="true">↗</b>
+        </button>
+        <button class="secondary-action home-tech-action" type="button" data-view="updates">
+          <span class="home-action-copy"><small>02 / UPDATE LOG</small><strong>查看工具更新日志</strong></span><b aria-hidden="true">↗</b>
+        </button>
       </div>
     </section>
 
@@ -61,10 +76,64 @@
     </section>
   </main>
 
+  <main class="directory-layout" id="directoryView">
+    <div class="directory-shell">
+      <header class="directory-hero">
+        <span class="directory-kicker"><i aria-hidden="true"></i>BINGO / SITE NAVIGATION<i aria-hidden="true"></i></span>
+        <h1><em>INDEX</em><span>功能目录</span></h1>
+        <p>汇总 Bingo ToolBox 当前的主要页面与功能入口。点击任意目录卡片，即可直接进入对应内容。</p>
+        <div class="directory-summary" aria-label="目录概览">
+          <span><b>09</b><small>功能入口</small></span>
+          <span><b>40</b><small>工具档案</small></span>
+          <span><b>05</b><small>更新记录</small></span>
+        </div>
+      </header>
+
+      <section class="directory-grid" aria-label="网站功能目录">
+        <button class="directory-card" type="button" data-view="tools" data-accent="cyan" aria-label="进入工具页面图鉴">
+          <span class="directory-card-index">01 / TOOL ATLAS</span><i aria-hidden="true">▦</i>
+          <strong>工具页面图鉴</strong><p>搜索、筛选并查看 40 个 Maya 工具档案与使用说明。</p><span>进入工具图鉴 <b>↗</b></span>
+        </button>
+        <button class="directory-card" id="directoryGalleryOpen" type="button" data-accent="violet" aria-label="打开立体界面图鉴">
+          <span class="directory-card-index">02 / 3D GALLERY</span><i aria-hidden="true">✦</i>
+          <strong>立体界面图鉴</strong><p>以立体卡片浏览工具界面，点击中央卡片进入详细说明。</p><span>打开立体图鉴 <b>↗</b></span>
+        </button>
+        <button class="directory-card" type="button" data-view="tool-orbit" data-accent="blue" aria-label="进入工具星轨浏览">
+          <span class="directory-card-index">03 / TOOL ORBIT</span><i aria-hidden="true">◎</i>
+          <strong>工具星轨浏览</strong><p>使用拖动、滚轮和方向按钮，在星轨中切换工具档案。</p><span>进入星轨 <b>↗</b></span>
+        </button>
+        <button class="directory-card" type="button" data-view="updates" data-accent="violet" aria-label="查看工具更新日志">
+          <span class="directory-card-index">04 / UPDATE LOG</span><i aria-hidden="true">↻</i>
+          <strong>工具更新日志</strong><p>独立查看功能新增、体验优化、问题修复与文档更新记录。</p><span>查看更新日志 <b>↗</b></span>
+        </button>
+        <button class="directory-card" type="button" data-open-panel="guideOverlay" data-accent="cyan" aria-label="打开快速上手指南">
+          <span class="directory-card-index">05 / QUICK START</span><i aria-hidden="true">01</i>
+          <strong>快速上手</strong><p>从安装、重启 Maya 到打开 ToolBox，查看四步使用流程。</p><span>查看使用指南 <b>↗</b></span>
+        </button>
+        <button class="directory-card" type="button" data-open-panel="downloadOverlay" data-accent="blue" aria-label="打开下载与安装页面">
+          <span class="directory-card-index">06 / DOWNLOAD</span><i aria-hidden="true">↓</i>
+          <strong>下载与安装</strong><p>查看当前版本、Maya 兼容范围和 Windows EXE 安装信息。</p><span>打开下载页面 <b>↗</b></span>
+        </button>
+        <button class="directory-card" type="button" data-view="interest" data-accent="blue" aria-label="进入 AI 助手页面">
+          <span class="directory-card-index">07 / AI COMPANION</span><i aria-hidden="true">AI</i>
+          <strong>AI 助手</strong><p>查看工具推荐、使用答疑、错误分析与流程建议功能预告。</p><span>进入助手页面 <b>↗</b></span>
+        </button>
+        <button class="directory-card" type="button" data-view="nova" data-accent="cyan" aria-label="进入支持作者页面">
+          <span class="directory-card-index">08 / SUPPORT</span><i aria-hidden="true">♥</i>
+          <strong>支持作者</strong><p>查看微信与支付宝支持方式，陪伴 Bingo ToolBox 持续成长。</p><span>进入支持页面 <b>↗</b></span>
+        </button>
+        <button class="directory-card" type="button" data-open-panel="messageOverlay" data-accent="violet" aria-label="打开建议反馈面板">
+          <span class="directory-card-index">09 / SUGGESTIONS</span><i aria-hidden="true">✎</i>
+          <strong>建议反馈</strong><p>记录使用反馈、工具建议和问题，作为后续更新参考。</p><span>打开建议面板 <b>↗</b></span>
+        </button>
+      </section>
+    </div>
+  </main>
+
   <main class="feature-layout nova-layout" id="novaView">
-    <section class="feature-copy" aria-labelledby="novaTitle">
+    <section class="feature-copy feature-orbit-copy" aria-labelledby="novaTitle">
       <span class="section-code">NOVA / SUPPORT THE CREATOR</span>
-      <h1 id="novaTitle">让工具星域<br><b>持续生长</b></h1>
+      <h1 class="feature-orbit-title" id="novaTitle" aria-label="Support Orbit，让工具星域持续生长"><em><span>Support</span><span>Orbit</span></em><b>让工具星域持续生长</b></h1>
       <p>如果 Bingo ToolBox 帮你节省了时间，可以请作者喝杯咖啡。每一份支持都会用于兼容测试、问题修复、新工具开发和使用文档维护。</p>
       <div class="support-metrics" aria-label="支持用途">
         <span><small>01</small><b>持续维护</b></span>
@@ -72,18 +141,34 @@
         <span><small>03</small><b>新工具研发</b></span>
       </div>
     </section>
-    <section class="nova-console" aria-label="打赏方式">
-      <header><span>SUPPORT CHANNEL</span><i></i><b>ONLINE</b></header>
-      <div class="nova-qr"><img id="novaSupportQr" src="https://bingtools.github.io/assets/wechat-qr.png" alt="微信收款码"></div>
-      <div class="nova-console-copy"><small id="novaSupportMode" data-mode="wechat">当前方式 · 微信支付</small><b>感谢你支持 Bingo ToolBox</b><p>扫码后可自定义支持金额。感谢每一位陪伴工具箱成长的朋友。</p></div>
-      <button id="novaSupportSwitch" type="button"><span>切换至支付宝</span><b>↻</b></button>
+    <section class="nova-console" aria-labelledby="novaSupportTitle">
+      <header class="nova-terminal-header">
+        <span><small>SUPPORT CHANNEL</small><strong>PAYMENT NODE / 01</strong></span>
+        <i></i>
+        <b><em></em>ONLINE</b>
+      </header>
+      <div class="nova-qr-stage">
+        <div class="nova-qr-readout" aria-hidden="true"><span>SCAN TARGET / 01</span><b>SECURE LINK</b></div>
+        <div class="nova-qr-frame">
+          <i class="nova-qr-corner corner-nw" aria-hidden="true"></i><i class="nova-qr-corner corner-ne" aria-hidden="true"></i><i class="nova-qr-corner corner-sw" aria-hidden="true"></i><i class="nova-qr-corner corner-se" aria-hidden="true"></i>
+          <span class="nova-qr-pulse" aria-hidden="true"></span>
+          <div class="nova-qr"><img id="novaSupportQr" src="https://bingtools.github.io/assets/wechat-qr.png" alt="微信收款码"></div>
+        </div>
+        <div class="nova-telemetry" aria-hidden="true">
+          <span><small>PROTOCOL</small><b>QR PAY</b></span>
+          <span><small>CHANNEL</small><b>DUAL MODE</b></span>
+          <span><small>STATUS</small><b>READY</b></span>
+        </div>
+      </div>
+      <div class="nova-console-copy"><small id="novaSupportMode" data-mode="wechat" role="status">当前方式 · 微信支付</small><b id="novaSupportTitle">感谢你支持 Bingo ToolBox</b><p>扫码后可自定义支持金额。感谢每一位陪伴工具箱成长的朋友。</p></div>
+      <button id="novaSupportSwitch" type="button" aria-controls="novaSupportQr novaSupportMode"><span>切换至支付宝</span><small aria-hidden="true">CHANNEL SELECT / 02</small><b aria-hidden="true">↻</b></button>
     </section>
   </main>
 
   <main class="feature-layout interest-layout" id="interestView">
-    <section class="feature-copy" aria-labelledby="interestTitle">
+    <section class="feature-copy feature-orbit-copy" aria-labelledby="interestTitle">
       <span class="section-code">INTEREST / BINGO AI COMPANION</span>
-      <h1 id="interestTitle">下一位创作<br><b>协作伙伴</b></h1>
+      <h1 class="feature-orbit-title" id="interestTitle" aria-label="AI Companion，下一位创作协作伙伴"><em><span>AI</span><span>Companion</span></em><b>下一位创作协作伙伴</b></h1>
       <p>这里将成为面向 Maya 工作流的 AI 助手入口，未来可以提供工具推荐、操作答疑、错误分析和流程建议。</p>
       <span class="development-badge"><i></i> 待作者添加 AI 功能</span>
     </section>
@@ -96,6 +181,37 @@
     </section>
   </main>
 
+  <main class="tool-catalog-layout" id="toolCatalogView">
+    <div class="tool-catalog-shell">
+      <header class="catalog-hero">
+        <span class="catalog-kicker"><i aria-hidden="true"></i>BINGO / MAYA TOOL ATLAS<i aria-hidden="true"></i></span>
+        <h1><span>ATLAS</span><em>工具星图</em></h1>
+        <p>收录 Bingo ToolBox 的自研与精选工具，按用途搜索、筛选，并直接进入完整使用说明。</p>
+        <label class="catalog-search" for="catalogSearch">
+          <span aria-hidden="true">⌕</span>
+          <input id="catalogSearch" type="search" autocomplete="off" placeholder="搜索工具名称、用途或标签（如：镜像、IK/FK、贴图）">
+          <kbd>搜索</kbd>
+        </label>
+        <div class="catalog-filters" id="catalogFilters" aria-label="工具分类筛选"></div>
+      </header>
+
+      <section class="catalog-library" aria-labelledby="catalogLibraryTitle">
+        <div class="catalog-toolbar">
+          <div>
+            <small>MAYA TOOL ARCHIVE</small>
+            <h2 id="catalogLibraryTitle"><b id="catalogCount">40</b> 个工具档案</h2>
+          </div>
+          <div class="catalog-view-actions">
+            <button class="catalog-view-button" id="catalogGalleryOpen" type="button"><span>立体工具图鉴</span><b>✦</b></button>
+            <button class="catalog-view-button" type="button" data-view="tool-orbit"><span>星轨浏览</span><b>↗</b></button>
+          </div>
+        </div>
+        <div class="catalog-grid" id="catalogGrid"></div>
+        <p class="catalog-empty" id="catalogEmpty" hidden>没有找到符合条件的工具，换一个关键词试试。</p>
+      </section>
+    </div>
+  </main>
+
   <main class="orbit-layout" id="archiveView">
     <section class="orbit-copy" aria-labelledby="pageTitle">
       <span class="section-code" id="archiveKicker">BINGO / MAYA PRODUCTION SYSTEM</span>
@@ -103,23 +219,14 @@
         <em id="archiveTitlePrimary">Explore More</em>
         <span id="archiveTitleSecondary">开启工具星域</span>
       </h1>
-      <p id="archiveDescription">把动画、绑定、模型与特效工具组织成一套可探索的本地制作系统。移动鼠标旋转星空，滚轮切换工具档案。</p>
+      <p id="archiveDescription">把动画、绑定、模型与特效工具组织成一套可探索的 Maya 制作系统。移动鼠标旋转星空，滚轮切换工具档案。</p>
 
       <div class="system-stats" aria-label="工具箱信息">
-        <div><small id="statLabelOne">LOCAL TOOLS</small><b id="statValueOne">40</b></div>
+        <div><small id="statLabelOne">MAYA TOOLS</small><b id="statValueOne">40</b></div>
         <div><small id="statLabelTwo">MAYA HOST</small><b id="statValueTwo">2020—26</b></div>
         <div><small id="statLabelThree">BUILD</small><b id="statValueThree">V8.8.61</b></div>
       </div>
 
-      <div class="mascot-module" aria-label="Bingo Companion 装饰">
-        <div class="mascot-disc">
-          <video class="tiger-motion" autoplay loop muted playsinline poster="https://bingtools.github.io/assets/bingo-icon.png" aria-label="Bingo 老虎动画">
-            <source src="https://bingtools.github.io/assets/tiger.webm" type="video/webm">
-          </video>
-        </div>
-        <div class="mascot-copy"><small>BINGO COMPANION</small><b>创作轨道已连接</b></div>
-        <span class="playing-state"><i></i> PLAYING</span>
-      </div>
     </section>
 
     <section class="orbit-archive" aria-label="工具档案星轨">
@@ -155,7 +262,7 @@
   <div class="panel-overlay" id="toolOverlay" aria-hidden="true">
     <section class="glass-panel tool-panel" role="dialog" aria-modal="true" aria-labelledby="toolOverlayTitle">
       <button class="panel-close" type="button" data-close-panel aria-label="关闭工具详情">×</button>
-      <header><span id="toolOverlayMeta">LOCAL TOOL / 01</span><h2 id="toolOverlayTitle">工具详情</h2></header>
+      <header><span id="toolOverlayMeta">MAYA TOOL / 01</span><h2 id="toolOverlayTitle">工具详情</h2></header>
       <div class="tool-overlay-body" id="toolOverlayBody"></div>
     </section>
   </div>
@@ -164,9 +271,9 @@
     <section class="tool-gallery-shell" role="dialog" aria-modal="true" aria-labelledby="galleryTitle">
       <button class="panel-close gallery-close" type="button" data-close-panel aria-label="关闭工具页面图鉴">×</button>
       <header class="tool-gallery-header">
-        <span>BINGO / MAYA INTERFACE ARCHIVE</span>
-        <h2 id="galleryTitle">工具页面图鉴</h2>
-        <p>点击任意可见卡片可快速切换到中央；点击中央卡片，立即进入工具使用说明。</p>
+        <span class="tool-gallery-kicker"><i aria-hidden="true"></i><b>BINGO / MAYA</b><small>INTERFACE ARCHIVE</small></span>
+        <h2 id="galleryTitle"><span>工具页面</span><em>图鉴</em></h2>
+        <p><strong>点击可见卡片快速聚焦</strong><i aria-hidden="true"></i><span>点击中央卡片进入工具使用说明</span></p>
       </header>
       <div class="tool-gallery-stage" id="galleryStage" aria-label="工具界面预览卡片"></div>
       <div class="tool-gallery-caption" aria-live="polite">
@@ -191,17 +298,31 @@
   <div class="panel-overlay" id="downloadOverlay" aria-hidden="true">
     <section class="glass-panel download-panel" role="dialog" aria-modal="true" aria-labelledby="downloadTitle">
       <button class="panel-close" type="button" data-close-panel aria-label="关闭下载界面">×</button>
-      <span>LAUNCH BINGO TOOLBOX</span>
-      <h2 id="downloadTitle">一次安装，<br>进入完整工具星域。</h2>
-      <p>EXE 安装包会自动注册 Maya module。安装完成后重启 Maya，即可从 Bingo 菜单进入 ToolBox。</p>
-      <div class="download-data">
-        <div><small>VERSION</small><b>8.8.61</b></div>
-        <div><small>MODULES</small><b>40 / LOCAL</b></div>
-        <div><small>HOST</small><b>MAYA 2020—2026</b></div>
-        <div><small>PACKAGE</small><b>WINDOWS EXE</b></div>
+      <div class="download-layout">
+        <div class="download-copy">
+          <span>DOWNLOAD / BINGO TOOLBOX</span>
+          <h2 id="downloadTitle"><span>一次安装</span><strong>进入完整工具星域</strong></h2>
+          <p>将动画、绑定、模型与特效工具集中部署到 Maya。EXE 安装包会自动注册 Bingo module，完成后重启 Maya 即可开始使用。</p>
+          <ol class="download-steps" aria-label="安装流程">
+            <li><small>01</small><b>关闭 Maya</b><p>保存场景并退出程序。</p></li>
+            <li><small>02</small><b>运行安装包</b><p>按提示完成自动部署。</p></li>
+            <li><small>03</small><b>重新启动</b><p>从 Bingo 菜单进入工具箱。</p></li>
+          </ol>
+        </div>
+        <aside class="download-package" aria-label="Bingo ToolBox Windows 安装包">
+          <header class="download-package-head"><span>WINDOWS INSTALLER</span><b>PUBLIC RELEASE</b></header>
+          <button class="download-package-mark" id="previewDownloadMark" type="button" aria-label="下载 Bingo ToolBox EXE" title="下载 Bingo ToolBox EXE"><i aria-hidden="true">↓</i></button>
+          <div class="download-package-name"><small>AVAILABLE PACKAGE</small><strong>Bingo ToolBox <em>8.8.56</em></strong><p>Windows EXE · Maya Module</p></div>
+          <div class="download-data">
+            <div><small>PACKAGE</small><b>8.8.56</b></div>
+            <div><small>SIZE</small><b>≈ 152 MB</b></div>
+            <div><small>HOST</small><b>MAYA 2020—2026</b></div>
+            <div><small>FORMAT</small><b>WINDOWS EXE</b></div>
+          </div>
+          <button class="download-action" id="previewDownload" type="button"><span><small>DOWNLOAD</small><strong>下载 Bingo ToolBox EXE</strong></span><b>↓</b></button>
+          <small class="local-note">将前往 GitHub Releases 下载当前公开安装包。</small>
+        </aside>
       </div>
-      <button class="download-action" id="previewDownload" type="button"><span>下载公开版 EXE · v8.8.56</span><b>↓</b></button>
-      <small class="local-note">将前往 GitHub Releases 下载当前公开安装包。</small>
     </section>
   </div>
 
@@ -232,20 +353,51 @@
   </div>
 
   <div class="panel-overlay" id="messageOverlay" aria-hidden="true">
-    <section class="glass-panel message-panel" role="dialog" aria-modal="true" aria-labelledby="messageTitle">
+    <section class="glass-panel message-panel" role="dialog" aria-modal="true" aria-labelledby="messageTitle" aria-describedby="messageDescription">
       <button class="panel-close" type="button" data-close-panel aria-label="关闭建议面板">×</button>
-      <span>SUGGESTIONS / LOCAL PREVIEW</span>
+      <span>SUGGESTIONS / BROWSER STORAGE</span>
       <h2 id="messageTitle">留下你的想法</h2>
-      <p>这里用于收集使用反馈、工具建议和问题记录。在线留言存储功能正在接入。</p>
-      <div class="message-stream">
-        <article><header><b>Bingo ToolBox 用户</b><small>FEATURE REQUEST</small></header><p>希望后续增加更多绑定和动画效率工具。</p></article>
-        <article><header><b>创作者寄语</b><small>THANK YOU</small></header><p>每一条反馈都会成为下一次更新的参考。</p></article>
-      </div>
-      <div class="message-form">
-        <input id="messageName" type="text" maxlength="24" placeholder="你的称呼">
+      <p id="messageDescription">可以在这里记录使用反馈、工具建议和问题。内容仅保存在当前浏览器，不会公开同步。</p>
+      <form class="message-form" id="messageForm">
+        <label class="sr-only" for="messageName">你的称呼</label>
+        <input id="messageName" type="text" maxlength="24" autocomplete="name" placeholder="你的称呼">
+        <label class="sr-only" for="messageContent">留言内容</label>
         <textarea id="messageContent" maxlength="240" placeholder="写下使用反馈或工具建议"></textarea>
-        <button id="messagePreviewSubmit" type="button"><span>提交建议</span><b>↗</b></button>
-      </div>
+        <button id="messagePreviewSubmit" type="submit"><span>保存到本浏览器</span><b aria-hidden="true">↗</b></button>
+      </form>
+      <section class="message-feed" aria-labelledby="messageFeedTitle">
+        <header class="message-feed-head">
+          <span><small>COMMUNITY SIGNALS / BROWSER NOTES</small><h3 id="messageFeedTitle">留言与建议</h3></span>
+          <em><i aria-hidden="true"></i><span id="messageCount">6 条留言</span></em>
+        </header>
+        <div class="message-stream" id="messageStream" role="log" aria-live="polite" aria-relevant="additions">
+          <article class="message-entry" data-static-message>
+            <span class="message-avatar" aria-hidden="true">动</span>
+            <div><header><span><b>动画同学</b><time datetime="2026-08-25T14:32:00+08:00">08.25 · 14:32</time></span><small>功能建议</small></header><p>希望后续增加一键清理无效关键帧，以及动画层批量整理功能。</p></div>
+          </article>
+          <article class="message-entry" data-static-message>
+            <span class="message-avatar" aria-hidden="true">绑</span>
+            <div><header><span><b>绑定同学</b><time datetime="2026-08-25T11:08:00+08:00">08.25 · 11:08</time></span><small>使用反馈</small></header><p>控制器搭建和对称镜像入口很直观，希望继续补充高级绑定示例。</p></div>
+          </article>
+          <article class="message-entry" data-static-message>
+            <span class="message-avatar" aria-hidden="true">模</span>
+            <div><header><span><b>模型同学</b><time datetime="2026-08-24T18:46:00+08:00">08.24 · 18:46</time></span><small>兼容建议</small></header><p>文件预览在大量资产目录中很实用，希望后续增加常用路径分组。</p></div>
+          </article>
+          <article class="message-entry" data-static-message>
+            <span class="message-avatar" aria-hidden="true">制</span>
+            <div><header><span><b>制作同学</b><time datetime="2026-08-24T15:20:00+08:00">08.24 · 15:20</time></span><small>问题记录</small></header><p>P4 连接器如果可以显示当前工作区和连接状态，使用时会更安心。</p></div>
+          </article>
+          <article class="message-entry" data-static-message>
+            <span class="message-avatar" aria-hidden="true">新</span>
+            <div><header><span><b>Maya 学习者</b><time datetime="2026-08-23T20:16:00+08:00">08.23 · 20:16</time></span><small>体验反馈</small></header><p>工具页面图鉴很方便，希望每个工具继续补充更完整的操作步骤。</p></div>
+          </article>
+          <article class="message-entry message-entry-official" data-static-message>
+            <span class="message-avatar" aria-hidden="true">B</span>
+            <div><header><span><b>Bingo</b><time datetime="2026-08-23T21:05:00+08:00">08.23 · 21:05</time></span><small>创作者回复</small></header><p>已经收到。每一条反馈都会作为下一次工具更新和文档整理的参考。</p></div>
+          </article>
+        </div>
+        <footer class="message-feed-note"><i aria-hidden="true"></i><span>当前展示示例留言与浏览器留言；内容仅在本设备保存。</span></footer>
+      </section>
     </section>
   </div>
 
@@ -264,8 +416,8 @@
   <div class="source-toast" id="sourceToast" role="status"></div>
 
   <script src="/stellar-source/vendor/three.min.js"></script>
-  <script src="/workbench/actual-tools.js?v=source-1"></script>
-  <script src="/stellar-source/update-log.js?v=source-2"></script>
-  <script src="/stellar-source/source.js?v=gallery-credit-v61"></script>
+  <script src="/workbench/actual-tools.js?v=starfield-v92"></script>
+  <script src="/stellar-source/update-log.js?v=starfield-v92"></script>
+  <script src="/stellar-source/source.js?v=starfield-v92"></script>
 </body>
 </html>
