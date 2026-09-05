@@ -596,12 +596,29 @@
     panel.setAttribute('aria-hidden', String(!open));
     document.body.classList.toggle('panel-open', Boolean(document.querySelector('.panel-overlay.open')));
     document.body.classList.toggle('gallery-open', document.getElementById('galleryOverlay').classList.contains('open'));
+    syncViewControls(document.body.dataset.view || 'home');
     if (open) panel.querySelector('.panel-close').focus();
     else {
       const returnTarget = panelReturnFocus.get(id);
       panelReturnFocus.delete(id);
       if (returnTarget && document.contains(returnTarget)) requestAnimationFrame(() => returnTarget.focus());
     }
+  }
+
+  function syncViewControls(view) {
+    const utilityPanelOpen = ['messageOverlay', 'downloadOverlay'].some((id) => document.getElementById(id).classList.contains('open'));
+    document.querySelectorAll('[data-view]').forEach((button) => {
+      const isToolRoute = button.dataset.view === 'tools' && view === 'tool-orbit';
+      const isPrimaryNavButton = Boolean(button.closest('.stellar-nav'));
+      const active = (button.dataset.view === view || isToolRoute) && !(utilityPanelOpen && isPrimaryNavButton);
+      button.classList.toggle('active', active);
+      if (active) button.setAttribute('aria-current', 'page');
+      else button.removeAttribute('aria-current');
+    });
+    [['messageOpen', 'messageOverlay'], ['toolboxOpen', 'downloadOverlay']].forEach(([triggerId, panelId]) => {
+      const trigger = document.getElementById(triggerId);
+      trigger.setAttribute('aria-expanded', String(document.getElementById(panelId).classList.contains('open')));
+    });
   }
 
   function syncToolBody(tool) {
@@ -829,13 +846,7 @@
     document.getElementById('archiveView').classList.toggle('active-view', archive);
     document.getElementById('novaView').classList.toggle('active-view', view === 'nova');
     document.getElementById('interestView').classList.toggle('active-view', view === 'interest');
-    document.querySelectorAll('[data-view]').forEach((button) => {
-      const isToolRoute = button.dataset.view === 'tools' && view === 'tool-orbit';
-      const active = button.dataset.view === view || isToolRoute;
-      button.classList.toggle('active', active);
-      if (active) button.setAttribute('aria-current', 'page');
-      else button.removeAttribute('aria-current');
-    });
+    syncViewControls(view);
     if (archive) configureArchive(view === 'updates' ? 'updates' : 'tools');
     if (updateHash) history.replaceState(null, '', `#${view}`);
   }
@@ -871,8 +882,12 @@
     let lastTime = -1;
     let lastAdvance = performance.now();
     let frameRevealPending = false;
+    let frameCallbackId = null;
+    let frameGeneration = 0;
+    let validFrameStreak = 0;
     let visibilityCanvas = null;
     let visibilityContext = null;
+    const requiredVisibleFrames = options.requireVisibleFrame ? 2 : 1;
     const hasVisiblePixels = () => {
       if (!options.requireVisibleFrame) return true;
       try {
@@ -887,29 +902,68 @@
         visibilityContext.drawImage(video, 0, 0, 24, 24);
         const pixels = visibilityContext.getImageData(0, 0, 24, 24).data;
         let visiblePixelCount = 0;
-        for (let index = 3; index < pixels.length; index += 4) {
-          if (pixels[index] > 24 && ++visiblePixelCount >= 8) return true;
+        for (let index = 0; index < pixels.length; index += 4) {
+          const red = pixels[index];
+          const green = pixels[index + 1];
+          const blue = pixels[index + 2];
+          const alpha = pixels[index + 3];
+          const brightestChannel = Math.max(red, green, blue);
+          const darkestChannel = Math.min(red, green, blue);
+          const luminance = red * .2126 + green * .7152 + blue * .0722;
+          const hasImageSignal = brightestChannel > 48 && (luminance > 58 || brightestChannel - darkestChannel > 16);
+          if (alpha > 64 && hasImageSignal && ++visiblePixelCount >= 24) return true;
         }
         return false;
       } catch (error) {
-        return true;
+        return false;
       }
     };
-    const revealDecodedFrame = () => {
-      frameRevealPending = false;
-      if (!video.paused && video.readyState >= 2 && !document.hidden && hasVisiblePixels()) owner.classList.add(playingClass);
-      else owner.classList.remove(playingClass);
+
+    const updateVisibleFrameState = () => {
+      if (hasVisiblePixels()) {
+        validFrameStreak += 1;
+        if (validFrameStreak >= requiredVisibleFrames) owner.classList.add(playingClass);
+        return;
+      }
+      validFrameStreak = 0;
+      owner.classList.remove(playingClass);
     };
-    const showVideo = () => {
-      if (typeof video.requestVideoFrameCallback !== 'function') {
-        revealDecodedFrame();
+    const cancelFrameCheck = () => {
+      frameGeneration += 1;
+      if (frameCallbackId !== null && typeof video.cancelVideoFrameCallback === 'function') {
+        try { video.cancelVideoFrameCallback(frameCallbackId); } catch (error) { /* callback already completed */ }
+      }
+      frameCallbackId = null;
+      frameRevealPending = false;
+      validFrameStreak = 0;
+    };
+    const showFallback = () => {
+      cancelFrameCheck();
+      owner.classList.remove(playingClass);
+    };
+    const scheduleFrameCheck = () => {
+      if (document.hidden || video.paused || video.readyState < 2) return;
+      if (!options.requireVisibleFrame || typeof video.requestVideoFrameCallback !== 'function') {
+        updateVisibleFrameState();
         return;
       }
       if (frameRevealPending) return;
+      const generation = frameGeneration;
       frameRevealPending = true;
-      video.requestVideoFrameCallback(revealDecodedFrame);
+      frameCallbackId = video.requestVideoFrameCallback(() => {
+        frameCallbackId = null;
+        frameRevealPending = false;
+        if (generation !== frameGeneration) return;
+        if (document.hidden || video.paused || video.readyState < 2) {
+          validFrameStreak = 0;
+          owner.classList.remove(playingClass);
+          return;
+        }
+        updateVisibleFrameState();
+        scheduleFrameCheck();
+      });
     };
-    const showFallback = () => owner.classList.remove(playingClass);
+    const showVideo = () => scheduleFrameCheck();
     const restartAtLoopEdge = () => {
       const duration = video.duration;
       if (Number.isFinite(duration) && duration > 0 && video.currentTime >= duration - 0.08) video.currentTime = 0.001;
@@ -934,12 +988,20 @@
       showVideo();
     });
     video.addEventListener('loadeddata', tryPlayback);
+    video.addEventListener('canplay', tryPlayback);
     video.addEventListener('timeupdate', registerProgress);
-    video.addEventListener('pause', showFallback);
-    ['error', 'abort', 'emptied', 'stalled'].forEach((eventName) => video.addEventListener(eventName, showFallback));
+    ['pause', 'waiting', 'seeking', 'error', 'abort', 'emptied', 'stalled'].forEach((eventName) => video.addEventListener(eventName, showFallback));
+    video.addEventListener('seeked', tryPlayback);
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) showFallback();
-      else tryPlayback();
+      else {
+        showFallback();
+        tryPlayback();
+      }
+    });
+    addEventListener('pageshow', () => {
+      showFallback();
+      tryPlayback();
     });
     setInterval(() => {
       if (document.hidden) return;
@@ -958,7 +1020,21 @@
   }
 
   const mascotDisc = document.querySelector('.mascot-disc');
-  bindResilientLoop(mascotDisc && mascotDisc.querySelector('.tiger-motion'), mascotDisc, 'motion-playing', { requireVisibleFrame: true });
+  const mascotPoster = mascotDisc && mascotDisc.querySelector('.tiger-motion-poster');
+  const mascotMotion = mascotDisc && mascotDisc.querySelector('.tiger-motion');
+  if (mascotPoster) mascotPoster.addEventListener('error', () => {
+    mascotPoster.src = '/stellar-source/assets/bingo-tiger-logo-clean-whisker-loop-poster-v46.png';
+  }, { once: true });
+  if (mascotMotion) {
+    const revealMascotMotion = () => mascotDisc.classList.add('motion-ready');
+    const keepMascotPoster = () => {
+      mascotDisc.classList.remove('motion-ready');
+      mascotMotion.hidden = true;
+    };
+    mascotMotion.addEventListener('load', revealMascotMotion, { once: true });
+    mascotMotion.addEventListener('error', keepMascotPoster, { once: true });
+    if (mascotMotion.complete && mascotMotion.naturalWidth > 0) revealMascotMotion();
+  }
 
   const tigerPortrait = document.querySelector('.tiger-portrait-stage');
   bindResilientLoop(tigerPortrait && tigerPortrait.querySelector('.tiger-portrait-video'), tigerPortrait, 'video-playing');
@@ -1215,7 +1291,7 @@
     novaQr.alt = novaQrMode === 'wechat' ? '微信收款码' : '支付宝收款码';
     const novaModeLabel = document.getElementById('novaSupportMode');
     novaModeLabel.dataset.mode = novaQrMode;
-    novaModeLabel.textContent = novaQrMode === 'wechat' ? '当前方式 · 微信支付' : '当前方式 · 支付宝';
+    novaModeLabel.textContent = novaQrMode === 'wechat' ? '当前方式 · 微信' : '当前方式 · 支付宝';
     novaSwitch.querySelector('span').textContent = novaQrMode === 'wechat' ? '切换至支付宝' : '切换至微信';
   });
 

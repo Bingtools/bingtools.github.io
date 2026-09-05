@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Bingo ToolBox · Maya 工具星域</title>
   <meta name="description" content="Bingo ToolBox Maya 工具官网：浏览动画、绑定、模型与特效工具，查看更新日志并下载安装包。">
-  <link rel="stylesheet" href="/stellar-source/source.css?v=starfield-v92">
+  <link rel="stylesheet" href="/stellar-source/source.css?v=mascot-stable-v110">
 </head>
 <body>
   <div id="canvas-container" aria-hidden="true"></div>
@@ -19,14 +19,14 @@
     </a>
 
     <div class="orbit-nav-cluster">
-      <button class="orbit-nav-icon message-trigger" type="button" id="messageOpen" aria-label="打开建议面板"><span>建议</span></button>
+      <button class="orbit-nav-icon message-trigger" type="button" id="messageOpen" aria-label="打开建议面板" aria-controls="messageOverlay" aria-expanded="false"><span>建议</span></button>
       <nav class="stellar-nav" aria-label="主要导航">
         <button type="button" data-view="directory"><b>目录</b><small>目录</small></button>
         <button type="button" data-view="tools"><b>工具</b><small>工具</small></button>
-        <button type="button" data-view="interest"><b>助手</b><small>AI</small></button>
+        <button type="button" data-view="interest"><b>高阶功能</b><small>AI</small></button>
         <button type="button" data-view="nova"><b>支持</b><small>支持</small></button>
       </nav>
-      <button class="orbit-nav-icon toolbox-trigger" type="button" id="toolboxOpen" aria-label="打开工具箱下载"><span>下载</span></button>
+      <button class="orbit-nav-icon toolbox-trigger" type="button" id="toolboxOpen" aria-label="打开工具箱下载" aria-controls="downloadOverlay" aria-expanded="false"><span>下载</span></button>
     </div>
 
     <div class="header-meta">
@@ -35,12 +35,10 @@
     </div>
   </header>
 
-  <a class="mascot-module" href="#home" data-view="home" aria-label="返回 Bingo ToolBox 主页" title="返回主页">
+  <a class="mascot-module" href="#home" data-view="home" aria-label="返回 Bingo ToolBox 主页">
     <div class="mascot-disc">
-      <img class="tiger-motion-poster" src="/stellar-source/assets/mascot-tiger-fallback-v86.png" alt="" aria-hidden="true">
-      <video class="tiger-motion" autoplay loop muted playsinline preload="auto" poster="/stellar-source/assets/mascot-tiger-fallback-v86.png" aria-label="Bingo 老虎动画">
-        <source src="/stellar-source/assets/mascot-tiger.webm" type="video/webm">
-      </video>
+      <img class="tiger-motion-poster" src="/stellar-source/assets/mascot-tiger-stable-poster-v110.png" alt="" aria-hidden="true" draggable="false">
+      <img class="tiger-motion" src="/stellar-source/assets/mascot-tiger-stable-v110.webp" alt="" aria-hidden="true" draggable="false" decoding="async">
     </div>
     <div class="mascot-copy"><small>BINGO COMPANION / HOME</small><b>点击返回主页</b></div>
     <span class="playing-state"><i></i> PLAYING</span>
@@ -72,7 +70,7 @@
           <source src="/stellar-source/assets/bingo-tiger-logo-clean-whisker-loop-v46.webm" type="video/webm">
         </video>
       </div>
-      <div class="tiger-readout" aria-hidden="true"><span>COMPANION / 01</span><b>BINGO TIGER</b><small>PARTICLE PORTRAIT ONLINE</small></div>
+      <div class="tiger-readout" aria-hidden="true"><span>COMPANION / 01</span><b>BINGO TOOLBOX</b><small>PARTICLE PORTRAIT ONLINE</small></div>
     </section>
   </main>
 
@@ -160,7 +158,7 @@
           <span><small>STATUS</small><b>READY</b></span>
         </div>
       </div>
-      <div class="nova-console-copy"><small id="novaSupportMode" data-mode="wechat" role="status">当前方式 · 微信支付</small><b id="novaSupportTitle">感谢你支持 Bingo ToolBox</b><p>扫码后可自定义支持金额。感谢每一位陪伴工具箱成长的朋友。</p></div>
+      <div class="nova-console-copy"><small id="novaSupportMode" data-mode="wechat" role="status">当前方式 · 微信</small><b id="novaSupportTitle">感谢你支持 Bingo ToolBox</b><p>如果 Bingo ToolBox 为你节省了时间，欢迎请作者喝杯咖啡，感谢你的支持与陪伴。</p></div>
       <button id="novaSupportSwitch" type="button" aria-controls="novaSupportQr novaSupportMode"><span>切换至支付宝</span><small aria-hidden="true">CHANNEL SELECT / 02</small><b aria-hidden="true">↻</b></button>
     </section>
   </main>
@@ -312,10 +310,10 @@
         <aside class="download-package" aria-label="Bingo ToolBox Windows 安装包">
           <header class="download-package-head"><span>WINDOWS INSTALLER</span><b>PUBLIC RELEASE</b></header>
           <button class="download-package-mark" id="previewDownloadMark" type="button" aria-label="下载 Bingo ToolBox EXE" title="下载 Bingo ToolBox EXE"><i aria-hidden="true">↓</i></button>
-          <div class="download-package-name"><small>AVAILABLE PACKAGE</small><strong>Bingo ToolBox <em>8.8.56</em></strong><p>Windows EXE · Maya Module</p></div>
+          <div class="download-package-name"><small>AVAILABLE PACKAGE</small><strong>Bingo ToolBox <em>8.8.57</em></strong><p>Windows EXE · Maya Module</p></div>
           <div class="download-data">
-            <div><small>PACKAGE</small><b>8.8.56</b></div>
-            <div><small>SIZE</small><b>≈ 152 MB</b></div>
+            <div><small>PACKAGE</small><b>8.8.57</b></div>
+            <div><small>SIZE</small><b>≈ 156 MB</b></div>
             <div><small>HOST</small><b>MAYA 2020—2026</b></div>
             <div><small>FORMAT</small><b>WINDOWS EXE</b></div>
           </div>
@@ -323,6 +321,41 @@
           <small class="local-note">将前往 GitHub Releases 下载当前公开安装包。</small>
         </aside>
       </div>
+      <section class="download-details" aria-labelledby="downloadDetailsTitle">
+        <header class="download-details-head">
+          <span>TOOLBOX FUNCTIONS / WORKFLOW</span>
+          <h3 id="downloadDetailsTitle">安装完成后，打造自己的 Maya 工具工作台</h3>
+          <p>9 项核心能力 · 7 步快速开始</p>
+        </header>
+        <div class="download-details-columns">
+          <section class="download-details-group" aria-labelledby="downloadCapabilitiesTitle">
+            <header><small>01 / FUNCTIONS</small><h4 id="downloadCapabilitiesTitle">工具箱核心能力</h4></header>
+            <ul class="download-feature-grid">
+              <li><small>01</small><b>搜索、筛选与收藏</b><p>支持中文和拼音搜索、分类筛选、收藏及置顶常用工具。</p></li>
+              <li><small>02</small><b>工具卡片个性化</b><p>右键设置图标、颜色、快捷键和所属分类。</p></li>
+              <li><small>03</small><b>中文功能介绍</b><p>点击工具右侧的 <code>i</code>，查看功能和选择要求。</p></li>
+              <li><small>04</small><b>拖入底部快捷栏</b><p>把高频工具拖到时间轴附近，减少重复查找。</p></li>
+              <li><small>05</small><b>快捷栏自由编排</b><p>图标可左右排序、自适应缩放，并能设置背景色。</p></li>
+              <li><small>06</small><b>快捷栏自定义按键</b><p>右键快捷栏图标，为常用操作设置快捷键。</p></li>
+              <li><small>07</small><b>创建 Python / MEL 工具</b><p>把自己的脚本制作成可直接运行的工具按钮。</p></li>
+              <li><small>08</small><b>添加外部入口</b><p>可添加网页、软件、文件夹或系统命令按钮。</p></li>
+              <li><small>09</small><b>浮动与停靠模式</b><p>在独立浮动窗口和 Maya 停靠模式之间切换。</p></li>
+            </ul>
+          </section>
+          <section class="download-details-group" aria-labelledby="downloadWorkflowTitle">
+            <header><small>02 / QUICK START</small><h4 id="downloadWorkflowTitle">7 步开始使用</h4></header>
+            <ol class="download-flow-grid">
+              <li><b>打开工具箱</b><p>启动 Maya 后，点击状态栏里的老虎图标。</p></li>
+              <li><b>查找工具</b><p>从左侧选择分类，或直接搜索名称。</p></li>
+              <li><b>准备对象</b><p>先选择控制器、骨骼、模型或关键帧。</p></li>
+              <li><b>单击运行</b><p>单击工具卡片，执行对应功能。</p></li>
+              <li><b>查看说明</b><p>选择要求不清楚时，点击右侧的 <code>i</code>。</p></li>
+              <li><b>加入快捷栏</b><p>把常用工具拖到时间轴附近的快捷栏。</p></li>
+              <li><b>设置快捷键</b><p>右键工具或快捷栏图标，自定义快捷键。</p></li>
+            </ol>
+          </section>
+        </div>
+      </section>
     </section>
   </div>
 
@@ -416,8 +449,8 @@
   <div class="source-toast" id="sourceToast" role="status"></div>
 
   <script src="/stellar-source/vendor/three.min.js"></script>
-  <script src="/workbench/actual-tools.js?v=starfield-v92"></script>
-  <script src="/stellar-source/update-log.js?v=starfield-v92"></script>
-  <script src="/stellar-source/source.js?v=starfield-v92"></script>
+  <script src="/workbench/actual-tools.js?v=mascot-stable-v110"></script>
+  <script src="/stellar-source/update-log.js?v=mascot-stable-v110"></script>
+  <script src="/stellar-source/source.js?v=mascot-stable-v110"></script>
 </body>
 </html>
