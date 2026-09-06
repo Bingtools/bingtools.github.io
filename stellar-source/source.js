@@ -1268,7 +1268,7 @@
   }
 
   function handlePreviewDownload() {
-    window.location.href = 'https://github.com/Bingtools/bingtools.github.io/releases/download/toolbox-v8.8.56/Bingo_ToolBox_v8.8.56_20260813.exe';
+    toast('下载通道暂未开放。');
   }
 
   document.getElementById('previewDownload').addEventListener('click', handlePreviewDownload);

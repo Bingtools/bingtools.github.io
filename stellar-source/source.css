@@ -700,6 +700,9 @@ body.gallery-open .tool-gallery-header { left: clamp(190px,12vw,230px); width: m
 .download-panel .panel-close:hover, .download-panel .panel-close:focus-visible { outline: 0; border-color: rgba(154,251,229,.62); color: #fff; box-shadow: 0 0 24px rgba(154,251,229,.12), inset 0 0 17px rgba(154,251,229,.08); }
 .message-panel > p { color: rgba(255,255,255,.66); }
 .local-note { display: block; margin-top: 12px; color: rgba(255,255,255,.42); text-align: center; font-size: 7px; line-height: 1.5; }
+#toolboxOpen:disabled, .directory-card:disabled, .download-package-mark:disabled, .download-action:disabled { cursor: not-allowed; filter: saturate(.12); opacity: .46; }
+#toolboxOpen:disabled:hover, .directory-card:disabled:hover, .download-package-mark:disabled:hover, .download-action:disabled:hover { border-color: var(--line); box-shadow: none; transform: none; }
+.download-action:disabled::before { display: none; }
 .guide-grid { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line); }
 .guide-grid article { padding: 21px 17px 9px 0; }
 .guide-grid article + article { padding-left: 17px; border-left: 1px solid var(--line); }

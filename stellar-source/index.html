@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Bingo ToolBox · Maya 工具星域</title>
-  <meta name="description" content="Bingo ToolBox Maya 工具官网：浏览动画、绑定、模型与特效工具，查看更新日志并下载安装包。">
-  <link rel="stylesheet" href="/stellar-source/source.css?v=mascot-stable-v110">
+  <meta name="description" content="Bingo ToolBox Maya 工具官网：浏览动画、绑定、模型与特效工具，并查看更新日志。">
+  <link rel="stylesheet" href="/stellar-source/source.css?v=download-paused-v110">
 </head>
 <body>
   <div id="canvas-container" aria-hidden="true"></div>
@@ -26,7 +26,7 @@
         <button type="button" data-view="interest"><b>高阶功能</b><small>AI</small></button>
         <button type="button" data-view="nova"><b>支持</b><small>支持</small></button>
       </nav>
-      <button class="orbit-nav-icon toolbox-trigger" type="button" id="toolboxOpen" aria-label="打开工具箱下载" aria-controls="downloadOverlay" aria-expanded="false"><span>下载</span></button>
+      <button class="orbit-nav-icon toolbox-trigger" type="button" id="toolboxOpen" aria-label="下载暂未开放" aria-disabled="true" disabled title="下载暂未开放"><span>暂停</span></button>
     </div>
 
     <div class="header-meta">
@@ -108,9 +108,9 @@
           <span class="directory-card-index">05 / QUICK START</span><i aria-hidden="true">01</i>
           <strong>快速上手</strong><p>从安装、重启 Maya 到打开 ToolBox，查看四步使用流程。</p><span>查看使用指南 <b>↗</b></span>
         </button>
-        <button class="directory-card" type="button" data-open-panel="downloadOverlay" data-accent="blue" aria-label="打开下载与安装页面">
+        <button class="directory-card" type="button" data-accent="blue" aria-label="下载暂未开放" aria-disabled="true" disabled>
           <span class="directory-card-index">06 / DOWNLOAD</span><i aria-hidden="true">↓</i>
-          <strong>下载与安装</strong><p>查看当前版本、Maya 兼容范围和 Windows EXE 安装信息。</p><span>打开下载页面 <b>↗</b></span>
+          <strong>下载暂未开放</strong><p>当前版本暂不对外提供下载，恢复时间另行通知。</p><span>ACCESS PAUSED <b>—</b></span>
         </button>
         <button class="directory-card" type="button" data-view="interest" data-accent="blue" aria-label="进入 AI 助手页面">
           <span class="directory-card-index">07 / AI COMPANION</span><i aria-hidden="true">AI</i>
@@ -308,17 +308,17 @@
           </ol>
         </div>
         <aside class="download-package" aria-label="Bingo ToolBox Windows 安装包">
-          <header class="download-package-head"><span>WINDOWS INSTALLER</span><b>PUBLIC RELEASE</b></header>
-          <button class="download-package-mark" id="previewDownloadMark" type="button" aria-label="下载 Bingo ToolBox EXE" title="下载 Bingo ToolBox EXE"><i aria-hidden="true">↓</i></button>
-          <div class="download-package-name"><small>AVAILABLE PACKAGE</small><strong>Bingo ToolBox <em>8.8.57</em></strong><p>Windows EXE · Maya Module</p></div>
+          <header class="download-package-head"><span>WINDOWS INSTALLER</span><b>ACCESS PAUSED</b></header>
+          <button class="download-package-mark" id="previewDownloadMark" type="button" aria-label="下载暂未开放" aria-disabled="true" disabled title="下载暂未开放"><i aria-hidden="true">×</i></button>
+          <div class="download-package-name"><small>PRIVATE PACKAGE</small><strong>Bingo ToolBox <em>暂未开放</em></strong><p>Windows EXE · Maya Module</p></div>
           <div class="download-data">
-            <div><small>PACKAGE</small><b>8.8.57</b></div>
-            <div><small>SIZE</small><b>≈ 156 MB</b></div>
+            <div><small>PACKAGE</small><b>—</b></div>
+            <div><small>SIZE</small><b>—</b></div>
             <div><small>HOST</small><b>MAYA 2020—2026</b></div>
             <div><small>FORMAT</small><b>WINDOWS EXE</b></div>
           </div>
-          <button class="download-action" id="previewDownload" type="button"><span><small>DOWNLOAD</small><strong>下载 Bingo ToolBox EXE</strong></span><b>↓</b></button>
-          <small class="local-note">将前往 GitHub Releases 下载当前公开安装包。</small>
+          <button class="download-action" id="previewDownload" type="button" aria-disabled="true" disabled><span><small>PAUSED</small><strong>暂未开放下载</strong></span><b>×</b></button>
+          <small class="local-note">当前版本暂不对外提供下载，恢复时间另行通知。</small>
         </aside>
       </div>
       <section class="download-details" aria-labelledby="downloadDetailsTitle">
@@ -451,6 +451,6 @@
   <script src="/stellar-source/vendor/three.min.js"></script>
   <script src="/workbench/actual-tools.js?v=mascot-stable-v110"></script>
   <script src="/stellar-source/update-log.js?v=mascot-stable-v110"></script>
-  <script src="/stellar-source/source.js?v=mascot-stable-v110"></script>
+  <script src="/stellar-source/source.js?v=download-paused-v110"></script>
 </body>
 </html>
