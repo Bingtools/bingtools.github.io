@@ -1,0 +1,8 @@
+{
+  "enabled": true,
+  "message": "",
+  "policy": {
+    "check_interval_hours": 6,
+    "offline_grace_hours": 72
+  }
+}
