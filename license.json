@@ -1,8 +1,7 @@
 {
-  "enabled": false,
-  "message": "工具箱已停用，如需使用请联系 Bingo",
-  "policy": {
-    "check_interval_hours": 6,
-    "offline_grace_hours": 72
-  }
+  "enabled": true,
+  "message": "",
+  "notice": "",
+  "offline_grace_hours": 72,
+  "check_interval_hours": 1
 }
