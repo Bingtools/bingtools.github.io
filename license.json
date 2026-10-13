@@ -1,6 +1,6 @@
 {
-  "enabled": true,
-  "message": "",
+  "enabled": false,
+  "message": "当前版本已停止使用，最新版请加 QQ 群 960143821 下载",
   "notice": "",
   "offline_grace_hours": 72,
   "check_interval_hours": 1
