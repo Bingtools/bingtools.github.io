@@ -342,8 +342,12 @@
   }
 
   search.addEventListener('input', renderGrid);
-  renderFilters();
-  renderGrid();
+  try {
+    renderFilters();
+    renderGrid();
+  } catch (error) {
+    console.error('Bingo 工具列表渲染失败:', error);
+  }
 
   window.BINGO_LOCAL_TOOL_PREVIEW = { tools, sourceInfo, categoryInfo };
 })();
