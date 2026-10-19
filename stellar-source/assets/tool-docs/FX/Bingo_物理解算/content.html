@@ -1,0 +1,22 @@
+<!DOCTYPE html><html><head><meta charset="utf-8" /><meta name="qrichtext" content="1" />
+<style type="text/css">body{font-family:"Microsoft YaHei","Consolas";font-size:13px;color:#dddddd;background:#242424;}h1{color:#f0f0f0;font-size:20px;}h2{color:#66b7e8;margin-top:18px;margin-bottom:8px;}p{margin:5px 0;line-height:1.55;}li{margin:5px 0;}.tip{color:#e7c26d;}</style></head><body>
+<p><img src="images/img_1784602735223.png" /></p>
+<h1>Bingo_物理解算</h1>
+<h2>工具具体功能</h2><ul>
+<li>为连续控制器生成延迟跟随和拖拽效果。</li>
+<li>支持平移烘焙、第一节保持、只向下收集子级控制器和循环动画。</li>
+<li>可叠加风力幅度与速度，制作飘带、尾巴、触须等次级运动。</li>
+<li>支持当前时间轴或自定义帧范围。</li>
+</ul><h2>工具使用教程</h2><ol>
+<li>按运动链顺序选择控制器，或只选一个曲线根控制器并启用“只向下收集子级”。</li>
+<li>设置每节延迟、跟随幅度和可选风力参数。</li>
+<li>根据绑定类型决定是否同时烘焙平移。</li>
+<li>设置当前时间轴或自定义帧范围。</li>
+<li>点击开始烘焙跟随效果。</li>
+<li>播放结果并检查首尾循环、穿插和控制器旋转。</li>
+</ol><h2>注意事项</h2><ul>
+<li class="tip">先在场景副本或动画层流程中测试，烘焙会写入大量关键帧。</li>
+<li class="tip">控制器选择顺序会影响延迟传播方向。</li>
+<li class="tip">自动收集不会搜索父级、祖先或同级节点；遇到多个子控制器分支时会停止，请手动选择要处理的单条链。</li>
+<li class="tip">复杂绑定建议关闭并行计算干扰后再核对结果。</li>
+</ul></body></html>

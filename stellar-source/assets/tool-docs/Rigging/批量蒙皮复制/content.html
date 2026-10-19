@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="qrichtext" content="1" />
+<style type="text/css">
+body{font-family:"Microsoft YaHei","Consolas";font-size:13px;color:#dddddd;background:#242424;}
+h1{color:#f0f0f0;font-size:20px;}h2{color:#55c9a5;margin-top:18px;margin-bottom:8px;}
+p{margin:5px 0;line-height:1.55;}li{margin:5px 0;line-height:1.55;}.tip{color:#e7c26d;}
+</style>
+</head>
+<body>
+<h1>Bingo 批量蒙皮复制</h1>
+<h2>工具具体功能</h2>
+<ul>
+<li>按左右文件列表的同一行，批量把源文件的蒙皮复制到目标文件。</li>
+<li>支持 FBX、MA、MB，添加文件夹时默认递归识别所有子文件夹。</li>
+<li>支持列表上移、下移、移除和清空，用于明确调整左右配对顺序。</li>
+<li>每个成功结果保存到右侧目标文件同级的 Done 文件夹，不删除任何源文件。</li>
+</ul>
+<h2>工具使用教程</h2>
+<ol>
+<li>分别向左右列表添加多个文件，或添加包含模型文件的文件夹。</li>
+<li>使用上移、下移调整顺序，使左右同一编号为一对。</li>
+<li>确认左右文件数量完全一致，必要时展开“高级设置”调整导入参数。</li>
+<li>选择输出格式，点击“开始批量复制”。</li>
+</ol>
+<h2>配对规则</h2>
+<ul>
+<li>左右文件数量不一致时不会开始，不会默默忽略多出的文件。</li>
+<li>每对文件内：已蒙皮源模型与目标模型数量相同时一对一；源模型只有 1 个时可复制到多个目标。</li>
+</ul>
+<h2>注意事项</h2>
+<ul>
+<li class="tip">批处理每对文件前会建立新场景；当前场景有未保存修改时，工具会先请你确认。</li>
+<li class="tip">源文件和目标原文件均不会被删除或覆盖。</li>
+<li class="tip">正式批处理前，建议先用少量文件验证模型顺序和骨骼命名。</li>
+</ul>
+</body>
+</html>

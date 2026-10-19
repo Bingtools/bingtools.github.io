@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="qrichtext" content="1" />
+<style type="text/css">
+body{font-family:"Microsoft YaHei","Consolas";font-size:13px;color:#dddddd;background:#242424;}
+h1{color:#f0f0f0;font-size:20px;}
+h2{color:#66b7e8;margin-top:18px;margin-bottom:8px;}
+p{margin:5px 0;line-height:1.55;}
+li{margin:5px 0;line-height:1.55;}
+.tip{color:#e7c26d;}
+</style>
+</head>
+<body>
+<h1>引用功能</h1>
+
+<h2>选中内容转引用</h2>
+<ol>
+<li>在当前 Maya 场景中选择一个或多个本地模型的最外层组。</li>
+<li>选择引用源文件保存路径，或使用自动路径。</li>
+<li>点击“将当前选择转换为引用”。</li>
+<li>工具会先导出 Maya 文件，确认引用创建成功并保持位置后，再删除本地节点。</li>
+</ol>
+
+<h2>引用本地文件</h2>
+<ul>
+<li>支持 <code>.fbx</code>、<code>.ma</code>、<code>.mb</code> 三种引用文件，扩展名大小写均可识别。</li>
+<li>点击“添加文件夹（含子文件夹）”后，默认递归识别所选文件夹及全部子文件夹，不需要勾选任何额外选项。</li>
+<li>同一文件不会重复加入列表；再次扫描父目录、子目录或手动添加时会自动跳过重复项。</li>
+<li>如果扫描目录包含当前正在打开的 Maya 场景，工具会自动跳过，避免场景引用自身。</li>
+<li>每个文件自动使用独立命名空间，并在名称冲突时自动编号。</li>
+<li>支持创建为延迟加载引用。</li>
+<li>引用 FBX 时会自动检查并加载 Maya 自带的 <code>fbxmaya</code> 插件；插件不可用时只跳过对应 FBX，并继续处理其他文件。</li>
+</ul>
+
+<h2>引用管理</h2>
+<ul>
+<li>查看当前场景引用节点、命名空间、加载状态和源文件路径。</li>
+<li>支持重新加载、卸载、替换引用文件和移除引用。</li>
+<li>“替换引用文件”沿用原有 Maya 文件流程，目前仅选择 <code>.ma</code> 或 <code>.mb</code>；FBX 可重新添加为新引用。</li>
+<li>移除引用只影响当前场景，不会删除磁盘上的源文件。</li>
+</ul>
+
+<h2>注意事项</h2>
+<ul>
+<li class="tip">同时选择父层和子层时，工具只转换最外层根节点，避免重复导出。</li>
+<li class="tip">已经被引用的节点不会再次转换。</li>
+<li class="tip">如果模型与选择范围外的约束、表达式或节点存在连接，请先检查外部依赖。</li>
+<li class="tip">部分 Maya 版本无法稳定读写包含中文或特殊字符的文件路径；遇到路径错误时请改用纯英文路径。</li>
+</ul>
+</body>
+</html>

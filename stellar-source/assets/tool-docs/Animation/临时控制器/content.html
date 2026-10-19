@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="qrichtext" content="1" />
+  <style>
+    body { font-family: "Microsoft YaHei", "Consolas"; font-size: 13px; color: #dddddd; background: #242424; }
+    h1 { color: #f0f0f0; font-size: 20px; }
+    h2 { color: #b87cf2; margin-top: 18px; margin-bottom: 8px; }
+    p { margin: 5px 0; line-height: 1.55; }
+    li { margin: 5px 0; line-height: 1.5; }
+    .key { color: #d5aff7; font-weight: bold; }
+    .tip { color: #9fd38c; }
+    .warn { color: #e7c26d; }
+  </style>
+</head>
+<body>
+<h1>临时控制器</h1>
+<p>作者：Bingo　版本：1.0.0　兼容 Maya 2020–2026</p>
+<p>在指定动画范围内创建可烘焙的临时控制器，用于整体调整、空间切换、动画修形和枢轴编辑。</p>
+
+<h2>工具具体功能</h2>
+<ul>
+  <li>为所选对象逐个创建临时控制器，或为两个以上对象创建一个整体控制器。</li>
+  <li>支持时间滑块选区与播放范围，并提供圆形、方形、立方体形状和尺寸设置。</li>
+  <li>可抓取到参考对象、释放到世界，以及只切换位移空间或旋转空间，切换时保持世界姿势。</li>
+  <li>可添加父控制器、子控制器，修改控制层级，并重新应用形状与大小。</li>
+  <li>可把枢轴移到参考对象、居中、留在世界位置或恢复默认枢轴。</li>
+  <li>完成后可把结果烘焙回原对象并清理临时系统，也可不烘焙直接删除。</li>
+</ul>
+
+<h2>明确使用步骤</h2>
+<ol>
+  <li>先在时间轴框选需要处理的范围；如果没有框选，选择 <span class="key">播放范围</span>。设置控制器形状与大小。</li>
+  <li>选择一个或多个需要调整的控制器或对象。点击 <span class="key">逐个创建</span>；需要统一控制两个以上对象时，点击 <span class="key">整体控制器</span>。</li>
+  <li>在新建的临时控制器上制作或修改动画。</li>
+  <li>需要跟随其他物体时，先选择临时控制器，再按住 Shift 最后选择参考对象，然后点击 <span class="key">抓取到所选</span>、<span class="key">仅位移空间</span> 或 <span class="key">仅旋转空间</span>。回到世界空间时只选临时控制器并点击 <span class="key">释放到世界</span>。</li>
+  <li>需要更多控制层时使用 <span class="key">添加父控制器</span> 或 <span class="key">添加子控制器</span>；需要改变旋转中心时使用枢轴区域的相应按钮。</li>
+  <li>确认动画后点击 <span class="key">烘焙并清理</span>，把当前范围的结果写回原对象并移除临时系统。</li>
+  <li>如果不需要临时控制器上的修改，点击 <span class="key">直接删除</span>，仅移除临时系统。</li>
+</ol>
+
+<h2>主要按钮说明</h2>
+<ul>
+  <li><span class="key">抓取到所选：</span>临时控制器完整跟随最后选择的参考对象。</li>
+  <li><span class="key">仅位移 / 仅旋转空间：</span>只改变对应空间，另一部分保持独立。</li>
+  <li><span class="key">枢轴到所选：</span>把主要临时控制器枢轴移到最后选择的参考对象。</li>
+  <li><span class="key">应用形状与大小：</span>把当前形状和尺寸设置应用到选中的临时控制器。</li>
+</ul>
+
+<h2>注意事项</h2>
+<ul>
+  <li class="warn">整体控制器至少需要选择两个对象。</li>
+  <li class="warn">空间切换和“枢轴到所选”要求参考对象最后选择。</li>
+  <li class="warn">“直接删除”不会把临时控制器上的动画烘焙回原对象。</li>
+  <li>时间滑块没有有效选区时，工具会自动使用播放范围。</li>
+  <li>“烘焙并清理”会保留动画层，只清理当前 Bingo 临时系统；整次操作支持 Ctrl+Z。</li>
+</ul>
+</body>
+</html>

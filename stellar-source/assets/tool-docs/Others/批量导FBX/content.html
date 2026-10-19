@@ -1,0 +1,23 @@
+<!DOCTYPE html><html><head><meta charset="utf-8" /><meta name="qrichtext" content="1" />
+<style type="text/css">body{font-family:"Microsoft YaHei","Consolas";font-size:13px;color:#dddddd;background:#242424;}h1{color:#f0f0f0;font-size:20px;}h2{color:#66b7e8;margin-top:18px;margin-bottom:8px;}p{margin:5px 0;line-height:1.55;}li{margin:5px 0;}.tip{color:#e7c26d;}</style></head><body>
+<h1>Bingo_批量导FBX</h1>
+<h2>工具功能</h2><ul>
+<li>扫描当前场景中的根骨骼，并将选择的骨骼批量导出为 FBX。</li>
+<li>批量扫描文件夹中的 MA、MB 文件，逐个打开、识别骨骼并导出。</li>
+<li>提供仅骨骼、骨骼与蒙皮、骨骼与动画、完整导出四种预设。</li>
+<li>输出目录自动生成：每个源文件旁创建 FBX 文件夹。</li>
+</ul><h2>基本使用</h2><ol>
+<li>在“当前场景”或“批量文件”页选择工作模式。</li>
+<li>扫描并勾选需要导出的骨骼或 Maya 文件。</li>
+<li>选择导出预设，点击“开始导出”。</li>
+<li>工具会自动创建 FBX 文件夹并保存导出结果。</li>
+</ol><h2>路径规则</h2><ul>
+<li>已保存场景：在场景文件所在目录创建 FBX 文件夹。</li>
+<li>未保存场景：在当前 Maya 工程目录创建 FBX 文件夹。</li>
+<li>批量文件：在每个 MA/MB 源文件所在目录分别创建 FBX 文件夹。</li>
+</ul><h2>注意事项</h2><ul>
+<li class="tip">工具依赖 Maya 自带的 fbxmaya 插件。</li>
+<li class="tip">“骨骼 + 动画（不含模型）”会按当前播放范围每帧 BAKE 骨骼，再导出 FBX。</li>
+<li class="tip">骨骼 BAKE 是临时操作；导出后会自动撤销，并恢复原选择和当前帧。</li>
+<li class="tip">批量文件模式会依次打开场景，使用前请保存当前工作。</li>
+</ul></body></html>

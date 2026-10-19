@@ -1,0 +1,23 @@
+<!DOCTYPE html><html><head><meta charset="utf-8" /><meta name="qrichtext" content="1" />
+<style type="text/css">body{font-family:"Microsoft YaHei","Consolas";font-size:13px;color:#dddddd;background:#242424;}h1{color:#f0f0f0;font-size:20px;}h2{color:#66b7e8;margin-top:18px;margin-bottom:8px;}p{margin:5px 0;line-height:1.55;}li{margin:5px 0;}.tip{color:#e7c26d;}</style></head><body>
+<p><img src="images/img_1781606613091.png" /></p>
+<h1>路径指认</h1>
+<h2>工具具体功能</h2><ul>
+<li>选择一个项目文件夹后，自动识别该目录及全部子文件夹中的文件。</li>
+<li>支持按 Maya、FBX、OBJ、Alembic、脚本等类型筛选，也可按文件名或子路径搜索。</li>
+<li>列表使用相对路径显示，同名文件位于不同子目录时也能准确区分。</li>
+<li>支持打开选中、导入选中、选中新建导入，以及引用选中的 Maya 文件。</li>
+<li>常用项目目录可加入收藏夹，双击收藏即可重新扫描该目录。</li>
+</ul><h2>工具使用教程</h2><ol>
+<li>点击“浏览”并选择具体的项目文件夹；工具会自动扫描全部子文件夹，无需额外勾选。</li>
+<li>在“类型”中选择需要的文件格式，或输入文件名、子路径进行筛选。</li>
+<li>在文件列表中选择一个或多个文件。</li>
+<li>根据需要点击“打开选中”“导入选中”“选中文件引用”或“选中新建导入”。</li>
+<li>项目内容变化后，点击“刷新（含子文件夹）”重新扫描。</li>
+</ol><h2>注意事项</h2><ul>
+<li class="tip">为避免 Maya 长时间无响应，请选择具体项目文件夹，不要直接扫描磁盘根目录或网络共享根目录。</li>
+<li class="tip">扫描大量文件时会显示进度窗口，可随时点击取消；已读取的文件仍会保留在列表中。</li>
+<li class="tip">工具不会跟随符号链接或 Windows Junction，且不能把这类链接本身作为扫描根目录，避免目录循环和重复文件。</li>
+<li class="tip">“选中文件引用”沿用原有规则，仅支持 .ma 和 .mb；其他格式请使用导入。</li>
+<li class="tip">打开工具时仅快速读取初始目录当前层；选择路径、收藏夹或点击刷新后默认递归扫描。</li>
+</ul></body></html>

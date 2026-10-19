@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="qrichtext" content="1" />
+  <style>
+    body { font-family: "Microsoft YaHei", "Consolas"; font-size: 13px; color: #dddddd; background: #242424; }
+    h1 { color: #f0f0f0; font-size: 20px; }
+    h2 { color: #f0a14a; margin-top: 18px; margin-bottom: 8px; }
+    p { margin: 5px 0; line-height: 1.55; }
+    li { margin: 5px 0; line-height: 1.5; }
+    .key { color: #f3b46d; font-weight: bold; }
+    .tip { color: #9fd38c; }
+    .warn { color: #ffcc66; }
+  </style>
+</head>
+<body>
+<h1>Bingo_速度线</h1>
+<p>作者：Bingo　版本：1.1.7</p>
+<p>在一个或多个多边形武器、载具或道具表面生成可调节、可流动的卡通速度线。</p>
+
+<h2>工具具体功能</h2>
+<ul>
+  <li>从模型表面、尾部区域和边界采样，生成渐细的带状多边形速度线。</li>
+  <li>支持根据物体运动方向、模型最长轴或局部 X/Y/Z 轴确定拖尾方向，并可反转。</li>
+  <li>可设置线条数量、方向随机、随机种子、长度、粗细、粗糙度、表面偏移、颜色和透明度。</li>
+  <li>支持流动动画、流动速度、流动幅度、闪烁，以及播放时实时更新运动方向。</li>
+  <li>同一模型再次创建会更新原有 Bingo 速度线；可选择现有效果或完整删除。</li>
+</ul>
+
+<h2>明确使用步骤</h2>
+<ol>
+  <li>在 Maya 中选择一个或多个包含 Mesh 的多边形武器、载具或道具。</li>
+  <li>打开工具并点击 <span class="key">读取选择</span>，确认“速度线来源”显示正确模型。</li>
+  <li>设置线条数量与方向。选择“根据物体运动方向”时，速度线会沿物体实际移动方向的反方向拖尾；静止时会回退到模型最长轴。</li>
+  <li>调整方向随机、随机种子、最短/最长长度、粗细、粗糙度、表面偏移、颜色和不透明度。</li>
+  <li>需要动态效果时勾选 <span class="key">启用流动动画</span>，设置流动速度、幅度和闪烁；需要播放中转向时保留“播放时实时更新运动方向”。</li>
+  <li>点击 <span class="key">创建 / 更新速度线</span>，播放时间轴检查效果。</li>
+  <li>使用 <span class="key">选择现有效果</span> 定位生成组；不再需要时选择源模型或效果组，再点击 <span class="key">删除速度线</span>。</li>
+</ol>
+
+<h2>主要参数说明</h2>
+<ul>
+  <li><span class="key">线条数量：</span>控制生成网格数量，数量越高实时更新开销越大。</li>
+  <li><span class="key">随机种子：</span>相同参数与种子会获得稳定的分布；点击“随机”可快速换一种排列。</li>
+  <li><span class="key">表面偏移：</span>让速度线离开模型表面，减少穿插和闪烁。</li>
+  <li><span class="key">流动动画：</span>由时间变化回调驱动速度线移动与闪烁，不会自动烘焙为逐帧顶点动画。</li>
+</ul>
+
+<h2>注意事项</h2>
+<ul>
+  <li>只接受包含 Mesh Shape 的多边形物体。</li>
+  <li>最短长度大于最长长度时，工具会自动交换两个数值。</li>
+  <li>线条越多，同时开启实时方向和流动动画时，播放开销越高。</li>
+  <li>重新打开场景后，建议重新打开一次本工具再播放，以恢复实时更新回调。</li>
+  <li class="warn">点击“删除速度线”时如果完全没有选择，工具会删除场景内全部带 Bingo 标记的速度线效果。</li>
+</ul>
+</body>
+</html>

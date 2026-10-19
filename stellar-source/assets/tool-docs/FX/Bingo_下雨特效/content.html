@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="qrichtext" content="1" />
+<style type="text/css">
+body { font-family: "Microsoft YaHei", "Consolas"; font-size: 13px; color: #dddddd; background: #242424; }
+h1 { color: #f0f0f0; font-size: 20px; }
+h2 { color: #66b7e8; margin-top: 18px; margin-bottom: 8px; }
+h3 { color: #e7e7e7; margin-top: 14px; margin-bottom: 6px; }
+p { margin: 5px 0; line-height: 1.55; }
+li { margin: 5px 0; line-height: 1.5; }
+.tip { color: #9fd38c; }
+.warn { color: #e7c26d; }
+.key { color: #7fc7f3; font-weight: bold; }
+</style>
+</head>
+<body>
+<h1>Bingo_下雨特效</h1>
+
+<h2>工具具体功能</h2>
+<ul>
+  <li>自动创建基于 Maya nParticle 的可播放雨滴系统。</li>
+  <li>提供小雨、中雨、暴雨和斜风暴雨四套预设。</li>
+  <li>可设置降雨区域宽度、深度、雨云高度和地面高度。</li>
+  <li>支持雨量、下落速度、水平风向、扰动、雨滴长度、宽度和透明度调整。</li>
+  <li>可选地面飞溅粒子，并控制飞溅数量与速度。</li>
+  <li>可在当前所选模型中心创建雨区，也可在世界原点创建。</li>
+  <li>支持自定义模拟开始帧和结束帧。</li>
+  <li>支持重复生成并更新、选择控制器和一键删除整套雨效。</li>
+</ul>
+
+<h2>参数说明</h2>
+<ul>
+  <li><span class="key">降雨预设：</span>快速载入不同强度、速度、风力和飞溅参数。</li>
+  <li><span class="key">宽度 / 深度：</span>控制雨滴发射区域覆盖范围。</li>
+  <li><span class="key">雨云高度：</span>控制雨滴发射器所在高度。</li>
+  <li><span class="key">地面高度：</span>决定飞溅区域和地面显示位置。</li>
+  <li><span class="key">雨量：</span>每秒发射的雨滴数量，数值越大场景计算量越高。</li>
+  <li><span class="key">风向 X / Z：</span>控制雨滴的水平偏移方向和强度。</li>
+  <li><span class="key">扰动：</span>增加雨滴运动的随机变化，避免轨迹过于整齐。</li>
+  <li><span class="key">雨滴长度 / 宽度：</span>控制 Viewport 2.0 中雨丝的外观。</li>
+  <li><span class="key">启用飞溅：</span>在地面区域创建额外的飞溅粒子。</li>
+</ul>
+
+<h2>工具使用教程</h2>
+<ol>
+  <li>如果希望雨区围绕角色或场景模型生成，先在 Maya 中选择目标模型或模型组。</li>
+  <li>打开 <span class="key">Bingo_下雨特效</span>。</li>
+  <li>选择小雨、中雨、暴雨或斜风暴雨预设。</li>
+  <li>设置降雨区域宽度、深度、雨云高度和地面高度。</li>
+  <li>根据镜头需要调整雨量、下落速度、风向、扰动和雨滴外观。</li>
+  <li>需要地面水花时勾选 <span class="key">启用飞溅</span>，再设置飞溅数量和速度。</li>
+  <li>设置模拟的开始帧和结束帧。</li>
+  <li>需要以所选物体为中心时保留 <span class="key">以当前选择中心创建</span>；否则取消勾选。</li>
+  <li>点击 <span class="key">生成 / 更新下雨特效</span>。</li>
+  <li>播放时间轴检查雨滴方向、覆盖范围和飞溅位置。</li>
+  <li>修改参数后再次点击生成按钮即可更新整套效果。</li>
+  <li>点击 <span class="key">选择控制器</span> 可整体移动雨区；不再使用时点击 <span class="key">删除雨效</span>。</li>
+</ol>
+
+<h2>使用建议与注意事项</h2>
+<ul>
+  <li class="tip">先用中低雨量调整范围和风向，确认构图后再提高雨量，可明显减少调试等待时间。</li>
+  <li>雨滴需要播放若干帧后才会布满区域，从开始帧立即观察时数量较少属于正常情况。</li>
+  <li>地面飞溅属于独立粒子系统，关闭飞溅可降低场景计算量。</li>
+  <li>最终渲染前应根据所用渲染器检查粒子材质、运动模糊和透明度效果。</li>
+  <li class="warn">超大降雨范围与高雨量组合会增加播放和缓存开销，请按镜头实际可见范围设置。</li>
+</ul>
+</body>
+</html>

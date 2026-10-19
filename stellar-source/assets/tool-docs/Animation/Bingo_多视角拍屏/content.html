@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="qrichtext" content="1" />
+<style type="text/css">
+body{font-family:"Microsoft YaHei","Consolas";font-size:13px;color:#dddddd;background:#242424;}
+h1{color:#f0f0f0;font-size:20px;}
+h2{color:#66b7e8;margin-top:18px;margin-bottom:8px;}
+p{margin:5px 0;line-height:1.55;}
+li{margin:5px 0;line-height:1.55;}
+.tip{color:#e7c26d;}
+</style>
+</head>
+<body>
+<h1>Bingo_多视角拍屏</h1>
+
+<h2>影视化拍屏</h2>
+<ul>
+<li>显示文件名、动画师、帧范围、总帧数、当前帧、帧率、主镜头和日期。</li>
+<li>“当前打开文件”可直接把正在打开且已经保存的 Maya 文件输出为同名 MP4 视频。</li>
+<li>界面会显示当前源文件路径，并可重新读取当前文件的时间轴、帧率和相机列表。</li>
+<li>当前场景可自动识别主镜头，也可手动指定 Cam。</li>
+<li>批量模式可添加多个 Maya 文件或整个目录，并逐个预检主镜头。</li>
+<li>镜头名称带不同镜号时，会忽略镜号和命名空间识别同类主镜头。</li>
+<li>自动识别结果有歧义时，可为单个文件手动指定，不会使用不确定的镜头。</li>
+<li>每个批量文件使用自己的时间轴和场景帧率，任务完成后恢复原场景。</li>
+</ul>
+
+<h2>游戏动作拍屏</h2>
+<ul>
+<li>默认“四视图模型展示”会创建实时同步的正面、背面、左侧和右侧角色模型，并由专用相机输出为一个 MP4。</li>
+<li>展示副本使用 BlendShape 跟随原模型变形，不会修改原模型、原绑定和原动画。</li>
+<li>四视图继承模型材质；拍屏时只显示展示布局，并在结束后恢复原视图状态。</li>
+<li>可调整展示比例，并选择拍屏完成后自动删除或保留展示布局。</li>
+<li>“自由 Cam / 标准视图”保留场景 Cam 多选及透视、正视、侧视、顶视任意组合。</li>
+<li>自由模式可分别输出每个视角，也可把全部所选视角合成为一个 MP4；合成布局会自动计算。</li>
+<li>可显示文件名、帧率、视角和当前帧等精简信息。</li>
+</ul>
+
+<h2>默认显示与输出</h2>
+<ul>
+<li>默认显示模型、平滑着色、材质贴图、透明效果和常用粒子、流体、毛发、布料特效。</li>
+<li>自动在 Maya 源文件所在目录创建 MP4 文件夹。</li>
+<li>单个或合成输出使用源文件名；分别输出多个视角时追加视角名称。</li>
+<li>单独输出支持 MP4 或 PNG 序列；多视角合成输出 MP4。</li>
+<li>工具自动检查帧数、保护已有输出，并在任务后恢复视图和当前帧。</li>
+</ul>
+
+<h2>批量主镜头识别</h2>
+<ol>
+<li>bingoPlayblastMainCam 标记。</li>
+<li>用户填写的镜头关键词。</li>
+<li>与上一个镜头角色名一致的相机。</li>
+<li>Renderable 非默认相机。</li>
+<li>名称包含 main、render、shot、playblast 等关键词的相机。</li>
+<li>唯一非默认相机。</li>
+</ol>
+
+<h2>注意事项</h2>
+<ul>
+<li class="tip">开始拍屏前必须保存当前 Maya 场景。</li>
+<li class="tip">批量任务前不能存在未保存修改，因为工具需要逐个打开目标文件。</li>
+<li class="tip">MP4 输出依赖工具箱随附的 FFmpeg 组件。</li>
+</ul>
+
+<h2>第三方许可</h2>
+<p>游戏“四视图模型展示”的布局思路改编自 BB_MultiMesh_Showcase（MIT License，Copyright © 2023 Bonny Baez）。完整许可随工具保存在 THIRD_PARTY_LICENSE_BB_MultiMesh_Showcase.txt。</p>
+</body>
+</html>

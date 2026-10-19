@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="qrichtext" content="1" />
+  <style>
+    body { font-family: "Microsoft YaHei", "Consolas"; font-size: 13px; color: #dddddd; background: #242424; }
+    h1 { color: #f0f0f0; font-size: 20px; }
+    h2 { color: #7fc7f3; margin-top: 18px; margin-bottom: 8px; }
+    p { margin: 5px 0; line-height: 1.55; }
+    li { margin: 5px 0; line-height: 1.5; }
+    .key { color: #7fc7f3; font-weight: bold; }
+    .tip { color: #9fd38c; }
+    .warn { color: #e7c26d; }
+  </style>
+</head>
+<body>
+<h1>动作精简</h1>
+<p>作者：Bingo　版本：1.4.4</p>
+<p>安全减少 Bake 后的逐帧关键帧，在尽量保持动作轮廓和细节的同时，让曲线更轻、更容易继续编辑。</p>
+<p><img src="images/img_1787739765846.png" width="430" /></p>
+
+<h2>工具具体功能</h2>
+<ul>
+  <li>处理当前所选控制器、骨骼或物体的位移、旋转、缩放和数值型自定义属性动画。</li>
+  <li>支持内置“可见性”、关节半径等关键帧/通道盒属性，以及自定义布尔、枚举和整数开关属性。</li>
+  <li>对统一 Step / StepNext 的保持型曲线按状态段精简，不进入普通浮点曲线拟合。</li>
+  <li>支持时间滑块选区、播放范围和自定义开始/结束帧。</li>
+  <li>提供高保留、中保留、低保留三档精简强度。</li>
+  <li>保留范围首尾关键帧与 Breakdown 关键帧，并在删键后逐帧复核误差，必要时自动补回关键帧。</li>
+  <li>自动跳过混合阶梯模式、锁定属性、锁定曲线和引用曲线，整次操作可一次 Ctrl+Z。</li>
+</ul>
+
+<h2>明确使用步骤</h2>
+<ol>
+  <li>先选择已经 Bake、带有逐帧动画的控制器或骨骼。</li>
+  <li>在 <span class="key">时间范围</span> 中选择来源。使用“时间滑块选区”前先在时间轴框选；使用“自定义”时填写开始帧和结束帧。</li>
+  <li>选择保留等级：<span class="key">中保留（平衡推荐）</span> 适合首次处理；高保留留下更多细节与关键帧；低保留只保留主要动作轮廓。</li>
+  <li>点击 <span class="key">开始安全减帧</span>，等待状态提示完成。</li>
+  <li>播放处理范围，并在曲线编辑器中检查动作和关键帧数量。</li>
+  <li>如果细节损失不符合预期，立即 Ctrl+Z，改用更高保留等级重新处理。</li>
+</ol>
+
+<h2>保留等级说明</h2>
+<ul>
+  <li><span class="key">高保留：</span>误差容许最小，适合面部、手指或细微动作。</li>
+  <li><span class="key">中保留：</span>精简率和动作保真度平衡，适合作为默认选择。</li>
+  <li><span class="key">低保留：</span>删除更多关键帧，适合只需保留大轮廓的预览或二次整理。</li>
+</ul>
+
+<h2>注意事项</h2>
+<ul>
+  <li>只处理 Maya 时间动画曲线 animCurveTA、TL、TT、TU；范围外关键帧不会主动删除。</li>
+  <li>普通数值曲线默认只处理看起来像逐帧 Bake 的稠密动画；稀疏手工曲线会安全跳过。</li>
+  <li>统一 Step 或统一 StepNext 的曲线只删除连续相同状态中的冗余键，保留范围首尾、状态切换时刻和 Breakdown，并保持原切线。</li>
+  <li>同一曲线混合 Step / StepNext，或混入平滑切线时会整条安全跳过，避免开关时刻改变。</li>
+  <li>当前界面每次执行都会包含位移、旋转、缩放，以及其他受支持且已显示在关键帧/通道盒中的内置与自定义属性，没有属性分类开关。</li>
+  <li class="warn">正式文件建议先保存副本；动画层、复杂约束或引用绑定应先用短范围测试。</li>
+</ul>
+</body>
+</html>

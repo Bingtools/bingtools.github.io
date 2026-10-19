@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="qrichtext" content="1" />
+  <style>
+    body { font-family: "Microsoft YaHei", "Consolas"; font-size: 13px; color: #dddddd; background: #242424; }
+    h1 { color: #f0f0f0; font-size: 20px; }
+    h2 { color: #54b7e9; margin-top: 18px; margin-bottom: 8px; }
+    h3 { color: #e7e7e7; margin-top: 14px; margin-bottom: 6px; }
+    p { margin: 5px 0; line-height: 1.55; }
+    li { margin: 5px 0; line-height: 1.5; }
+    .key { color: #7fc7f3; font-weight: bold; }
+    .tip { color: #9fd38c; }
+    .warn { color: #e7c26d; }
+  </style>
+</head>
+<body>
+<h1>Bingo 重定向工具</h1>
+<p>版本：3.1.2　ADV 兼容识别修正版</p>
+<p>把 FBX / Mixamo 风格骨骼动画重定向到 AdvancedSkeleton 角色，单个动画和批量动画集中在同一窗口。</p>
+<p><img src="images/img_1787739782820.png" width="680" /></p>
+
+<h2>工具具体功能</h2>
+<ul>
+  <li>兼容旧版 AdvancedSkeleton Main 结构与 ADV 6 的 MotionSystem / DeformationSystem 分离结构。</li>
+  <li>支持命名空间、额外组织层，并可从目标角色任意控制器或骨骼进入识别。</li>
+  <li>自动识别动画范围、0/1 参考帧、角色比例、骨轴、Space Switch、反向脚、鞋底支撑和手指方向。</li>
+  <li>把结果烘焙到独立的 <span class="key">BINGO_Scheme5_Final</span> 动画层，误差超限时会取消结果并恢复。</li>
+  <li>支持批量扫描 FBX 目录、包含子文件夹、单独添加文件、MA/MB 输出、逐文件失败隔离和报告。</li>
+  <li>可删除本工具生成的动画层，并恢复执行前的角色绑定状态。</li>
+</ul>
+
+<h2>明确使用步骤：单个动画</h2>
+<ol>
+  <li>打开目标 AdvancedSkeleton 角色场景，并把需要处理的 FBX 动画骨架导入或引用到当前场景。</li>
+  <li><span class="key">FBX 根骨骼</span> 可以留空让工具自动检测；也可以选择 root 或 Hips 后点击第一行的 <span class="key">使用当前选择</span>。</li>
+  <li>选择目标角色的任意 AdvancedSkeleton 控制器，点击第二行的 <span class="key">使用当前选择</span>。</li>
+  <li>点击 <span class="key">生成角色动画</span>，等待进度达到 100%。</li>
+  <li>在 BINGO_Scheme5_Final 动画层检查身体、膝盖、脚底、反向脚和手指结果。</li>
+  <li>如需撤销整次生成，点击窗口底部 <span class="key">恢复角色绑定到默认状态</span> 并确认。</li>
+</ol>
+
+<h2>明确使用步骤：批量动画</h2>
+<ol>
+  <li>切换到 <span class="key">批量动画</span>。选择当前目标角色，或指定一个绑定 MA/MB 模板；使用当前角色时请先保存场景。</li>
+  <li>选择包含 FBX 动画的文件夹并扫描；需要时勾选“包含子文件夹”，也可点击“添加文件”。</li>
+  <li>在列表中勾选要处理的动画，设置输出目录以及 Maya ASCII（.ma）或 Maya Binary（.mb）格式。</li>
+  <li>点击 <span class="key">开始批量重定向</span>。需要停止时使用“当前任务完成后停止”，当前文件会先安全完成。</li>
+  <li>根据列表状态检查成功与失败项目；失败行的提示和最终报告会给出具体原因。</li>
+</ol>
+
+<h2>注意事项</h2>
+<ul>
+  <li>单个模式要求源 FBX 骨架和目标绑定同时存在于当前场景。</li>
+  <li>场景中存在多套无法区分的完整 ADV 绑定时，工具会停止并提示，不会自动猜测角色。</li>
+  <li>存在多个 root / Hips 时建议明确选择 FBX 根骨骼。</li>
+  <li class="warn">“恢复角色绑定到默认状态”会删除本工具生成的动画层，恢复到本次生成前的状态。</li>
+  <li>批量处理不要强行结束 Maya；需要停止时使用“当前任务完成后停止”。</li>
+  <li>Maya 2020、2022–2026 已完成正式兼容验证；Maya 2021 共用 cp27，但当前机器未直接实测。</li>
+</ul>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="qrichtext" content="1" />
+<style type="text/css">
+body { font-family: "Microsoft YaHei", "Consolas"; font-size: 13px; color: #dddddd; background: #242424; }
+h1 { color: #f0f0f0; font-size: 20px; }
+h2 { color: #66b7e8; margin-top: 18px; margin-bottom: 8px; }
+p { margin: 5px 0; line-height: 1.55; }
+li { margin: 5px 0; line-height: 1.5; }
+.tip { color: #9fd38c; }
+.warn { color: #e7c26d; }
+.key { color: #7fc7f3; font-weight: bold; }
+</style>
+</head>
+<body>
+<h1>Bingo_花瓣飘落</h1>
+
+<h2>工具功能</h2>
+<ul>
+  <li>Bingo 自研的 Maya 花瓣飘落动力学工具。</li>
+  <li>支持使用一个或多个所选模型作为花瓣；自动花瓣恢复原版 MEL 的 NURBS CV 建模参数与 Ramp 材质逻辑。</li>
+  <li>支持 classic particle 与 nParticle 两种粒子系统。</li>
+  <li>自动创建曲面发射器、重力、扰动、风场、粒子实例化和逐粒子表达式。</li>
+  <li>花瓣大小、初始朝向、旋转速度和实例模型会产生随机变化。</li>
+  <li>每套效果使用独立的 Bingo 命名与效果组，支持选择控制器和删除指定效果。</li>
+</ul>
+
+<h2>使用方法</h2>
+<ol>
+  <li>选择一个或多个花瓣模型，点击 <span class="key">读取选择</span>；或者选择 <span class="key">自动创建花瓣</span>。</li>
+  <li>根据项目需要选择 particle 或 nParticle。</li>
+  <li>在醒目的 <span class="key">花瓣密度</span> 区域调整数量；数值越小越稀疏。</li>
+  <li>在基础参数中设置发射范围、生命周期、缩放和旋转速度。</li>
+  <li>在动力参数中设置重力、扰动、风力和风向。</li>
+  <li>点击 <span class="key">创建花瓣飘落</span>。</li>
+  <li>播放时间轴检查效果。控制器可移动、旋转和缩放发射区域，并可直接调整已连接的动力属性。</li>
+  <li>点击 <span class="key">选择控制器</span> 找回最近创建的效果；创建后可通过控制器的 <span class="key">petalDensity</span> 属性继续调整密度。</li>
+  <li>不再使用时点击 <span class="key">删除所选效果</span>。</li>
+</ol>
+
+<h2>注意事项</h2>
+<ul>
+  <li class="tip">工具不会修改作为实例来源的用户模型；自动创建的花瓣会归入对应效果组。</li>
+  <li>多个来源模型会随机分配给粒子实例。</li>
+  <li>高发射数量和高细分花瓣模型会增加视口、缓存和渲染开销。</li>
+  <li>最终输出前请按渲染器检查实例材质、透明度与运动模糊。</li>
+  <li class="warn">创建动力学效果前建议保存场景。工具支持 Maya 撤销，但复杂场景中仍建议保留文件版本。</li>
+</ul>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="qrichtext" content="1" />
+<style type="text/css">
+body { font-family: "Microsoft YaHei", "Consolas"; font-size: 13px; color: #dddddd; background: #242424; }
+h1 { color: #f0f0f0; font-size: 20px; }
+h2 { color: #66b7e8; margin-top: 18px; margin-bottom: 8px; }
+h3 { color: #e7e7e7; margin-top: 14px; margin-bottom: 6px; }
+p { margin: 5px 0; line-height: 1.55; }
+li { margin: 5px 0; line-height: 1.5; }
+.tip { color: #9fd38c; }
+.warn { color: #e7c26d; }
+.key { color: #7fc7f3; font-weight: bold; }
+</style>
+</head>
+<body>
+<h1>Bingo_刀光拖尾</h1>
+
+<h2>工具具体功能</h2>
+<ul>
+  <li>采样刀刃根部和尖端的世界坐标，生成可播放、可渲染的动画刀光网格。</li>
+  <li>可根据所选刀模型的包围盒自动创建根部和尖端定位器。</li>
+  <li>支持自定义动画开始帧、结束帧、拖尾帧数和子帧采样精度。</li>
+  <li>支持刀光宽度、尾端收缩、颜色和不透明度调整。</li>
+  <li>提供能量蓝、火焰橙、魔法紫和纯白外观预设。</li>
+  <li>支持 PNG、TIF、TGA、JPG、BMP 和 EXR 刀光贴图。</li>
+  <li>贴图颜色会与刀光颜色混合；有 Alpha 时使用 Alpha，无 Alpha 时可按亮度形成透明纹理。</li>
+  <li>自动生成带 UV 的双面带状网格，不依赖 Arnold 或第三方插件。</li>
+  <li>支持当前帧快速预览、批量生成动画、选择刀光和完整删除。</li>
+</ul>
+
+<h2>参数说明</h2>
+<ul>
+  <li><span class="key">根部 / 尖端：</span>决定刀光带状网格的两条边，两个对象必须跟随刀具动画。</li>
+  <li><span class="key">拖尾帧数：</span>决定每一帧保留多长的历史运动轨迹。</li>
+  <li><span class="key">采样精度：</span>每帧适合普通动作；半帧和四分之一帧适合高速挥刀，但生成时间与网格量更高。</li>
+  <li><span class="key">宽度倍率：</span>相对于根部和尖端距离缩放刀光宽度。</li>
+  <li><span class="key">尾端收缩：</span>数值越大，拖尾末端越尖细。</li>
+  <li><span class="key">不透明度：</span>控制整套刀光及贴图 Alpha 的总体强度。</li>
+  <li><span class="key">刀光贴图：</span>沿刀刃宽度和拖尾长度自动铺设到生成的 UV 上。</li>
+</ul>
+
+<h2>工具使用教程</h2>
+<ol>
+  <li>选择刀模型或跟随刀具运动的控制器。</li>
+  <li>打开 <span class="key">Bingo_刀光拖尾</span>。</li>
+  <li>点击 <span class="key">按所选刀模型创建根部 / 尖端定位器</span>。</li>
+  <li>检查两个定位器位置：根部放在刀刃靠近刀柄处，尖端放在刀尖处；位置不准确时可手动调整。</li>
+  <li>也可以分别选择已有定位器、关节或控制器，然后点击根部和尖端右侧的 <span class="key">拾取</span>。</li>
+  <li>设置动画开始帧、结束帧和拖尾帧数。</li>
+  <li>高速动作建议先用半帧采样；普通动作先用每帧采样。</li>
+  <li>选择外观预设，再调整宽度、尾端收缩、颜色与不透明度。</li>
+  <li>需要纹理刀光时点击贴图旁的 <span class="key">浏览</span> 并选择图片；贴图会立即连接到现有刀光，并自动更新旧 UV。</li>
+  <li>移动到有明显挥刀动作的帧，点击 <span class="key">预览当前帧</span> 检查宽度、颜色和贴图。</li>
+  <li>确认效果后点击 <span class="key">生成动画刀光</span>，等待进度完成。</li>
+  <li>播放时间轴检查结果；点击 <span class="key">选择刀光</span> 可找到生成组。</li>
+  <li>需要重新生成时直接修改参数并再次生成；不再使用时点击 <span class="key">删除刀光</span>。</li>
+</ol>
+
+<h2>贴图制作建议</h2>
+<ul>
+  <li>推荐使用横向为拖尾长度、纵向为刀刃宽度的贴图。</li>
+  <li>PNG、TGA 或 TIF 可使用 Alpha 制作透明边缘、断裂纹理和能量线条。</li>
+  <li>没有 Alpha 的黑白 JPG 可利用亮度形成透明度，白色区域更明显，黑色区域更透明。</li>
+  <li>刀光颜色会与贴图颜色相乘；贴图过暗时可改用纯白预设或提高贴图亮度。</li>
+  <li class="tip">选择贴图后工具会自动开启模型视口纹理显示；如手动关闭，可按键盘 6 恢复纹理显示。</li>
+</ul>
+
+<h2>使用建议与注意事项</h2>
+<ul>
+  <li>根部和尖端必须真实跟随刀具动画，否则生成的刀光不会跟随武器。</li>
+  <li>先预览当前帧，再生成完整范围，可避免反复生成大量动画网格。</li>
+  <li>生成结果采用逐帧网格和阶梯可见性键，适合视口预览与正式渲染。</li>
+  <li class="warn">长帧范围、高拖尾帧数与四分之一帧采样会增加场景体积和生成时间。</li>
+</ul>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html><html><head><meta charset="utf-8" /><meta name="qrichtext" content="1" />
+<style type="text/css">body{font-family:"Microsoft YaHei","Consolas";font-size:13px;color:#dddddd;background:#242424;}h1{color:#f0f0f0;font-size:20px;}h2{color:#66b7e8;margin-top:18px;margin-bottom:8px;}p{margin:5px 0;line-height:1.55;}li{margin:5px 0;}.tip{color:#e7c26d;}</style></head><body>
+<p><img src="images/img_1781496126852.png" /></p>
+<h1>对称镜像</h1>
+<h2>工具具体功能</h2><ul>
+<li>按 X、Y 或 Z 轴镜像骨骼、模型、曲线或整个层级。</li>
+<li>支持世界原点和自定义镜像中心。</li>
+<li>可设置左右命名规则、镜像 Joint Orient、复制蒙皮权重或实例化。</li>
+<li>“获取选择”会固定源对象，之后改变 Maya 当前选择不会误换镜像目标。</li>
+<li>世界原点骨骼镜像使用 Maya 原生 mirrorJoint，正确处理 Joint Orient 和旋转顺序。</li>
+<li>模型镜像使用完整世界矩阵反射，支持父级变换、旋转顺序和非均匀缩放。</li>
+<li>自动忽略已选父级下面的重复子项，避免同一层级被镜像多次。</li>
+<li>提供镜像结果预览；同名目标默认安全跳过，只有勾选“覆盖同名目标”才会覆盖。</li>
+<li>目标尚未绑定时可自动创建 skinCluster，并优先匹配镜像侧影响骨骼后复制权重。</li>
+<li>整次执行合并为一个 Maya 撤销步骤，可按 Ctrl+Z 一次回退。</li>
+<li>窗口采用安全单实例生命周期，可反复打开、关闭和重载。</li>
+</ul><h2>工具使用教程</h2><ol>
+<li>选择需要镜像的骨骼根节点或模型。</li>
+<li>点击“获取选择”固定本次源对象。</li>
+<li>选择镜像轴和镜像中心。</li>
+<li>设置左右命名规则。</li>
+<li>按需求开启骨骼方向、蒙皮权重或实例化选项。</li>
+<li>点击预览并检查生成名称。</li>
+<li>确认无误后执行镜像；需要替换已有目标时再勾选“覆盖同名目标（谨慎）”。</li>
+</ol><h2>注意事项</h2><ul>
+<li class="tip">复制蒙皮权重前确认源模型已正确绑定。</li>
+<li class="tip">世界原点骨骼镜像精度最高；使用自定义中心时工具会使用兼容后备逻辑。</li>
+<li class="tip">自定义命名的查找文本没有命中时会安全跳过，不会删除源对象。</li>
+</ul></body></html>

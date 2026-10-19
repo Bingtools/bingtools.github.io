@@ -185,10 +185,12 @@
     }
   }
 
-  new CosmicUniverse('canvas-container');
+  // Sketch edition has no starfield or background WebGL render loop.
 
   const source = window.BINGO_LOCAL_TOOL_PREVIEW;
   if (!source) return;
+  const sourceInfo = source.sourceInfo || {};
+  const sourceBuildLabel = `V${sourceInfo.version || '8.9.15'}`;
   const allTools = source.tools;
   const updateLogs = window.BINGO_UPDATE_LOGS || [];
   const categoryInfo = source.categoryInfo;
@@ -196,10 +198,7 @@
   const updateTypeLabels = { feature: '功能更新', improvement: '体验优化', fix: '问题修复', docs: '文档更新', planned: '后续计划' };
   const stage = document.getElementById('stackStage');
   const iconRoot = '/stellar-source/assets/tool-icons/';
-  const toolIconAliases = {
-    '三转四面': '三角面转四边面',
-    'Animo v6.2.0': 'Animation Helper'
-  };
+  const toolIconAliases = {};
   const thirdPartyToolNames = new Set(['Animation Helper', 'studiolibrary', 'ADV', 'Animo v6.2.0']);
   const toolAuthorOverrides = { 'P4连接器': '祥子' };
   const fallbackToolIcon = iconRoot + encodeURIComponent('选择工具') + '.png';
@@ -226,7 +225,7 @@
     ['批量对齐', 'preview-18.png', 1, 1],
     ['批量约束', 'preview-19.png', 1, 1],
     ['曲线显示调整', 'preview-20.png', 1, 1],
-    ['三转四面', 'preview-21.png', 1, 1],
+    ['三角面转四边面', 'preview-21.png', 1, 1],
     ['丢失贴图查找器', 'preview-22.png', 1, 1],
     ['模面显隐', 'preview-23.png', 1, 1],
     ['强制显示', 'preview-24.png', 1, 1],
@@ -236,14 +235,12 @@
     ['文件预览', 'preview-28.png', 1, 1],
     ['杀毒', 'preview-29.png', 1, 1]
   ].map(([name, file, shot, total]) => ({ tool: toolByName.get(name), preview: galleryPreviewRoot + file, shot, total })).filter((item) => item.tool);
-  let archiveMode = 'tools';
   let activeCategory = 'all';
-  let currentItems = allTools.slice();
+  let currentItems = updateLogs.slice();
   let activeIndex = 0;
   let dragStart = null;
   let dragMoved = false;
   let lastWheel = 0;
-  let qrMode = 'wechat';
   let toastTimer;
   let galleryIndex = 0;
   let galleryRendered = false;
@@ -290,11 +287,10 @@
       <span class="catalog-card-head">
         <img class="catalog-card-icon" src="${iconUrl(tool)}" alt="${esc(tool.name)}工具图标" loading="lazy">
         <span class="catalog-card-identity"><small>${esc(tool.category.toUpperCase())} / ${esc(categoryLabel(tool))}</small><strong>${esc(tool.name)}</strong></span>
-        <span class="catalog-origin ${credit.ownershipClass}">${esc(credit.ownership)}</span>
       </span>
       <span class="catalog-card-desc">${esc(tool.desc)}</span>
       <span class="catalog-card-tags">${tags.map((tag) => `<span>${esc(tag)}</span>`).join('')}</span>
-      <span class="catalog-card-footer"><small>作者：${esc(credit.author)}</small><b>查看使用说明 <i>↗</i></b></span>
+      <span class="catalog-card-footer"><span class="catalog-credit"><span class="catalog-origin ${credit.ownershipClass}">${esc(credit.ownership)}</span><small>${esc(credit.author)}</small></span><b>使用说明 <i>↗</i></b></span>
     </button>`;
   }
 
@@ -336,35 +332,21 @@
 
   function renderCategories() {
     const host = document.getElementById('categorySwitch');
-    const keys = archiveMode === 'tools'
-      ? ['all', ...categoryKeys]
-      : ['all', ...new Set(updateLogs.map((item) => item.type))];
+    const keys = ['all', ...new Set(updateLogs.map((item) => item.type))];
     host.innerHTML = keys.map((key) => {
-      const label = key === 'all' ? '全部' : archiveMode === 'tools' ? categoryInfo[key].label : updateTypeLabels[key] || key;
-      const sourceItems = archiveMode === 'tools' ? allTools : updateLogs;
-      const count = key === 'all' ? sourceItems.length : sourceItems.filter((item) => (archiveMode === 'tools' ? item.category : item.type) === key).length;
+      const label = key === 'all' ? '全部' : updateTypeLabels[key] || key;
+      const count = key === 'all' ? updateLogs.length : updateLogs.filter((item) => item.type === key).length;
       return `<button class="${activeCategory === key ? 'active' : ''}" type="button" data-category="${key}">${label}<span>${count}</span></button>`;
     }).join('');
     host.querySelectorAll('button').forEach((button) => {
       button.addEventListener('click', () => {
         activeCategory = button.dataset.category;
-        const sourceItems = archiveMode === 'tools' ? allTools : updateLogs;
-        currentItems = activeCategory === 'all' ? sourceItems.slice() : sourceItems.filter((item) => (archiveMode === 'tools' ? item.category : item.type) === activeCategory);
+        currentItems = activeCategory === 'all' ? updateLogs.slice() : updateLogs.filter((item) => item.type === activeCategory);
         activeIndex = 0;
         renderCategories();
         renderCards();
       });
     });
-  }
-
-  function toolCard(tool, index) {
-    return `<button class="orbit-card" type="button" data-index="${index}" aria-label="${esc(tool.name)}">
-      <span class="card-inner"><span class="card-glare"></span><span class="card-top">
-        <span class="card-index"><small>MAYA ARCHIVE</small><b>${String(index + 1).padStart(2, '0')} / ${String(currentItems.length).padStart(2, '0')}</b></span>
-        <img class="card-icon" src="${iconUrl(tool)}" alt="">
-      </span><span class="card-main"><small>${esc(categoryLabel(tool))} / ${esc(tool.category.toUpperCase())}</small><h2>${esc(tool.name)}</h2><p>${esc(tool.desc)}</p></span>
-      <span class="card-bottom"><span>${esc(tool.tags.slice(0, 2).join(' · '))}</span><b>OPEN ARCHIVE ↗</b></span></span>
-    </button>`;
   }
 
   function updateCard(item, index) {
@@ -379,7 +361,7 @@
   }
 
   function renderCards() {
-    stage.innerHTML = currentItems.map((item, index) => archiveMode === 'tools' ? toolCard(item, index) : updateCard(item, index)).join('');
+    stage.innerHTML = currentItems.map((item, index) => updateCard(item, index)).join('');
     stage.querySelectorAll('.orbit-card').forEach((card) => {
       const image = card.querySelector('img');
       if (image) image.addEventListener('error', () => { image.src = fallbackToolIcon; }, { once: true });
@@ -407,7 +389,8 @@
       const rotateX = diff === 0 ? 0 : diff * 25;
       const scale = diff === 0 ? 1.055 : Math.max(.7, 1 - distance * .08);
       card.style.transform = `translateY(${entering ? y + 120 : y}px) translateZ(${entering ? z - 250 : z}px) rotateX(${entering ? rotateX + 18 : rotateX}deg) scale(${entering ? scale * .9 : scale})`;
-      card.style.opacity = entering ? '0' : String(Math.max(0, 1 - distance * .24));
+      card.style.opacity = entering || distance > 4 ? '0' : '1';
+      card.setAttribute('aria-hidden', String(distance > 4));
       card.style.filter = distance > 2 ? 'blur(1.5px)' : 'none';
       card.style.zIndex = String(100 - distance);
       card.style.pointerEvents = distance > 4 ? 'none' : 'auto';
@@ -416,21 +399,19 @@
       bindActiveTilt(card, diff, y, z, rotateX, scale);
       if (entering) requestAnimationFrame(() => setTimeout(() => {
         card.style.transform = `translateY(${y}px) translateZ(${z}px) rotateX(${rotateX}deg) scale(${scale})`;
-        card.style.opacity = String(Math.max(0, 1 - distance * .24));
+        card.style.opacity = distance > 4 ? '0' : '1';
       }, index * 36));
     });
     const item = currentItems[activeIndex];
     if (!item) return;
     document.getElementById('activePosition').textContent = `${String(activeIndex + 1).padStart(2, '0')} / ${String(currentItems.length).padStart(2, '0')}`;
-    document.getElementById('activeCategory').textContent = archiveMode === 'tools'
-      ? `${item.category.toUpperCase()} / ${categoryLabel(item)}`
-      : `${item.version} / ${item.typeLabel}`;
+    document.getElementById('activeCategory').textContent = `${item.version} / ${item.typeLabel}`;
   }
 
   function bindActiveTilt(card, diff, y, z, rotateX, scale) {
     card.onpointermove = null;
     card.onpointerleave = null;
-    if (diff !== 0 || matchMedia('(pointer: coarse)').matches) return;
+    if (diff !== 0 || matchMedia('(pointer: coarse)').matches || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     card.onpointermove = (event) => {
       const rect = card.getBoundingClientRect();
       const px = (event.clientX - rect.left) / rect.width;
@@ -509,9 +490,7 @@
   document.getElementById('stackPrev').addEventListener('click', () => move(-1));
   document.getElementById('stackNext').addEventListener('click', () => move(1));
   document.getElementById('stackOpen').addEventListener('click', openActiveItem);
-  document.getElementById('galleryOpen').addEventListener('click', openToolGallery);
-  document.getElementById('catalogGalleryOpen').addEventListener('click', openToolGallery);
-  document.getElementById('directoryGalleryOpen').addEventListener('click', openToolGallery);
+  document.querySelectorAll('[data-open-library-preview]').forEach(button => button.addEventListener('click', openToolGallery));
   document.getElementById('galleryPrev').addEventListener('click', () => moveToolGallery(-1));
   document.getElementById('galleryNext').addEventListener('click', () => moveToolGallery(1));
   document.getElementById('galleryDetailOpen').addEventListener('click', openGalleryTool);
@@ -594,7 +573,10 @@
     }
     panel.classList.toggle('open', open);
     panel.setAttribute('aria-hidden', String(!open));
-    document.body.classList.toggle('panel-open', Boolean(document.querySelector('.panel-overlay.open')));
+    const anyPanelOpen = Boolean(document.querySelector('.panel-overlay.open'));
+    document.body.classList.toggle('panel-open', anyPanelOpen);
+    // Panels cover page content, but the persistent site navigation stays usable.
+    document.querySelectorAll('main,.scene-hud,.skip-link').forEach(element => { element.inert = anyPanelOpen; });
     document.body.classList.toggle('gallery-open', document.getElementById('galleryOverlay').classList.contains('open'));
     syncViewControls(document.body.dataset.view || 'home');
     if (open) panel.querySelector('.panel-close').focus();
@@ -606,18 +588,24 @@
   }
 
   function syncViewControls(view) {
-    const utilityPanelOpen = ['messageOverlay', 'downloadOverlay'].some((id) => document.getElementById(id).classList.contains('open'));
+    const utilityPanelOpen = ['qqGroupOverlay', 'downloadOverlay'].some((id) => document.getElementById(id).classList.contains('open'));
     document.querySelectorAll('[data-view]').forEach((button) => {
-      const isToolRoute = button.dataset.view === 'tools' && view === 'tool-orbit';
       const isPrimaryNavButton = Boolean(button.closest('.stellar-nav'));
-      const active = (button.dataset.view === view || isToolRoute) && !(utilityPanelOpen && isPrimaryNavButton);
+      const active = button.dataset.view === view && !(utilityPanelOpen && isPrimaryNavButton);
       button.classList.toggle('active', active);
       if (active) button.setAttribute('aria-current', 'page');
       else button.removeAttribute('aria-current');
     });
-    [['messageOpen', 'messageOverlay'], ['toolboxOpen', 'downloadOverlay']].forEach(([triggerId, panelId]) => {
+    [['qqGroupOpen', 'qqGroupOverlay'], ['toolboxOpen', 'downloadOverlay']].forEach(([triggerId, panelId]) => {
       const trigger = document.getElementById(triggerId);
       trigger.setAttribute('aria-expanded', String(document.getElementById(panelId).classList.contains('open')));
+    });
+    const libraryMode = document.getElementById('galleryOverlay').classList.contains('open') ? 'preview' : 'list';
+    document.querySelectorAll('[data-library-mode]').forEach(button => {
+      const active = button.dataset.libraryMode === libraryMode;
+      button.classList.toggle('active', active);
+      button.setAttribute('aria-pressed', String(active));
+      button.removeAttribute('aria-current');
     });
   }
 
@@ -653,10 +641,6 @@
     document.getElementById('toolOverlayTitle').textContent = tool.name;
     syncToolBody(tool);
     setPanel('toolOverlay', true);
-  }
-
-  function openTool() {
-    openToolRecord(currentItems[activeIndex]);
   }
 
   function galleryCard(item, index) {
@@ -725,7 +709,8 @@
       const z = diff === 0 ? 0 : -zSpacing * distance;
       const rotateY = diff === 0 ? 0 : direction * -25;
       const scale = diff === 0 ? 1.05 : Math.max(.62, .875 - distance * .025);
-      const opacity = distance > visibleLimit ? 0 : diff === 0 ? 1 : Math.max(.1, 1 - distance * .15);
+      const opacity = distance > visibleLimit ? 0 : 1;
+      card.setAttribute('aria-hidden', String(distance > visibleLimit));
       const entryX = x * 1.08;
       card.style.transform = entering
         ? `translateX(${entryX}px) translateZ(${z - 160}px) rotateY(${rotateY + direction * -6}deg) scale(${scale * .86})`
@@ -769,6 +754,8 @@
   }
 
   function openToolGallery() {
+    if (document.getElementById('galleryOverlay').classList.contains('open')) return;
+    if (document.body.dataset.view !== 'tools') showView('tools');
     renderToolGallery();
     updateToolGallery(true);
     setPanel('galleryOverlay', true);
@@ -799,56 +786,54 @@
   }
 
   function openActiveItem() {
-    if (archiveMode === 'tools') openTool();
-    else openUpdate();
+    openUpdate();
   }
 
-  function configureArchive(mode) {
-    archiveMode = mode;
+  function configureArchive() {
     activeCategory = 'all';
     activeIndex = 0;
-    if (mode === 'tools') {
-      currentItems = allTools.slice();
-      document.getElementById('archiveKicker').textContent = 'BINGO / MAYA PRODUCTION SYSTEM';
-      document.getElementById('archiveTitlePrimary').textContent = 'Explore More';
-      document.getElementById('archiveTitleSecondary').textContent = '开启工具星域';
-      document.getElementById('archiveDescription').textContent = '把动画、绑定、模型与特效工具组织成一套可探索的 Maya 制作系统。移动鼠标旋转星空，滚轮切换工具档案。';
-      document.getElementById('statLabelOne').textContent = 'MAYA TOOLS'; document.getElementById('statValueOne').textContent = String(allTools.length);
-      document.getElementById('statLabelTwo').textContent = 'MAYA HOST'; document.getElementById('statValueTwo').textContent = '2020—26';
-      document.getElementById('statLabelThree').textContent = 'BUILD'; document.getElementById('statValueThree').textContent = 'V8.8.87';
-      document.querySelector('.archive-heading .archive-label').textContent = 'TOOL ARCHIVE';
-      document.querySelector('#stackOpen span').textContent = '查看工具档案';
-    } else {
-      currentItems = updateLogs.slice();
-      document.getElementById('archiveKicker').textContent = 'BINGO / TOOL UPDATE ORBIT';
-      document.getElementById('archiveTitlePrimary').textContent = 'Update Orbit';
-      document.getElementById('archiveTitleSecondary').textContent = '工具更新日志';
-      document.getElementById('archiveDescription').textContent = '用时间轴记录工具新增、体验优化、问题修复与文档更新。滚动切换版本，再打开卡片查看完整变化。';
-      document.getElementById('statLabelOne').textContent = 'LOG ENTRIES'; document.getElementById('statValueOne').textContent = String(updateLogs.length);
-      document.getElementById('statLabelTwo').textContent = 'CURRENT BUILD'; document.getElementById('statValueTwo').textContent = 'V8.8.87';
-      document.getElementById('statLabelThree').textContent = 'STATUS'; document.getElementById('statValueThree').textContent = 'ACTIVE';
-      document.querySelector('.archive-heading .archive-label').textContent = 'CHANGE LOG';
-      document.querySelector('#stackOpen span').textContent = '查看更新详情';
-    }
+    currentItems = updateLogs.slice();
+    document.getElementById('archiveKicker').textContent = 'BINGO / TOOL UPDATE ORBIT';
+    document.getElementById('archiveTitlePrimary').textContent = 'Release Notes';
+    document.getElementById('archiveTitleSecondary').textContent = '工具更新日志';
+    document.getElementById('archiveDescription').textContent = '用时间轴记录工具新增、体验优化、问题修复与文档更新。滚动切换版本，再打开卡片查看完整变化。';
+    document.getElementById('statLabelOne').textContent = 'LOG ENTRIES'; document.getElementById('statValueOne').textContent = String(updateLogs.length);
+    document.getElementById('statLabelTwo').textContent = 'CURRENT BUILD'; document.getElementById('statValueTwo').textContent = sourceBuildLabel;
+    document.getElementById('statLabelThree').textContent = 'STATUS'; document.getElementById('statValueThree').textContent = 'ACTIVE';
+    document.querySelector('.archive-heading .archive-label').textContent = 'CHANGE LOG';
+    document.querySelector('#stackOpen span').textContent = '查看更新详情';
     renderCategories();
     renderCards();
   }
 
   function showView(view, updateHash = true) {
+    // Retired tool-flip links lead to the remaining tool list, not an empty view.
+    if (view === 'tool-orbit') { view = 'tools'; updateHash = true; }
+    // The retired advanced-feature page now returns visitors to the home page.
+    if (view === 'interest') { view = 'home'; updateHash = true; }
+    // Subscription is temporarily hidden; old links still open a usable page.
+    if (view === 'nova' && document.getElementById('novaView').hidden) { view = 'home'; updateHash = true; }
+    const viewChanged = document.body.dataset.view !== view;
     const home = view === 'home';
     const directory = view === 'directory';
     const catalog = view === 'tools';
-    const archive = view === 'tool-orbit' || view === 'updates';
+    const archive = view === 'updates';
     document.body.dataset.view = view;
     document.getElementById('homeView').classList.toggle('active-view', home);
     document.getElementById('directoryView').classList.toggle('active-view', directory);
     document.getElementById('toolCatalogView').classList.toggle('active-view', catalog);
     document.getElementById('archiveView').classList.toggle('active-view', archive);
     document.getElementById('novaView').classList.toggle('active-view', view === 'nova');
-    document.getElementById('interestView').classList.toggle('active-view', view === 'interest');
     syncViewControls(view);
-    if (archive) configureArchive(view === 'updates' ? 'updates' : 'tools');
+    if (archive) configureArchive();
     if (updateHash) history.replaceState(null, '', `#${view}`);
+    const skip = document.querySelector('.skip-link');
+    const heading = document.querySelector('main.active-view h1');
+    if (skip && heading) {
+      if (!heading.id) heading.id = `${view}-heading`;
+      skip.setAttribute('href', `#${heading.id}`);
+    }
+    if (viewChanged) window.scrollTo({ top: 0, behavior: 'instant' });
   }
 
   document.querySelectorAll('[data-view]').forEach((button) => button.addEventListener('click', (event) => {
@@ -1253,9 +1238,8 @@
 
   setupTigerDissolve();
 
-  document.getElementById('toolboxOpen').addEventListener('click', () => setPanel('downloadOverlay', true));
-  document.getElementById('messageOpen').addEventListener('click', () => setPanel('messageOverlay', true));
-  document.querySelectorAll('[data-open-panel]').forEach((button) => button.addEventListener('click', () => setPanel(button.dataset.openPanel, true)));
+  document.getElementById('toolboxOpen').addEventListener('click', () => setPanel('downloadOverlay', !document.getElementById('downloadOverlay').classList.contains('open')));
+  document.querySelectorAll('[data-open-panel]').forEach((button) => button.addEventListener('click', () => setPanel(button.dataset.openPanel, !document.getElementById(button.dataset.openPanel).classList.contains('open'))));
   document.querySelectorAll('[data-close-panel]').forEach((button) => button.addEventListener('click', () => setPanel(button.closest('.panel-overlay').id, false)));
   document.querySelectorAll('.panel-overlay').forEach((panel) => panel.addEventListener('click', (event) => { if (event.target === panel) setPanel(panel.id, false); }));
 
@@ -1268,150 +1252,16 @@
   }
 
   function handlePreviewDownload() {
-    toast('下载通道暂未开放。');
+    const url = sourceInfo.downloadUrl;
+    if (url) {
+      window.open(url, '_blank', 'noopener');
+    } else {
+      toast(`下载地址尚未接入。`);
+    }
   }
 
   document.getElementById('previewDownload').addEventListener('click', handlePreviewDownload);
   document.getElementById('previewDownloadMark').addEventListener('click', handlePreviewDownload);
-  const qr = document.getElementById('supportQr');
-  const supportSwitch = document.getElementById('supportSwitch');
-  supportSwitch.addEventListener('click', () => {
-    qrMode = qrMode === 'wechat' ? 'alipay' : 'wechat';
-    qr.src = qrMode === 'wechat' ? 'https://bingtools.github.io/assets/wechat-qr.png' : 'https://bingtools.github.io/assets/alipay-qr.png';
-    qr.alt = qrMode === 'wechat' ? '微信收款码' : '支付宝收款码';
-    supportSwitch.firstChild.textContent = qrMode === 'wechat' ? '切换至支付宝 ' : '切换至微信 ';
-  });
-
-  let novaQrMode = 'wechat';
-  const novaQr = document.getElementById('novaSupportQr');
-  const novaSwitch = document.getElementById('novaSupportSwitch');
-  novaSwitch.addEventListener('click', () => {
-    novaQrMode = novaQrMode === 'wechat' ? 'alipay' : 'wechat';
-    novaQr.src = novaQrMode === 'wechat' ? 'https://bingtools.github.io/assets/wechat-qr.png' : 'https://bingtools.github.io/assets/alipay-qr.png';
-    novaQr.alt = novaQrMode === 'wechat' ? '微信收款码' : '支付宝收款码';
-    const novaModeLabel = document.getElementById('novaSupportMode');
-    novaModeLabel.dataset.mode = novaQrMode;
-    novaModeLabel.textContent = novaQrMode === 'wechat' ? '当前方式 · 微信' : '当前方式 · 支付宝';
-    novaSwitch.querySelector('span').textContent = novaQrMode === 'wechat' ? '切换至支付宝' : '切换至微信';
-  });
-
-  const messageStorageKey = 'bingoToolbox.feedback.preview.v1';
-  const messageForm = document.getElementById('messageForm');
-  const messageNameInput = document.getElementById('messageName');
-  const messageInput = document.getElementById('messageContent');
-  const messageStream = document.getElementById('messageStream');
-  const messageCount = document.getElementById('messageCount');
-  let localMessageEntries = [];
-
-  function formatMessageTime(value) {
-    const date = new Date(value);
-    if (Number.isNaN(date.getTime())) return '刚刚';
-    const twoDigits = (number) => String(number).padStart(2, '0');
-    return `${twoDigits(date.getMonth() + 1)}.${twoDigits(date.getDate())} · ${twoDigits(date.getHours())}:${twoDigits(date.getMinutes())}`;
-  }
-
-  function createMessageEntry(entry, animate = false) {
-    const article = document.createElement('article');
-    article.className = `message-entry local-message-entry${animate ? ' is-new' : ''}`;
-    article.dataset.localMessage = entry.id;
-
-    const avatar = document.createElement('span');
-    avatar.className = 'message-avatar';
-    avatar.setAttribute('aria-hidden', 'true');
-    avatar.textContent = (Array.from(entry.author)[0] || '匿').toUpperCase();
-
-    const body = document.createElement('div');
-    const header = document.createElement('header');
-    const identity = document.createElement('span');
-    const author = document.createElement('b');
-    const time = document.createElement('time');
-    const type = document.createElement('small');
-    const content = document.createElement('p');
-
-    author.textContent = entry.author;
-    time.dateTime = entry.createdAt;
-    time.textContent = formatMessageTime(entry.createdAt);
-    type.textContent = entry.type;
-    content.textContent = entry.content;
-    identity.append(author, time);
-    header.append(identity, type);
-    body.append(header, content);
-    article.append(avatar, body);
-    return article;
-  }
-
-  function updateMessageCount() {
-    const total = messageStream.querySelectorAll('.message-entry').length;
-    messageCount.textContent = `${total} 条留言`;
-  }
-
-  function saveLocalMessages() {
-    try {
-      localStorage.setItem(messageStorageKey, JSON.stringify(localMessageEntries.slice(0, 30)));
-      return true;
-    } catch (error) {
-      console.warn('Local feedback could not be saved.', error);
-      return false;
-    }
-  }
-
-  try {
-    const storedMessages = JSON.parse(localStorage.getItem(messageStorageKey) || '[]');
-    if (Array.isArray(storedMessages)) {
-      localMessageEntries = storedMessages
-        .filter((entry) => entry && typeof entry.content === 'string' && entry.content.trim())
-        .map((entry, index) => ({
-          id: String(entry.id || `saved-${index}`),
-          author: String(entry.author || '匿名创作者').trim().slice(0, 24) || '匿名创作者',
-          content: entry.content.trim().slice(0, 240),
-          type: String(entry.type || '浏览器留言').slice(0, 12),
-          createdAt: String(entry.createdAt || new Date().toISOString())
-        }))
-        .sort((entryA, entryB) => {
-          const timeA = new Date(entryA.createdAt).getTime() || 0;
-          const timeB = new Date(entryB.createdAt).getTime() || 0;
-          return timeB - timeA;
-        })
-        .slice(0, 30);
-      localMessageEntries.slice().reverse().forEach((entry) => {
-        messageStream.prepend(createMessageEntry(entry));
-      });
-    }
-  } catch (error) {
-    console.warn('Local feedback could not be restored.', error);
-  }
-  updateMessageCount();
-
-  messageForm.addEventListener('submit', (event) => {
-    event.preventDefault();
-    const content = messageInput.value.trim();
-    if (!content) {
-      toast('先写下使用反馈或工具建议吧。');
-      messageInput.focus();
-      return;
-    }
-
-    const entry = {
-      id: `local-${Date.now().toString(36)}`,
-      author: messageNameInput.value.trim().slice(0, 24) || '匿名创作者',
-      content: content.slice(0, 240),
-      type: '浏览器留言',
-      createdAt: new Date().toISOString()
-    };
-    localMessageEntries = [entry, ...localMessageEntries].slice(0, 30);
-    messageStream.prepend(createMessageEntry(entry, true));
-    messageStream.querySelectorAll('.local-message-entry').forEach((element, index) => {
-      if (index >= 30) element.remove();
-    });
-    messageStream.scrollTop = 0;
-    updateMessageCount();
-    const savedLocally = saveLocalMessages();
-    messageInput.value = '';
-    toast(savedLocally
-      ? '留言已保存在当前浏览器。'
-      : '留言已显示在当前页面，但浏览器未能保存，刷新后可能消失。');
-  });
-
   addEventListener('keydown', (event) => {
     const galleryOpen = document.getElementById('galleryOverlay').classList.contains('open');
     if (galleryOpen && event.key === 'ArrowLeft') { event.preventDefault(); moveToolGallery(-1); return; }

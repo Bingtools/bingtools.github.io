@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><style>
+body{margin:0;padding:18px;background:#3d3d3d;color:#e7e7e7;font:15px/1.65 "Microsoft YaHei",sans-serif}h1{margin:0 0 10px;color:#55c5c7;font-size:21px;border-bottom:1px solid #666;padding-bottom:8px}.tag{display:inline-block;background:#31888b;color:#fff;border-radius:5px;padding:2px 8px;margin-right:8px}.note{background:#313131;border-left:4px solid #55c5c7;padding:9px 12px}ol,ul{padding-left:23px}
+</style></head><body>
+<h1><span class="tag">CA</span>裁剪动画</h1>
+<p>只保留指定范围内的动画，移除范围外的关键帧。作者：Bingo。</p>
+<ol><li>选择需要裁剪的动画对象。</li><li>在时间轴拖选要保留的起止范围。</li><li>单击图标执行裁剪。</li></ol>
+<ul><li>起止边界没有关键帧时会先补键，保持边界姿势。</li><li>仅处理基于时间的动画曲线。</li><li>执行后恢复原来的当前帧。</li></ul>
+<p class="note">范围外关键帧会被删除，但整次操作支持 Ctrl+Z。</p>
+<h2>右键：删除时间轴以外的帧</h2>
+<ol><li>选择要处理的对象。</li><li>把 Maya 时间轴的播放起始帧、结束帧设为需要保留的范围。</li><li>右键快捷栏“裁剪动画”图标，选择“删除时间轴以外的帧”。</li></ol>
+<ul><li>只使用当前播放范围，不使用高亮选区，也不使用动画总起止范围。</li><li>仅删除播放起始帧之前和结束帧之后的关键帧；边界上的键保留，不额外补键。</li><li>支持所选对象的位移、旋转、缩放、可见性和数值型自定义属性。</li><li>未选对象不受影响；锁定、引用、共享曲线、动画层和复杂连接会安全跳过。</li><li>没有范围外关键帧时不做修改；支持一次 Ctrl+Z 撤销。</li></ul>
+<p class="note">这是删除关键帧，不是移动或缩短时间轴。因为不补边界键，曲线自动切线或范围边缘的插值可能变化；如需补边界保持裁剪边界姿势，请继续使用左键高亮范围裁剪。操作前建议保存场景。</p>
+<h2>右键：删除所有的帧</h2>
+<ol><li>选择需要清除动画的一个或多个对象。</li><li>右键快捷栏“裁剪动画”图标，选择“删除所有的帧”。</li></ol>
+<ul><li>只删除当前所选对象的全部时间动画关键帧，不会清空整个场景。</li><li>支持所选对象的位移、旋转、缩放、可见性和数值型自定义属性。</li><li>未选对象不受影响；锁定、引用、共享曲线、动画层和复杂连接会安全跳过。</li><li>不修改播放范围、当前帧和当前选择；整次操作支持一次 Ctrl+Z 撤销。</li><li>没有可安全删除的关键帧时不会产生空的撤销步骤。</li></ul>
+<p class="note">该操作会清除所选对象可安全处理的全部关键帧。执行前请确认选择范围并保存场景；如误操作，可立即按 Ctrl+Z 恢复。</p>
+</body></html>

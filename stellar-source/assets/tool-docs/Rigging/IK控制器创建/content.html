@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="qrichtext" content="1" />
+  <style>
+    body { font-family: "Microsoft YaHei", "Consolas"; font-size: 13px; color: #dddddd; background: #242424; }
+    h1 { color: #f0f0f0; font-size: 20px; }
+    h2 { color: #69c7a1; margin-top: 18px; margin-bottom: 8px; }
+    p { margin: 5px 0; line-height: 1.55; }
+    li { margin: 5px 0; line-height: 1.5; }
+    .key { color: #7bd6b1; font-weight: bold; }
+    .tip { color: #9fd38c; }
+    .warn { color: #e7c26d; }
+  </style>
+</head>
+<body>
+<h1>IK控制器创建</h1>
+<p>作者：Bingo　版本：1.1.8</p>
+<p>从连续骨骼链创建可切换、可匹配的 IK/FK 系统，并提供样条链端点固定功能。</p>
+
+<h2>工具具体功能</h2>
+<ul>
+  <li>选择 3 根连续骨骼时，创建 RP 肢体 IK/FK：FK 控制器、末端 IK 控制器、Pole Vector 和 IK/FK 切换。</li>
+  <li>选择 4 根及以上连续骨骼时，创建样条 IK/FK：逐关节 FK、样条 IK 控制器以及根端/末端固定。</li>
+  <li>自动复制 IK 与 FK 驱动链，通过约束驱动原骨骼，原骨骼与蒙皮保持不变。</li>
+  <li>支持无跳动匹配并切换到 FK 或 IK，可选择是否在当前帧自动设置关键帧。</li>
+  <li>删除时只清理本工具创建和标记的 IK/FK 系统节点。</li>
+</ul>
+
+<h2>明确使用步骤</h2>
+<ol>
+  <li>选择同一条连续骨骼链的起始关节和末端关节；也可选择链上的多个关节。至少需要 3 根，不能包含分叉或不连续关节。</li>
+  <li>“命名前缀”可以留空，让工具按首关节自动生成；按骨骼大小设置控制器尺寸倍率。</li>
+  <li>4 根及以上样条链可选择 <span class="key">整体控制端</span>：骨骼末端（默认）或骨骼根端。</li>
+  <li>点击 <span class="key">一键创建 IK/FK</span>。3 根自动创建肢体模式，4 根及以上自动创建样条模式；切换属性中 0 代表 FK，1 代表 IK。</li>
+  <li>切换前选择该系统任意控制器或关联骨骼，再点击 <span class="key">匹配并切到 FK</span> 或 <span class="key">匹配并切到 IK</span>。</li>
+  <li>默认勾选“切换时设置关键帧”，工具会在当前帧为控制器和切换属性设键；不需要设键时先取消勾选。</li>
+  <li>样条模式下，选中根端或末端 IK 控制器后，可点击 <span class="key">固定所选控制端</span>；解除时使用“解除所选控制端固定”。</li>
+  <li>需要清理时选择该系统任意控制器或骨骼，点击 <span class="key">删除所选 IK/FK 系统</span> 并确认。</li>
+</ol>
+
+<h2>模式与按钮说明</h2>
+<ul>
+  <li><span class="key">3 根骨骼：</span>适合手臂、腿等标准三段肢体，使用 RP IK 与 Pole Vector。</li>
+  <li><span class="key">4 根及以上：</span>适合脊柱、尾巴、触手等连续链，使用 Spline IK。</li>
+  <li><span class="key">整体控制端：</span>只决定哪一端的控制器可整体带动样条层级，不等于动画中的固定端。</li>
+  <li><span class="key">固定所选控制端：</span>固定哪一端由当前选择的样条端点控制器决定。</li>
+</ul>
+
+<h2>注意事项</h2>
+<ul>
+  <li>3 根肢体模式不支持“固定所选控制端”；该功能只用于 4 根及以上的样条模式。</li>
+  <li>已经接入 Bingo IK/FK 的骨骼会拒绝重复创建。</li>
+  <li>源骨骼已有外部约束、驱动关系、负缩放或非统一缩放层级时，请先保存场景并在副本中验证。</li>
+  <li class="tip">删除 IK/FK 系统会保留原骨骼和蒙皮，整次操作支持 Ctrl+Z。</li>
+</ul>
+</body>
+</html>

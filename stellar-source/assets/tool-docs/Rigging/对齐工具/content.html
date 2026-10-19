@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="qrichtext" content="1" />
+<style type="text/css">
+body{font-family:"Microsoft YaHei","Consolas";font-size:13px;color:#dddddd;background:#242424;}
+h1{color:#f0f0f0;font-size:20px;}
+h2{color:#66b7e8;margin-top:18px;margin-bottom:8px;}
+p{margin:5px 0;line-height:1.55;}
+li{margin:5px 0;}
+.tip{color:#e7c26d;}
+</style>
+</head>
+<body>
+<h1>对齐工具</h1>
+<h2>工具功能</h2>
+<ul>
+<li>将一个或多个对象的位置、旋转、缩放批量匹配到同一个目标。</li>
+<li>位置、旋转、缩放可分别启用，并支持单独选择 X、Y、Z 轴。</li>
+<li>使用世界空间匹配位置与旋转，适用于不同父级下的对象。</li>
+<li>执行过程合并为一次 Maya 撤销操作。</li>
+</ul>
+<h2>使用步骤</h2>
+<ol>
+<li>先选择需要被对齐的一个或多个对象。</li>
+<li>最后选择目标对象；最后选中的对象始终作为目标。</li>
+<li>设置需要对齐的变换类型和轴向。</li>
+<li>点击“执行对齐”。如需恢复，可按 Ctrl+Z。</li>
+</ol>
+<h2>窗口操作</h2>
+<ul>
+<li>按住标题栏或窗口空白区域可以拖动窗口，移动逻辑与 IKFK 工具一致。</li>
+<li>拖动窗口四边或四角可以调整窗口大小。</li>
+<li>点击右上角加宽的关闭按钮可关闭工具。</li>
+</ul>
+<h2>注意事项</h2>
+<ul>
+<li class="tip">至少需要选择两个对象。</li>
+<li class="tip">锁定、约束或被连接的变换通道可能无法被修改。</li>
+<li class="tip">缩放按对象的 scale 通道进行匹配。</li>
+</ul>
+</body>
+</html>

@@ -1,0 +1,126 @@
+/* Pencil finish: decorative layers never intercept controls or change their layout. */
+:root {
+  --pencil-edge: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 500' preserveAspectRatio='none'%3E%3Cg fill='none' stroke='%23413e35' stroke-linecap='round'%3E%3Cpath opacity='.72' stroke-width='1.3' d='M4 8Q143 3 299 7T595 5L592 163 595 327 591 494Q435 490 300 494T7 491L5 339 8 170Z'/%3E%3Cpath opacity='.35' stroke-width='.85' d='M14 4L181 5 335 3 586 8M597 19L594 213 598 394 593 486M584 498L415 495 203 498 15 495M3 485L5 282 2 19'/%3E%3Cpath opacity='.5' d='M1 20L16 2M1 26L22 2M578 498L599 477M584 499L599 484'/%3E%3C/g%3E%3C/svg%3E");
+}
+body {
+  background-image: repeating-linear-gradient(93deg, transparent 0 6px, #51483805 6px 7px), repeating-linear-gradient(3deg, transparent 0 9px, #51483804 9px 10px);
+}
+body::before { opacity: .3; }
+.site-header { border-bottom: 0; }
+.site-header::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 5px; pointer-events: none;
+  border-top: 1px solid var(--ink); border-bottom: 1px solid var(--line);
+  transform: rotate(-.16deg); border-radius: 45% 12% 38% 18%; opacity: .8;
+}
+.directory-card, .catalog-card, .plan-card, .contact-card, .brightness-panel {
+  position: relative;
+  border-color: var(--muted);
+  border-radius: 2px 5px 3px 7px / 5px 2px 6px 3px;
+  background-image: repeating-linear-gradient(128deg, transparent 0 4px, #413e3533 4px 5px, transparent 5px 8px);
+  background-size: 100px 12px; background-position: right 12px bottom 7px; background-repeat: no-repeat;
+  box-shadow: 3px 4px 0 var(--paper), 4px 5px 0 var(--line), 7px 8px 0 var(--soft);
+}
+.directory-card::after, .catalog-card::after, .plan-card::after, .contact-card::after, .brightness-panel::after {
+  content: ''; position: absolute; inset: 3px; background: var(--pencil-edge) center / 100% 100% no-repeat;
+  pointer-events: none; opacity: .75; border-radius: inherit;
+}
+.brightness-panel { position: absolute; }
+.directory-card:nth-child(2n)::after, .catalog-card:nth-child(2n)::after, .plan-card:nth-child(2n)::after {
+  transform: rotate(.25deg); opacity: .6;
+}
+.directory-card:nth-child(3n)::after, .catalog-card:nth-child(3n)::after { transform: rotate(-.3deg); }
+.plan-card-permanent { border-color: var(--red); }
+.plan-offer-stamp {
+  border-style: double; border-width: 3px; outline-style: dashed; outline-offset: 2px;
+  background-image: repeating-linear-gradient(-18deg, transparent 0 4px, #a54a380b 4px 5px);
+  box-shadow: 1px 2px 0 var(--soft); letter-spacing: .08em;
+}
+.subscription-hero, .directory-summary, .catalog-toolbar, .subscription-offer, .scene-hud {
+  border-color: var(--muted);
+  border-bottom-style: double; border-bottom-width: 3px;
+}
+.subscription-hero h1, .directory-hero h1 em, .catalog-hero h1 em, .home-copy h1 {
+  text-shadow: .45px .25px 0 var(--muted), -.25px -.3px 0 var(--line);
+}
+.subscription-hero h1, .directory-hero h1 em, .catalog-hero h1 em { position: relative; }
+.subscription-hero h1::after, .directory-hero h1 em::after, .catalog-hero h1 em::after {
+  content: ''; display: block; width: 112px; height: 8px; margin-top: 17px; pointer-events: none;
+  background: repeating-linear-gradient(164deg, transparent 0 3px, var(--muted) 3px 4px, transparent 4px 6px);
+  transform: rotate(-3deg); opacity: .62;
+  clip-path: polygon(0 35%, 94% 0, 100% 45%, 8% 100%);
+}
+.directory-card strong, .plan-card h2, .contact-card h3 {
+  text-shadow: .3px .2px 0 currentColor;
+}
+.plan-index, .directory-card-index { letter-spacing: .12em; }
+.plan-term, .contact-card button, .directory-card>span:last-child { border-top-style: dashed; }
+.orbit-nav-icon, .catalog-view-button, .catalog-filters button, .home-tech-action, .brightness-footer button {
+  border-radius: 3px 7px 4px 5px / 6px 3px 7px 2px;
+}
+.stellar-nav button.active::after { height: 5px; border-top: 1px solid var(--muted); border-radius: 45%; }
+.glass-panel::before { border-color: var(--line); background: var(--pencil-edge) center / 100% 100% no-repeat; opacity: .65; }
+.sheet-front::after { background: var(--pencil-edge) center / 100% 100% no-repeat; border: 0; inset: 6px; opacity: .75; }
+.sheet-back { background: repeating-linear-gradient(128deg, transparent 0 5px, #413e351c 5px 6px), var(--soft); }
+.sheet-middle { background: repeating-linear-gradient(0deg, transparent 0 25px, var(--line) 25px 26px), var(--sheet); }
+.paper-tab { border-radius: 3px 6px 7px 2px; box-shadow: 2px 1px 0 var(--line); }
+.home-copy h1 b::after { border-top-style: double; border-top-width: 4px; pointer-events: none; }
+@media(max-width:760px) {
+  .directory-card, .catalog-card, .plan-card, .contact-card { background-size: 76px 9px; }
+  .subscription-hero h1::after, .directory-hero h1 em::after, .catalog-hero h1 em::after { margin-top: 12px; width: 88px; }
+}
+
+/* V132: darker graphite, repeated contours and localized cross-hatching. */
+/* Draft marks live in gutters and unused heading space, never over controls. */
+body::after {
+  content: ''; position: fixed; inset: 110px 0 0; pointer-events: none; z-index: 0;
+  background-image: url('/stellar-source/assets/pencil-margin-v132.svg'),url('/stellar-source/assets/pencil-margin-v132.svg');
+  background-repeat: no-repeat; background-position: left 2px top 30px,right 3px bottom 18px;
+  background-size: min(4vw,62px) 560px,min(4vw,58px) 500px; opacity: .58;
+}
+main, .scene-hud { position: relative; z-index: 1; }
+.catalog-hero, .directory-hero { position: relative; }
+@media(min-width:1100px) {
+  .catalog-hero::after, .directory-hero::after {
+    content: ''; position: absolute; top: -24px; right: 0; width: 260px; height: 140px;
+    background: url('/stellar-source/assets/pencil-study-v132.svg') center / contain no-repeat;
+    transform: rotate(-5deg); opacity: .62; pointer-events: none;
+  }
+}
+@media(max-width:760px) { body::after { opacity: .38; background-size: 18px 460px,16px 400px; top: var(--site-header-height); } }
+:root { --pencil-edge: url('/stellar-source/assets/graphite-frame-v132.svg'); }
+body::before { opacity: .42; }
+body {
+  background-image: radial-gradient(ellipse at 0 30%, #423c2914, transparent 28%), radial-gradient(ellipse at 100% 75%, #423c2914, transparent 30%), repeating-linear-gradient(94deg, transparent 0 6px, #51483808 6px 7px), repeating-linear-gradient(4deg, transparent 0 11px, #51483806 11px 12px);
+}
+.site-header::after { height: 7px; border-top: 2px solid var(--ink); border-bottom: 2px solid var(--muted); opacity: .95; }
+.directory-card, .catalog-card, .plan-card, .contact-card, .brightness-panel {
+  border: 1.5px solid var(--ink);
+  background-image: repeating-linear-gradient(128deg, transparent 0 4px, #302f2966 4px 5.5px, transparent 5.5px 8px), repeating-linear-gradient(42deg, transparent 0 5px, #302f2933 5px 6px, transparent 6px 10px), linear-gradient(90deg, #302f2912, transparent 16px), linear-gradient(0deg, #302f2915, transparent 22px);
+  background-size: 160px 15px, 160px 15px, 100% 100%, 100% 100%;
+  background-position: right 10px bottom 6px, right 10px bottom 6px, left top, left top;
+  box-shadow: 4px 5px 0 var(--paper), 5px 6px 0 var(--ink), 8px 9px 0 var(--soft), 9px 10px 0 var(--muted);
+}
+.directory-card::after, .catalog-card::after, .plan-card::after, .contact-card::after, .brightness-panel::after,
+.directory-card:nth-child(2n)::after, .catalog-card:nth-child(2n)::after, .plan-card:nth-child(2n)::after { opacity: .95; inset: 2px; }
+.catalog-card-head { padding-bottom: 14px; border-bottom: 2px solid var(--line); }
+.catalog-card-identity strong { font-family: 'KaiTi','STKaiti',var(--body); font-size: 1.4rem; font-weight: 700; text-shadow: .35px .2px 0 currentColor; }
+.catalog-card-icon { border: 2px solid var(--ink); border-radius: 2px 6px 3px 5px; box-shadow: 2px 2px 0 var(--line); }
+.catalog-card-footer, .plan-term, .contact-card button, .directory-card>span:last-child { border-top: 2px dashed var(--muted); }
+.catalog-card-tags span, .actual-detail-tags span, .update-tags span { border-bottom: 2px solid var(--line); }
+.subscription-hero, .directory-summary, .catalog-toolbar, .subscription-offer, .scene-hud { border-bottom-width: 5px; border-bottom-color: var(--ink); }
+.subscription-hero h1::after, .directory-hero h1 em::after, .catalog-hero h1 em::after {
+  width: 190px; height: 13px; opacity: .9;
+  background: repeating-linear-gradient(166deg, transparent 0 2px, var(--ink) 2px 3.5px, transparent 3.5px 5px), repeating-linear-gradient(14deg, transparent 0 6px, var(--muted) 6px 7px, transparent 7px 9px);
+}
+.directory-card>i { text-shadow: 1px .5px 0 var(--muted), -1px -.5px 0 var(--line); }
+.plan-offer-stamp { border-color: var(--red); outline-color: var(--red); outline-style: solid; background-image: repeating-linear-gradient(-18deg, transparent 0 3px, #a54a381c 3px 4px); }
+.orbit-nav-icon, .catalog-view-button, .catalog-filters button, .home-tech-action { border-width: 2px; }
+.catalog-search { border-width: 2px; outline: 1px solid var(--line); outline-offset: 3px; }
+.stellar-nav button.active::after { height: 7px; border-top: 2px solid var(--muted); border-bottom-width: 3px; }
+.sheet-front::after, .glass-panel::before { opacity: .95; }
+.sheet-back { background: repeating-linear-gradient(128deg, transparent 0 5px, #302f2955 5px 6px), repeating-linear-gradient(38deg, transparent 0 9px, #302f2929 9px 10px), var(--soft); }
+.home-copy h1 b::after { height: 11px; border-top-width: 6px; }
+@media(max-width:760px) {
+  .directory-card, .catalog-card, .plan-card, .contact-card { background-size: 120px 13px,120px 13px,100% 100%,100% 100%; }
+  .subscription-hero h1::after, .directory-hero h1 em::after, .catalog-hero h1 em::after { width: 150px; }
+}

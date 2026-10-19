@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><title>Bingo 重置姿势</title></head>
+<body>
+  <h2>重置姿势</h2>
+  <p>作者：Bingo　版本：1.1.0（Animo 兼容识别修正版）</p>
+  <p>将所选控制器恢复到正确归位姿势。优先读取 Animo 已保存的自定义归位数值，找不到时使用 Maya 属性本身的默认值。</p>
+  <ul>
+    <li>通道盒选中属性时，只处理选中的属性。</li>
+    <li>曲线编辑器选中关键帧时，只修改选中的关键帧。</li>
+    <li>时间滑块框选范围时，只修改范围内已有关键帧。</li>
+    <li>普通选择时，重置当前帧；已有动画会写入真实关键帧。</li>
+    <li>兼容 Animo <code>channelbox_attributes.json</code> 保存的归位值，并支持引用命名空间。</li>
+    <li>普通直连 AnimCurve 可正常处理；pairBlend/动画层/blendWeighted 等多输出网络在曲线和范围模式下会明确跳过，避免误改相邻通道。</li>
+    <li>Set Driven Key（UA/UL/UT/UU）会被识别为非时间驱动并安全跳过，不改 SDK 映射或断开 Driver 连接。</li>
+    <li>当前帧对动画层写入关键帧后会立即刷新 DG，避免出现“数值已写入但视口没变”。</li>
+    <li>锁定、非数值和非动画连接驱动的属性会被安全跳过。</li>
+    <li>操作结果会显示成功、跳过、失败数量及首条原因，不再静默失败。</li>
+    <li>整次操作支持 Maya Ctrl+Z 撤销。</li>
+  </ul>
+  <p>快捷栏中的“重置姿势”图标可直接执行，无需打开额外窗口。</p>
+</body>
+</html>

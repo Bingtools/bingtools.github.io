@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="qrichtext" content="1" />
+<style type="text/css">
+body{font-family:"Microsoft YaHei","Consolas";font-size:13px;color:#dddddd;background:#242424;}
+h1{color:#f0f0f0;font-size:20px;}
+h2{color:#66b7e8;margin-top:18px;margin-bottom:8px;}
+p{margin:5px 0;line-height:1.55;}
+li{margin:5px 0;line-height:1.55;}
+.tip{color:#e7c26d;}
+</style>
+</head>
+<body>
+<h1>选择工具</h1>
+<h2>工具功能</h2>
+<ul>
+<li>根据节点类型快速选择或反选场景对象。</li>
+<li>支持层级、当前选择和全部节点三种处理范围。</li>
+<li>可以一次读取多个节点类型。</li>
+<li>开启 Transform 与 Shape 合并计算后，Shape 会返回对应的 Transform 对象。</li>
+</ul>
+<h2>使用步骤</h2>
+<ol>
+<li>选择一个或多个示例对象。</li>
+<li>点击“载入节点”，工具会读取 mesh、nurbsCurve、joint 等节点类型。</li>
+<li>选择“层级”“当前选择”或“全部节点”。</li>
+<li>点击“选择”筛选匹配节点，或点击“反选”筛选其余节点。</li>
+</ol>
+<h2>范围说明</h2>
+<ul>
+<li><b>层级：</b>从当前选择及其子层级中筛选。</li>
+<li><b>当前选择：</b>只在当前选中的对象中筛选。</li>
+<li><b>全部节点：</b>在整个 Maya 场景中筛选。</li>
+</ul>
+<h2>注意事项</h2>
+<ul>
+<li class="tip">“全部节点 + 反选”可能选中大量节点，复杂场景中建议谨慎使用。</li>
+<li class="tip">输入多个类型时使用英文逗号分隔，例如 mesh, nurbsCurve。</li>
+</ul>
+</body>
+</html>

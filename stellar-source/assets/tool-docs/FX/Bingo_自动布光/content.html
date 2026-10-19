@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="qrichtext" content="1" />
+<style type="text/css">
+body { font-family: "Microsoft YaHei", "Consolas"; font-size: 13px; color: #dddddd; background: #242424; }
+h2 { color: #66b7e8; margin-top: 18px; margin-bottom: 8px; }
+h3 { color: #e7e7e7; margin-top: 14px; margin-bottom: 6px; }
+p { margin: 5px 0; line-height: 1.55; }
+li { margin: 5px 0; }
+.tip { color: #9fd38c; }
+.warn { color: #e7c26d; }
+.key { color: #7fc7f3; font-weight: bold; }
+</style>
+</head>
+<body>
+<p><img src="images/img_1784606119562.png" /></p>
+
+<h2>工具具体功能</h2>
+<ul>
+  <li>自动读取当前选择模型或可见场景的包围盒，计算模型中心和整体尺寸。</li>
+  <li>根据当前视口摄像机方向，自动创建主光、补光和轮廓光三点布光。</li>
+  <li>支持 Arnold 灯光；Arnold 不可用时自动回退到 Maya 原生 Area Light。</li>
+  <li>提供均衡棚拍、柔和角色、戏剧轮廓、产品展示、日光环境五套布光预设。</li>
+  <li>可统一调整灯光强度和光源柔和度。</li>
+  <li>可选 Arnold 环境光 Skydome 和中性接地平面。</li>
+  <li>支持重复生成并更新现有灯光、快速选择灯光以及删除整套自动布光。</li>
+  <li>生成的灯光组带有 Bingo 专属标记，不会删除同名但不属于本工具的用户节点。</li>
+</ul>
+
+<h2>布光预设说明</h2>
+<ul>
+  <li><span class="key">均衡棚拍：</span>明暗比例均衡，适合大多数角色和道具的基础展示。</li>
+  <li><span class="key">柔和角色：</span>光源面积更大、阴影更柔和，适合角色面部和全身展示。</li>
+  <li><span class="key">戏剧轮廓：</span>降低补光并增强轮廓光，适合强调剪影和氛围。</li>
+  <li><span class="key">产品展示：</span>高亮更干净，适合硬表面模型和产品渲染。</li>
+  <li><span class="key">日光环境：</span>暖主光配合冷色环境光，适合室外日光方向的快速预览。</li>
+</ul>
+
+<h2>工具使用教程</h2>
+<ol>
+  <li>在 Maya 中选择需要布光的模型、模型组或角色层级。</li>
+  <li>打开 <span class="key">Bingo_自动布光</span>。</li>
+  <li>目标范围选择 <span class="key">当前选择</span>。如需对整个场景的可见模型布光，可改为 <span class="key">可见场景</span>。</li>
+  <li>灯光系统建议使用 <span class="key">自动检测</span>：当前渲染器为 Arnold 时创建 Arnold 灯光，否则使用 Maya 原生灯光。</li>
+  <li>选择合适的布光预设。</li>
+  <li>调整整体强度。数值越大，整套灯光越亮。</li>
+  <li>调整光源柔和度。数值越大，Area Light 面积越大，阴影通常越柔和。</li>
+  <li>需要环境补光时勾选 <span class="key">Arnold 环境光（Skydome）</span>；需要模型落地参照时勾选 <span class="key">创建中性接地平面</span>。</li>
+  <li>点击 <span class="key">生成 / 更新自动布光</span>。工具会创建灯光并自动朝向模型中心。</li>
+  <li>点击 <span class="key">选择灯光</span>，可在 Maya 属性编辑器中继续手动调整颜色、曝光和位置。</li>
+  <li>修改预设或参数后再次点击生成按钮，即可更新整套灯光。</li>
+  <li>不再需要时点击 <span class="key">删除灯光组</span>，清理本工具创建的灯光和可选接地平面。</li>
+</ol>
+
+<h2>使用建议与注意事项</h2>
+<ul>
+  <li class="tip">建议先切换到最终观察摄像机，再生成灯光；工具会参考当前视口摄像机方向安排主光和补光。</li>
+  <li>生成后请在 Arnold RenderView、IPR 或启用场景灯光的 Viewport 2.0 中检查最终效果。</li>
+  <li>Skydome 只在 Arnold 模式下创建；Maya 原生模式会自动跳过该选项。</li>
+  <li>更新布光时，工具会删除并重建上一套由本工具生成的灯光组。</li>
+  <li class="warn">如果场景中已有名为 Bingo_AutoLight_Rig_GRP、但没有 Bingo 专属标记的节点，工具会停止操作，避免覆盖用户内容。</li>
+  <li>复杂正式镜头建议将自动布光作为起点，生成后再根据材质、构图和渲染需求进行人工微调。</li>
+</ul>
+</body>
+</html>
