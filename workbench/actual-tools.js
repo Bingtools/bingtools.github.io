@@ -2,12 +2,12 @@
   const ICON_ROOT = '/stellar-source/assets/tool-icons/';
   const sourceInfo = {
     path: 'D:\\Maya\\_Tool\\Bingo\\_Tools\\tools',
-    version: '0.0.4.15',
+    version: '0.0.4.16',
     maya: '2020–2026',
     scannedAt: '2026-09-03',
     officialToolCount: 52,
     bundledEntryCount: 1,
-    downloadUrl: 'https://github.com/Bingtools/bingtools.github.io/releases/download/v0.0.4.15/BingoToolsBox_M_V0.0.4.15.exe',
+    downloadUrl: 'https://github.com/Bingtools/bingtools.github.io/releases/download/v0.0.4.16/BingoToolsBox_M_V0.0.4.16.exe',
   };
   const DOC_ROOT = '/stellar-source/assets/tool-docs/';
   const docFolderByTool = {
